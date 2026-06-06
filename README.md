@@ -1,4 +1,4 @@
-# horb
+# horb - Hydrogenic Orbital Radial Basis
 
 Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Galaxy Dark Matter Halos
 
