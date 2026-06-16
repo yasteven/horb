@@ -1,0 +1,8 @@
+/target/
+*.tmp
+*.bak
+
+# generated curve outputs
+/curves/
+/dz2_curve.csv
+/dz2_curve_*.csv

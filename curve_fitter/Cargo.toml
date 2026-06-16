@@ -1,0 +1,8 @@
+[package]
+name = "curve_fitter"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+orbital_basis = { path = "../orbital_basis" }
+anyhow = { workspace = true }
