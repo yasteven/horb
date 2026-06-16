@@ -55,6 +55,7 @@ So start spherical, then upgrade.
 pub mod angular;
 pub mod baryons;
 pub mod density;
+pub mod halo_models;
 pub mod presets;
 pub mod radial;
 pub mod superposition;
@@ -62,6 +63,7 @@ pub mod superposition;
 pub use angular::RealSphericalHarmonic;
 pub use baryons::BaryonicModel;
 pub use density::{DensityField, EnclosedMass};
+pub use halo_models::{ClassicalHalo, ClassicalHaloKind};
 pub use radial::RadialWavefunction;
 pub use superposition::Superposition;
 

@@ -1,46 +1,51 @@
 // horb/curve_fitter/src/main.rs
 
 use anyhow::{bail, Result};
-use orbital_basis::{BaryonicModel, DensityField, OrbitalConfig};
+use orbital_basis::{BaryonicModel, ClassicalHalo, ClassicalHaloKind, DensityField, OrbitalConfig};
 
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
-    if args.len() < 5 {
+    if args.len() < 2 {
         print_usage_and_exit()?;
     }
 
     let mode = &args[1];
-    let state = &args[2];
-    let a0_star: f64 = args[3].parse()?;
-    let dm_mass: f64 = args[4].parse()?;
-
-    let cfg = orbital_config(state, a0_star, dm_mass)?;
-    let field = DensityField::new(cfg)?;
 
     match mode.as_str() {
         "curve" => {
             if args.len() != 5 {
                 print_usage_and_exit()?;
             }
+
+            let field = build_field(&args[2], &args[3], &args[4])?;
             print_curve(&field)?;
         }
+
         "density" => {
             if args.len() != 5 {
                 print_usage_and_exit()?;
             }
+
+            let field = build_field(&args[2], &args[3], &args[4])?;
             print_density_axes(&field)?;
         }
+
         "xz" => {
             if args.len() != 5 {
                 print_usage_and_exit()?;
             }
+
+            let field = build_field(&args[2], &args[3], &args[4])?;
             print_xz_slice(&field)?;
         }
+
         "total" => {
             if args.len() != 9 {
                 print_usage_and_exit()?;
             }
+
+            let field = build_field(&args[2], &args[3], &args[4])?;
 
             let disk_mass: f64 = args[5].parse()?;
             let disk_scale: f64 = args[6].parse()?;
@@ -50,7 +55,63 @@ fn main() -> Result<()> {
             let baryons = BaryonicModel::new(disk_mass, disk_scale, bulge_mass, bulge_scale)?;
             print_total_curve(&field, &baryons)?;
         }
-        _ => bail!("unknown mode '{}'", mode),
+
+        "halo" => {
+            if args.len() != 6 {
+                print_usage_and_exit()?;
+            }
+
+            let kind = ClassicalHaloKind::parse(&args[2])?;
+            let scale_kpc: f64 = args[3].parse()?;
+            let m_ref_msun: f64 = args[4].parse()?;
+            let r_ref_kpc: f64 = args[5].parse()?;
+
+            let halo = ClassicalHalo::from_mass_at_radius(kind, scale_kpc, m_ref_msun, r_ref_kpc)?;
+            print_halo_curve(&halo)?;
+        }
+
+        "compare_dm" => {
+            if args.len() != 9 {
+                print_usage_and_exit()?;
+            }
+
+            let state = &args[2];
+            let a0_star: f64 = args[3].parse()?;
+            let dm_mass: f64 = args[4].parse()?;
+
+            let scale_piso: f64 = args[5].parse()?;
+            let scale_nfw: f64 = args[6].parse()?;
+            let scale_burkert: f64 = args[7].parse()?;
+            let r_ref_kpc: f64 = args[8].parse()?;
+
+            let cfg = orbital_config(state, a0_star, dm_mass)?;
+            let field = DensityField::new(cfg)?;
+
+            let piso = ClassicalHalo::from_mass_at_radius(
+                ClassicalHaloKind::PseudoIsothermal,
+                scale_piso,
+                dm_mass,
+                r_ref_kpc,
+            )?;
+
+            let nfw = ClassicalHalo::from_mass_at_radius(
+                ClassicalHaloKind::Nfw,
+                scale_nfw,
+                dm_mass,
+                r_ref_kpc,
+            )?;
+
+            let burkert = ClassicalHalo::from_mass_at_radius(
+                ClassicalHaloKind::Burkert,
+                scale_burkert,
+                dm_mass,
+                r_ref_kpc,
+            )?;
+
+            print_dm_comparison_curve(&field, &piso, &nfw, &burkert)?;
+        }
+
+        _ => print_usage_and_exit()?,
     }
 
     Ok(())
@@ -59,15 +120,27 @@ fn main() -> Result<()> {
 fn print_usage_and_exit() -> Result<()> {
     bail!(
         "usage:\n\
-         cargo run -p curve_fitter -- curve   <state> <a0_star_kpc> <dm_mass_msun>\n\
-         cargo run -p curve_fitter -- density <state> <a0_star_kpc> <dm_mass_msun>\n\
-         cargo run -p curve_fitter -- xz      <state> <a0_star_kpc> <dm_mass_msun>\n\
-         cargo run -p curve_fitter -- total   <state> <a0_star_kpc> <dm_mass_msun> <disk_mass_msun> <disk_scale_kpc> <bulge_mass_msun> <bulge_scale_kpc>\n\
+         cargo run -p curve_fitter -- curve      <state> <a0_star_kpc> <dm_mass_msun>\n\
+         cargo run -p curve_fitter -- density    <state> <a0_star_kpc> <dm_mass_msun>\n\
+         cargo run -p curve_fitter -- xz         <state> <a0_star_kpc> <dm_mass_msun>\n\
+         cargo run -p curve_fitter -- total      <state> <a0_star_kpc> <dm_mass_msun> <disk_mass_msun> <disk_scale_kpc> <bulge_mass_msun> <bulge_scale_kpc>\n\
+         cargo run -p curve_fitter -- halo       <halo_kind> <scale_kpc> <m_ref_msun> <r_ref_kpc>\n\
+         cargo run -p curve_fitter -- compare_dm <state> <a0_star_kpc> <dm_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc>\n\
          \n\
          states: 1s, 3d_z2\n\
-         example:\n\
-         cargo run -p curve_fitter -- total 3d_z2 1.5 1e11 6e10 3.0 1e10 0.7"
+         halo_kind: piso, nfw, burkert\n\
+         \n\
+         examples:\n\
+         cargo run -p curve_fitter -- halo nfw 15.0 1e11 80.0\n\
+         cargo run -p curve_fitter -- compare_dm 3d_z2 1.5 1e11 5.0 15.0 8.0 80.0"
     )
+}
+
+fn build_field(state: &str, a0_star: &str, dm_mass: &str) -> Result<DensityField> {
+    let a0_star: f64 = a0_star.parse()?;
+    let dm_mass: f64 = dm_mass.parse()?;
+    let cfg = orbital_config(state, a0_star, dm_mass)?;
+    Ok(DensityField::new(cfg)?)
 }
 
 fn orbital_config(state: &str, a0_star: f64, dm_mass: f64) -> Result<OrbitalConfig> {
@@ -123,6 +196,65 @@ fn print_total_curve(field: &DensityField, baryons: &BaryonicModel) -> Result<()
         println!(
             "{:.6},{:.6e},{:.6},{:.6},{:.6},{:.6},{:.6}",
             r, m_dm, v_dm, v_disk, v_bulge, v_baryon, v_total
+        );
+    }
+
+    Ok(())
+}
+
+fn print_halo_curve(halo: &ClassicalHalo) -> Result<()> {
+    println!("r_kpc,rho_Msun_per_kpc3,M_enc_Msun,v_circ_kms");
+
+    let r_min = 0.05;
+    let r_max = 80.0;
+    let bins = 500;
+
+    for i in 0..bins {
+        let t = i as f64 / (bins - 1) as f64;
+        let r = r_min + t * (r_max - r_min);
+
+        let rho = halo.density(r);
+        let m = halo.enclosed_mass(r);
+        let v = halo.circular_velocity(r);
+
+        println!("{:.6},{:.6e},{:.6e},{:.6}", r, rho, m, v);
+    }
+
+    Ok(())
+}
+
+fn print_dm_comparison_curve(
+    horb: &DensityField,
+    piso: &ClassicalHalo,
+    nfw: &ClassicalHalo,
+    burkert: &ClassicalHalo,
+) -> Result<()> {
+    println!("r_kpc,v_horb_kms,v_piso_kms,v_nfw_kms,v_burkert_kms,m_horb_msun,m_piso_msun,m_nfw_msun,m_burkert_msun");
+
+    let r_min = 0.05;
+    let r_max = 80.0;
+    let bins = 500;
+    let steps = 8000;
+
+    for i in 0..bins {
+        let t = i as f64 / (bins - 1) as f64;
+        let r = r_min + t * (r_max - r_min);
+
+        let m_horb = horb.enclosed_mass(r, steps)?;
+        let v_horb = horb.circular_velocity_spherical(r, steps)?;
+
+        let m_piso = piso.enclosed_mass(r);
+        let v_piso = piso.circular_velocity(r);
+
+        let m_nfw = nfw.enclosed_mass(r);
+        let v_nfw = nfw.circular_velocity(r);
+
+        let m_burkert = burkert.enclosed_mass(r);
+        let v_burkert = burkert.circular_velocity(r);
+
+        println!(
+            "{:.6},{:.6},{:.6},{:.6},{:.6},{:.6e},{:.6e},{:.6e},{:.6e}",
+            r, v_horb, v_piso, v_nfw, v_burkert, m_horb, m_piso, m_nfw, m_burkert
         );
     }
 
