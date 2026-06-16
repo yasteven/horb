@@ -2,6 +2,40 @@
 
 Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Galaxy Dark Matter Halos
 
+## Current Best Result
+
+The current best candidate is a morphology-constrained hydrogenic `3d_z2` halo with:
+
+| Parameter | Value |
+|---|---:|
+| Orbital state | `3d_z2` |
+| Orbital scale `a0_star` | `1.5 kpc` |
+| HORB dark halo mass | `2.5e11 M_sun` |
+| Toy disk mass | `1e11 M_sun` |
+| Toy disk scale | `3.0 kpc` |
+| Toy bulge mass | `1e10 M_sun` |
+| Toy bulge scale | `0.7 kpc` |
+
+Using the same baryonic model for every halo, the HORB candidate is compared directly against NFW, pseudo-isothermal, and Burkert halo baselines, with all curves plotted against the Sofue 2020 unified Milky Way rotation curve.
+
+![HORB best candidate versus classical halo models and the Milky Way rotation curve](images/best_candidate_total_models_vs_sofue2020.png)
+
+This result is the first core benchmark of the project: the same `a0_star ≈ 1.5 kpc` scale that lands in the Fermi-bubble morphology band also produces a competitive Milky Way circular-velocity curve when combined with the toy baryonic model.
+
+The plot is generated reproducibly by:
+
+```bash
+./scripts/run_best_candidate_total_model_comparison.sh
+```
+
+The current scoring reports are written to:
+
+```text
+reports/best_candidate_total_models_score_inner.csv
+reports/best_candidate_total_models_score_all.csv
+```
+
+
 ## Motivation
 
 Standard computational astrophysics models spiral-galaxy dark-matter halos using smooth, parametric density curves (e.g., NFW, Burkert, Einasto). While these phenomenological profiles function as flexible data-fitting forms, they are rarely constrained by independent, non-spherical geometric observables. 
