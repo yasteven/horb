@@ -111,6 +111,48 @@ fn main() -> Result<()> {
             print_dm_comparison_curve(&field, &piso, &nfw, &burkert)?;
         }
 
+        "compare_dm_fixed_baselines" => {
+            if args.len() != 10 {
+                print_usage_and_exit()?;
+            }
+
+            let state = &args[2];
+            let a0_star: f64 = args[3].parse()?;
+            let horb_mass: f64 = args[4].parse()?;
+            let baseline_mass: f64 = args[5].parse()?;
+
+            let scale_piso: f64 = args[6].parse()?;
+            let scale_nfw: f64 = args[7].parse()?;
+            let scale_burkert: f64 = args[8].parse()?;
+            let r_ref_kpc: f64 = args[9].parse()?;
+
+            let cfg = orbital_config(state, a0_star, horb_mass)?;
+            let field = DensityField::new(cfg)?;
+
+            let piso = ClassicalHalo::from_mass_at_radius(
+                ClassicalHaloKind::PseudoIsothermal,
+                scale_piso,
+                baseline_mass,
+                r_ref_kpc,
+            )?;
+
+            let nfw = ClassicalHalo::from_mass_at_radius(
+                ClassicalHaloKind::Nfw,
+                scale_nfw,
+                baseline_mass,
+                r_ref_kpc,
+            )?;
+
+            let burkert = ClassicalHalo::from_mass_at_radius(
+                ClassicalHaloKind::Burkert,
+                scale_burkert,
+                baseline_mass,
+                r_ref_kpc,
+            )?;
+
+            print_dm_comparison_curve(&field, &piso, &nfw, &burkert)?;
+        }
+
         _ => print_usage_and_exit()?,
     }
 
@@ -126,13 +168,15 @@ fn print_usage_and_exit() -> Result<()> {
          cargo run -p curve_fitter -- total      <state> <a0_star_kpc> <dm_mass_msun> <disk_mass_msun> <disk_scale_kpc> <bulge_mass_msun> <bulge_scale_kpc>\n\
          cargo run -p curve_fitter -- halo       <halo_kind> <scale_kpc> <m_ref_msun> <r_ref_kpc>\n\
          cargo run -p curve_fitter -- compare_dm <state> <a0_star_kpc> <dm_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc>\n\
+         cargo run -p curve_fitter -- compare_dm_fixed_baselines <state> <a0_star_kpc> <horb_mass_msun> <baseline_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc>\n\
          \n\
          states: 1s, 3d_z2\n\
          halo_kind: piso, nfw, burkert\n\
          \n\
          examples:\n\
          cargo run -p curve_fitter -- halo nfw 15.0 1e11 80.0\n\
-         cargo run -p curve_fitter -- compare_dm 3d_z2 1.5 1e11 5.0 15.0 8.0 80.0"
+         cargo run -p curve_fitter -- compare_dm 3d_z2 1.5 1e11 5.0 15.0 8.0 80.0\n\
+         cargo run -p curve_fitter -- compare_dm_fixed_baselines 3d_z2 1.5 5e10 1e11 5.0 15.0 8.0 80.0"
     )
 }
 
@@ -285,8 +329,23 @@ fn print_density_axes(field: &DensityField) -> Result<()> {
 fn print_xz_slice(field: &DensityField) -> Result<()> {
     println!("x_kpc,z_kpc,r_kpc,theta_rad,rho_Msun_per_kpc3");
 
-    let extent = 25.0;
-    let n = 201;
+    let extent = std::env::var("HORB_XZ_EXTENT_KPC")
+        .ok()
+        .and_then(|v| v.parse::<f64>().ok())
+        .unwrap_or(25.0);
+
+    let n = std::env::var("HORB_XZ_N")
+        .ok()
+        .and_then(|v| v.parse::<usize>().ok())
+        .unwrap_or(201);
+
+    if extent <= 0.0 {
+        bail!("HORB_XZ_EXTENT_KPC must be positive");
+    }
+
+    if n < 3 {
+        bail!("HORB_XZ_N must be >= 3");
+    }
 
     for iz in 0..n {
         let z = -extent + 2.0 * extent * iz as f64 / (n - 1) as f64;

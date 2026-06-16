@@ -6,3 +6,12 @@
 /curves/
 /dz2_curve.csv
 /dz2_curve_*.csv
+
+# local debug dumps
+horb_rust_debug_dump.txt
+print_horb_rust_debug.sh
+
+# generated outputs
+/plots/
+/reports/
+/curves/
