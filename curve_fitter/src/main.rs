@@ -1,19 +1,13 @@
 // horb/curve_fitter/src/main.rs
 
 use anyhow::{bail, Result};
-use orbital_basis::{DensityField, OrbitalConfig};
+use orbital_basis::{BaryonicModel, DensityField, OrbitalConfig};
 
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
-    if args.len() != 5 {
-        bail!(
-            "usage: cargo run -p curve_fitter -- <mode> <state> <a0_star_kpc> <dm_mass_msun>\n\
-             modes: curve, density, xz\n\
-             example curve:   cargo run -p curve_fitter -- curve 3d_z2 1.5 1e11\n\
-             example density: cargo run -p curve_fitter -- density 3d_z2 1.5 1e11\n\
-             example xz:      cargo run -p curve_fitter -- xz 3d_z2 1.5 1e11"
-        );
+    if args.len() < 5 {
+        print_usage_and_exit()?;
     }
 
     let mode = &args[1];
@@ -21,22 +15,69 @@ fn main() -> Result<()> {
     let a0_star: f64 = args[3].parse()?;
     let dm_mass: f64 = args[4].parse()?;
 
-    let cfg = match state.as_str() {
+    let cfg = orbital_config(state, a0_star, dm_mass)?;
+    let field = DensityField::new(cfg)?;
+
+    match mode.as_str() {
+        "curve" => {
+            if args.len() != 5 {
+                print_usage_and_exit()?;
+            }
+            print_curve(&field)?;
+        }
+        "density" => {
+            if args.len() != 5 {
+                print_usage_and_exit()?;
+            }
+            print_density_axes(&field)?;
+        }
+        "xz" => {
+            if args.len() != 5 {
+                print_usage_and_exit()?;
+            }
+            print_xz_slice(&field)?;
+        }
+        "total" => {
+            if args.len() != 9 {
+                print_usage_and_exit()?;
+            }
+
+            let disk_mass: f64 = args[5].parse()?;
+            let disk_scale: f64 = args[6].parse()?;
+            let bulge_mass: f64 = args[7].parse()?;
+            let bulge_scale: f64 = args[8].parse()?;
+
+            let baryons = BaryonicModel::new(disk_mass, disk_scale, bulge_mass, bulge_scale)?;
+            print_total_curve(&field, &baryons)?;
+        }
+        _ => bail!("unknown mode '{}'", mode),
+    }
+
+    Ok(())
+}
+
+fn print_usage_and_exit() -> Result<()> {
+    bail!(
+        "usage:\n\
+         cargo run -p curve_fitter -- curve   <state> <a0_star_kpc> <dm_mass_msun>\n\
+         cargo run -p curve_fitter -- density <state> <a0_star_kpc> <dm_mass_msun>\n\
+         cargo run -p curve_fitter -- xz      <state> <a0_star_kpc> <dm_mass_msun>\n\
+         cargo run -p curve_fitter -- total   <state> <a0_star_kpc> <dm_mass_msun> <disk_mass_msun> <disk_scale_kpc> <bulge_mass_msun> <bulge_scale_kpc>\n\
+         \n\
+         states: 1s, 3d_z2\n\
+         example:\n\
+         cargo run -p curve_fitter -- total 3d_z2 1.5 1e11 6e10 3.0 1e10 0.7"
+    )
+}
+
+fn orbital_config(state: &str, a0_star: f64, dm_mass: f64) -> Result<OrbitalConfig> {
+    let cfg = match state {
         "1s" => OrbitalConfig::ground_state(a0_star, dm_mass)?,
         "3d_z2" => OrbitalConfig::d_z2(a0_star, dm_mass)?,
         _ => bail!("unknown state '{}'; supported: 1s, 3d_z2", state),
     };
 
-    let field = DensityField::new(cfg)?;
-
-    match mode.as_str() {
-        "curve" => print_curve(&field)?,
-        "density" => print_density_axes(&field)?,
-        "xz" => print_xz_slice(&field)?,
-        _ => bail!("unknown mode '{}'; supported: curve, density, xz", mode),
-    }
-
-    Ok(())
+    Ok(cfg)
 }
 
 fn print_curve(field: &DensityField) -> Result<()> {
@@ -55,6 +96,34 @@ fn print_curve(field: &DensityField) -> Result<()> {
         let v = field.circular_velocity_spherical(r, steps)?;
 
         println!("{:.6},{:.6e},{:.6}", r, m_enc, v);
+    }
+
+    Ok(())
+}
+
+fn print_total_curve(field: &DensityField, baryons: &BaryonicModel) -> Result<()> {
+    println!("r_kpc,M_dm_enc_Msun,v_dm_kms,v_disk_kms,v_bulge_kms,v_baryon_kms,v_total_kms");
+
+    let r_min = 0.05;
+    let r_max = 80.0;
+    let bins = 500;
+    let steps = 8000;
+
+    for i in 0..bins {
+        let t = i as f64 / (bins - 1) as f64;
+        let r = r_min + t * (r_max - r_min);
+
+        let m_dm = field.enclosed_mass(r, steps)?;
+        let v_dm = field.circular_velocity_spherical(r, steps)?;
+        let v_disk = baryons.disk_velocity(r);
+        let v_bulge = baryons.bulge_velocity(r);
+        let v_baryon = baryons.baryon_velocity(r);
+        let v_total = BaryonicModel::total_velocity(v_dm, v_disk, v_bulge);
+
+        println!(
+            "{:.6},{:.6e},{:.6},{:.6},{:.6},{:.6},{:.6}",
+            r, m_dm, v_dm, v_disk, v_bulge, v_baryon, v_total
+        );
     }
 
     Ok(())

@@ -53,12 +53,14 @@ v_circ²(R) = R ∂Φ(R,z=0)/∂R
 So start spherical, then upgrade.
  * */
 pub mod angular;
+pub mod baryons;
 pub mod density;
 pub mod presets;
 pub mod radial;
 pub mod superposition;
 
 pub use angular::RealSphericalHarmonic;
+pub use baryons::BaryonicModel;
 pub use density::{DensityField, EnclosedMass};
 pub use radial::RadialWavefunction;
 pub use superposition::Superposition;
