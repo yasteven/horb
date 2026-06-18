@@ -44,8 +44,8 @@ impl RotationCurve {
         let mut rows = Vec::new();
 
         for rec in rdr.deserialize() {
-            let row: RotationCurveRow = rec
-                .with_context(|| format!("failed to parse row in {}", path.display()))?;
+            let row: RotationCurveRow =
+                rec.with_context(|| format!("failed to parse row in {}", path.display()))?;
             rows.push(row);
         }
 
