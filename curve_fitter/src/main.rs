@@ -1,6 +1,7 @@
 // horb/curve_fitter/src/main.rs
 
 use anyhow::{bail, Result};
+use data_io::RotationCurve;
 use orbital_basis::{BaryonicModel, ClassicalHalo, ClassicalHaloKind, DensityField, OrbitalConfig};
 
 fn main() -> Result<()> {
@@ -152,6 +153,7 @@ fn main() -> Result<()> {
 
             print_dm_comparison_curve(&field, &piso, &nfw, &burkert)?;
         }
+        "fit_standard_rc" => print_standard_rc_fit_score(&args[2..])?,
 
         _ => print_usage_and_exit()?,
     }
@@ -365,4 +367,101 @@ fn print_xz_slice(field: &DensityField) -> Result<()> {
     }
 
     Ok(())
+}
+
+fn print_standard_rc_fit_score(args: &[String]) -> Result<()> {
+    if args.len() != 10 {
+        bail!(
+            "usage: fit_standard_rc <csv> <state> <a0_star_kpc> <dm_mass_msun> \
+             <disk_mass_msun> <disk_scale_kpc> <bulge_mass_msun> <bulge_scale_kpc> \
+             <r_min_kpc> <r_max_kpc>"
+        );
+    }
+
+    let csv_path = &args[0];
+    let field = build_field(&args[1], &args[2], &args[3])?;
+
+    let disk_mass = parse_f64(&args[4], "disk_mass_msun")?;
+    let disk_scale = parse_f64(&args[5], "disk_scale_kpc")?;
+    let bulge_mass = parse_f64(&args[6], "bulge_mass_msun")?;
+    let bulge_scale = parse_f64(&args[7], "bulge_scale_kpc")?;
+    let r_min = parse_f64(&args[8], "r_min_kpc")?;
+    let r_max = parse_f64(&args[9], "r_max_kpc")?;
+
+    let rc = RotationCurve::from_csv(csv_path)?;
+    let baryons = BaryonicModel::new(disk_mass, disk_scale, bulge_mass, bulge_scale)?;
+
+    let mut n = 0usize;
+    let mut sum_sq = 0.0;
+    let mut chi2 = 0.0;
+
+    for row in rc.rows.iter() {
+        if row.r_kpc < r_min || row.r_kpc > r_max {
+            continue;
+        }
+
+        let v_dm = field.circular_velocity_spherical(row.r_kpc, 10_000)?;
+        let v_total = if rc.has_baryons() {
+            let vgas = row.vgas_kms.unwrap_or(0.0);
+            let vdisk = row.vdisk_kms.unwrap_or(0.0);
+            let vbul = row.vbul_kms.unwrap_or(0.0);
+
+            (v_dm * v_dm + vgas * vgas + vdisk * vdisk + vbul * vbul).sqrt()
+        } else {
+            let v_disk = baryons.disk_velocity(row.r_kpc);
+            let v_bulge = baryons.bulge_velocity(row.r_kpc);
+            (v_dm * v_dm + v_disk * v_disk + v_bulge * v_bulge).sqrt()
+        };
+
+        let residual = v_total - row.vobs_kms;
+        sum_sq += residual * residual;
+
+        if row.ev_kms > 0.0 {
+            chi2 += (residual / row.ev_kms).powi(2);
+        }
+
+        n += 1;
+    }
+
+    if n == 0 {
+        bail!(
+            "no rows selected from {} in range [{}, {}] kpc",
+            csv_path,
+            r_min,
+            r_max
+        );
+    }
+
+    let rms = (sum_sq / n as f64).sqrt();
+
+    println!(
+        "csv,state,a0_star_kpc,dm_mass_msun,disk_mass_msun,disk_scale_kpc,bulge_mass_msun,bulge_scale_kpc,r_min_kpc,r_max_kpc,n,rms_kms,chi2,chi2_per_point,has_baryons"
+    );
+
+    println!(
+        "{},{},{:.6},{:.6e},{:.6e},{:.6},{:.6e},{:.6},{:.6},{:.6},{},{:.6},{:.6},{:.6},{}",
+        csv_path,
+        args[1],
+        parse_f64(&args[2], "a0_star_kpc")?,
+        parse_f64(&args[3], "dm_mass_msun")?,
+        disk_mass,
+        disk_scale,
+        bulge_mass,
+        bulge_scale,
+        r_min,
+        r_max,
+        n,
+        rms,
+        chi2,
+        chi2 / n as f64,
+        rc.has_baryons()
+    );
+
+    Ok(())
+}
+
+fn parse_f64(value: &str, name: &str) -> Result<f64> {
+    value
+        .parse::<f64>()
+        .map_err(|err| anyhow::anyhow!("failed to parse {}='{}' as f64: {}", name, value, err))
 }

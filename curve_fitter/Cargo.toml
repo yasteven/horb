@@ -4,5 +4,6 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+data_io = { path = "../data_io" }
 orbital_basis = { path = "../orbital_basis" }
 anyhow = { workspace = true }
