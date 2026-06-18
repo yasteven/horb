@@ -5,7 +5,7 @@ set -euo pipefail
   -arch=sm_87 \
   -O3 \
   --compiler-options '-fPIC' \
-  -shared horb_accel.cu \
+  -shared horb_orbital_engine.cu \
   -o libhorb_cuda.so
 
 ls -lh libhorb_cuda.so
