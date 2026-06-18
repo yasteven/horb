@@ -136,3 +136,128 @@ mod tests {
         assert_eq!(b.baryon_velocity(8.0), 0.0);
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum BaryonComponentKind {
+    ExponentialDisk,
+    HernquistBulge,
+}
+
+impl BaryonComponentKind {
+    pub fn parse(value: &str) -> Option<Self> {
+        match value.trim().to_lowercase().as_str() {
+            "disk" | "exponential_disk" | "exponential-disk" => Some(Self::ExponentialDisk),
+            "bulge" | "hernquist" | "hernquist_bulge" | "hernquist-bulge" => {
+                Some(Self::HernquistBulge)
+            }
+            _ => None,
+        }
+    }
+
+    pub fn label(&self) -> &'static str {
+        match self {
+            Self::ExponentialDisk => "exponential_disk",
+            Self::HernquistBulge => "hernquist_bulge",
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct BaryonComponent {
+    pub label: String,
+    pub kind: BaryonComponentKind,
+    pub mass_msun: f64,
+    pub scale_kpc: f64,
+}
+
+impl BaryonComponent {
+    pub fn new(
+        label: impl Into<String>,
+        kind: BaryonComponentKind,
+        mass_msun: f64,
+        scale_kpc: f64,
+    ) -> anyhow::Result<Self> {
+        if mass_msun < 0.0 {
+            anyhow::bail!("baryon component mass must be non-negative");
+        }
+
+        if scale_kpc <= 0.0 {
+            anyhow::bail!("baryon component scale must be positive");
+        }
+
+        Ok(Self {
+            label: label.into(),
+            kind,
+            mass_msun,
+            scale_kpc,
+        })
+    }
+
+    pub fn enclosed_mass(&self, r_kpc: f64) -> f64 {
+        if r_kpc <= 0.0 {
+            return 0.0;
+        }
+
+        match self.kind {
+            BaryonComponentKind::ExponentialDisk => {
+                let x = r_kpc / self.scale_kpc;
+                self.mass_msun * (1.0 - (-x).exp() * (1.0 + x))
+            }
+            BaryonComponentKind::HernquistBulge => {
+                self.mass_msun * r_kpc.powi(2) / (r_kpc + self.scale_kpc).powi(2)
+            }
+        }
+    }
+
+    pub fn velocity(&self, r_kpc: f64) -> f64 {
+        if r_kpc <= 0.0 {
+            return 0.0;
+        }
+
+        (crate::G_KPC * self.enclosed_mass(r_kpc) / r_kpc).sqrt()
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct MultiBaryonicModel {
+    pub components: Vec<BaryonComponent>,
+}
+
+impl MultiBaryonicModel {
+    pub fn new(components: Vec<BaryonComponent>) -> anyhow::Result<Self> {
+        if components.is_empty() {
+            anyhow::bail!("multi-baryonic model requires at least one component");
+        }
+
+        Ok(Self { components })
+    }
+
+    pub fn enclosed_mass(&self, r_kpc: f64) -> f64 {
+        self.components
+            .iter()
+            .map(|component| component.enclosed_mass(r_kpc))
+            .sum()
+    }
+
+    pub fn baryon_velocity(&self, r_kpc: f64) -> f64 {
+        let v2: f64 = self
+            .components
+            .iter()
+            .map(|component| component.velocity(r_kpc).powi(2))
+            .sum();
+
+        v2.sqrt()
+    }
+
+    pub fn total_velocity(&self, r_kpc: f64, v_dm_kms: f64) -> f64 {
+        let v_baryon = self.baryon_velocity(r_kpc);
+        (v_dm_kms * v_dm_kms + v_baryon * v_baryon).sqrt()
+    }
+
+    pub fn component_velocities(&self, r_kpc: f64) -> Vec<(String, f64)> {
+        self.components
+            .iter()
+            .map(|component| (component.label.clone(), component.velocity(r_kpc)))
+            .collect()
+    }
+}

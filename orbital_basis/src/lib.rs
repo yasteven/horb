@@ -61,7 +61,7 @@ pub mod radial;
 pub mod superposition;
 
 pub use angular::RealSphericalHarmonic;
-pub use baryons::BaryonicModel;
+pub use baryons::{BaryonComponent, BaryonComponentKind, BaryonicModel, MultiBaryonicModel};
 pub use density::{DensityField, EnclosedMass};
 pub use halo_models::{ClassicalHalo, ClassicalHaloKind};
 pub use radial::RadialWavefunction;

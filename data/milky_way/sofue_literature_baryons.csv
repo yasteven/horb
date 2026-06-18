@@ -1,0 +1,3 @@
+label,kind,mass_msun,scale_kpc
+bulge,hernquist_bulge,1.652e10,0.522
+stellar_disk,exponential_disk,3.41e10,3.19

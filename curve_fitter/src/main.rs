@@ -2,7 +2,10 @@
 
 use anyhow::{bail, Result};
 use data_io::RotationCurve;
-use orbital_basis::{BaryonicModel, ClassicalHalo, ClassicalHaloKind, DensityField, OrbitalConfig};
+use orbital_basis::{
+    BaryonComponent, BaryonComponentKind, BaryonicModel, ClassicalHalo, ClassicalHaloKind,
+    DensityField, MultiBaryonicModel, OrbitalConfig,
+};
 
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
@@ -155,6 +158,7 @@ fn main() -> Result<()> {
         }
         "fit_standard_rc" => print_standard_rc_fit_score(&args[2..])?,
 
+        "fit_standard_rc_multi_baryons" => print_standard_rc_fit_score_multi_baryons(&args[2..])?,
         _ => print_usage_and_exit()?,
     }
 
@@ -464,4 +468,138 @@ fn parse_f64(value: &str, name: &str) -> Result<f64> {
     value
         .parse::<f64>()
         .map_err(|err| anyhow::anyhow!("failed to parse {}='{}' as f64: {}", name, value, err))
+}
+
+fn load_multi_baryons_csv(path: &str) -> Result<MultiBaryonicModel> {
+    let content = std::fs::read_to_string(path)?;
+
+    let mut components = Vec::new();
+
+    for (line_no, line) in content.lines().enumerate() {
+        let line = line.trim();
+
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+
+        if line_no == 0 && line.to_lowercase().starts_with("label,") {
+            continue;
+        }
+
+        let parts: Vec<&str> = line.split(',').map(|v| v.trim()).collect();
+
+        if parts.len() != 4 {
+            anyhow::bail!(
+                "bad baryon CSV row {} in {}: expected 4 columns, got {}",
+                line_no + 1,
+                path,
+                parts.len()
+            );
+        }
+
+        let label = parts[0].to_string();
+
+        let kind = BaryonComponentKind::parse(parts[1]).ok_or_else(|| {
+            anyhow::anyhow!(
+                "bad baryon component kind '{}' on row {} in {}",
+                parts[1],
+                line_no + 1,
+                path
+            )
+        })?;
+
+        let mass_msun = parse_f64(parts[2], "mass_msun")?;
+        let scale_kpc = parse_f64(parts[3], "scale_kpc")?;
+
+        components.push(BaryonComponent::new(label, kind, mass_msun, scale_kpc)?);
+    }
+
+    MultiBaryonicModel::new(components)
+}
+
+fn print_standard_rc_fit_score_multi_baryons(args: &[String]) -> Result<()> {
+    if args.len() != 7 {
+        bail!(
+            "usage: fit_standard_rc_multi_baryons <rc_csv> <baryons_csv> <state> \
+             <a0_star_kpc> <dm_mass_msun> <r_min_kpc> <r_max_kpc>"
+        );
+    }
+
+    let rc_csv = &args[0];
+    let baryons_csv = &args[1];
+    let state = &args[2];
+    let a0_star = &args[3];
+    let dm_mass = &args[4];
+    let r_min = parse_f64(&args[5], "r_min_kpc")?;
+    let r_max = parse_f64(&args[6], "r_max_kpc")?;
+
+    let field = build_field(state, a0_star, dm_mass)?;
+    let rc = RotationCurve::from_csv(rc_csv)?;
+    let baryons = load_multi_baryons_csv(baryons_csv)?;
+
+    let mut n = 0usize;
+    let mut sum_sq = 0.0;
+    let mut chi2 = 0.0;
+
+    for row in rc.rows.iter() {
+        if row.r_kpc < r_min || row.r_kpc > r_max {
+            continue;
+        }
+
+        let v_dm = field.circular_velocity_spherical(row.r_kpc, 10_000)?;
+
+        let v_total = if rc.has_baryons() {
+            let vgas = row.vgas_kms.unwrap_or(0.0);
+            let vdisk = row.vdisk_kms.unwrap_or(0.0);
+            let vbul = row.vbul_kms.unwrap_or(0.0);
+
+            (v_dm * v_dm + vgas * vgas + vdisk * vdisk + vbul * vbul).sqrt()
+        } else {
+            baryons.total_velocity(row.r_kpc, v_dm)
+        };
+
+        let residual = v_total - row.vobs_kms;
+
+        sum_sq += residual * residual;
+
+        if row.ev_kms > 0.0 {
+            chi2 += (residual / row.ev_kms).powi(2);
+        }
+
+        n += 1;
+    }
+
+    if n == 0 {
+        bail!(
+            "no rows selected from {} in range [{}, {}] kpc",
+            rc_csv,
+            r_min,
+            r_max
+        );
+    }
+
+    let rms = (sum_sq / n as f64).sqrt();
+
+    println!(
+        "rc_csv,baryons_csv,state,a0_star_kpc,dm_mass_msun,r_min_kpc,r_max_kpc,n,rms_kms,chi2,chi2_per_point,has_rc_baryons,n_baryon_components"
+    );
+
+    println!(
+        "{},{},{},{:.6},{:.6e},{:.6},{:.6},{},{:.6},{:.6},{:.6},{},{}",
+        rc_csv,
+        baryons_csv,
+        state,
+        parse_f64(a0_star, "a0_star_kpc")?,
+        parse_f64(dm_mass, "dm_mass_msun")?,
+        r_min,
+        r_max,
+        n,
+        rms,
+        chi2,
+        chi2 / n as f64,
+        rc.has_baryons(),
+        baryons.components.len()
+    );
+
+    Ok(())
 }
