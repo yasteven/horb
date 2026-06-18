@@ -16,7 +16,10 @@ N_SIDE="${3:-96}"
 EXTENT="${4:-80}"
 SOFTENING="${5:-0.25}"
 
-CUDA_CSV="curves/cuda_horb_diskplane_a$(printf "%.3f" "$A0")_m$(printf "%.3e" "$MASS")_n${N_SIDE}.csv"
+A0_TAG="$(printf "%.3f" "$A0")"
+MASS_TAG="$(printf "%.3e" "$MASS" | sed 's/e+/e/')"
+
+CUDA_CSV="curves/cuda_horb_diskplane_a${A0_TAG}_m${MASS_TAG}_n${N_SIDE}.csv"
 SPH_CSV="curves/spherical_horb_compare_a${A0}_m${MASS}.csv"
 PLOT="plots/mw_cuda_horb_diskplane_total_vs_sofue2020_a${A0}_m${MASS}_n${N_SIDE}.png"
 
