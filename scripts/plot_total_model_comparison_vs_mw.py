@@ -43,10 +43,21 @@ def main():
 
     fig, ax = plt.subplots(figsize=(10, 6.5))
 
+    # Accept either the old Sofue helper schema:
+    #   R_kpc,v_kms,v_err_kms,source
+    # or the standard rotation-curve schema:
+    #   R_kpc,Vobs_kms,eV_kms,Vgas_kms,Vdisk_kms,Vbul_kms,source
+    if "Vobs_kms" in mw.dtype.names:
+        mw_v = mw["Vobs_kms"]
+        mw_err = mw["eV_kms"]
+    else:
+        mw_v = mw["v_kms"]
+        mw_err = mw["v_err_kms"]
+
     ax.errorbar(
         mw["R_kpc"],
-        mw["v_kms"],
-        yerr=mw["v_err_kms"],
+        mw_v,
+        yerr=mw_err,
         fmt="o",
         capsize=3,
         markersize=4,

@@ -8,8 +8,14 @@ import numpy as np
 def score(name, r_model, v_model, mw, r_min, r_max):
     mask = (mw["R_kpc"] >= r_min) & (mw["R_kpc"] <= r_max)
     r_obs = mw["R_kpc"][mask]
-    v_obs = mw["v_kms"][mask]
-    err = mw["v_err_kms"][mask]
+
+    # Accept either old Sofue helper schema or standard RC schema.
+    if "Vobs_kms" in mw.dtype.names:
+        v_obs = mw["Vobs_kms"][mask]
+        err = mw["eV_kms"][mask]
+    else:
+        v_obs = mw["v_kms"][mask]
+        err = mw["v_err_kms"][mask]
 
     v_interp = np.interp(r_obs, r_model, v_model)
     resid = v_interp - v_obs

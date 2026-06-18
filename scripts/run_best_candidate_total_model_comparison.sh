@@ -4,6 +4,7 @@ set -euo pipefail
 mkdir -p curves plots reports data/milky_way
 
 ./scripts/make_mw_sofue2020_curve.py
+./scripts/convert_sofue2020_to_standard_rc.py
 
 A0="1.5"
 HORB_MASS="2.5e11"
@@ -13,7 +14,7 @@ DISK_SCALE="3.0"
 BULGE_MASS="1e10"
 BULGE_SCALE="0.7"
 
-MW="data/milky_way/sofue_2020_unified_rc.csv"
+MW="data/milky_way/sofue_2020_standard_rc.csv"
 
 TOTAL_CSV="curves/best_candidate_total_a${A0}_m${HORB_MASS}_disk${DISK_MASS}.csv"
 DM_COMPARE_CSV="curves/best_candidate_dm_compare_baselines.csv"

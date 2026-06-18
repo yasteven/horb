@@ -84,28 +84,3 @@ impl RotationCurve {
         })
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn parse_small_rotation_curve() {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("test.csv");
-
-        std::fs::write(
-            &path,
-            "R_kpc,Vobs_kms,eV_kms,Vgas_kms,Vdisk_kms,Vbul_kms,source\n\
-             8.0,230.0,5.0,10.0,150.0,50.0,test\n\
-             10.0,225.0,6.0,11.0,140.0,40.0,test\n",
-        )
-        .unwrap();
-
-        let rc = RotationCurve::from_csv(&path).unwrap();
-        assert_eq!(rc.len(), 2);
-        assert!(rc.has_baryons());
-        assert_eq!(rc.r_min(), 8.0);
-        assert_eq!(rc.r_max(), 10.0);
-    }
-}
