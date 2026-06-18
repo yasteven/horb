@@ -282,48 +282,28 @@ void disk_plane_curve_tiled_kernel(
     int tid = threadIdx.x;
     int threads = blockDim.x;
 
-    extern __shared__ unsigned char shared_raw[];
-    MassCell* shared_cells = reinterpret_cast<MassCell*>(shared_raw);
-    double* shared_sum = reinterpret_cast<double*>(&shared_cells[threads]);
+    extern __shared__ double shared_sum[];
 
     double R = radii[radius_idx];
     double eps2 = softening_kpc * softening_kpc;
 
     double local_a_in = 0.0;
 
-    for (size_t tile = 0; tile < cell_count; tile += threads) {
-        size_t j = tile + tid;
+    // Correct cooperative reduction:
+    // each thread handles a disjoint subset of cells.
+    for (size_t j = (size_t)tid; j < cell_count; j += (size_t)threads) {
+        double dx = cells[j].x - R;
+        double dy = cells[j].y;
+        double dz = cells[j].z;
 
-        if (j < cell_count) {
-            shared_cells[tid] = cells[j];
-        } else {
-            shared_cells[tid].x = 0.0;
-            shared_cells[tid].y = 0.0;
-            shared_cells[tid].z = 0.0;
-            shared_cells[tid].m = 0.0;
-        }
+        double d2 = dx*dx + dy*dy + dz*dz + eps2;
+        double d = sqrt(d2);
+        double d3 = d2 * d;
 
-        __syncthreads();
+        double ax = G_KPC * cells[j].m * dx / d3;
 
-        size_t tile_count = threads;
-        if (tile + tile_count > cell_count) {
-            tile_count = cell_count - tile;
-        }
-
-        for (size_t k = 0; k < tile_count; k++) {
-            double dx = shared_cells[k].x - R;
-            double dy = shared_cells[k].y;
-            double dz = shared_cells[k].z;
-
-            double d2 = dx*dx + dy*dy + dz*dz + eps2;
-            double d = sqrt(d2);
-            double d3 = d2 * d;
-
-            double ax = G_KPC * shared_cells[k].m * dx / d3;
-            local_a_in += -ax;
-        }
-
-        __syncthreads();
+        // inward radial acceleration at test point (R,0,0)
+        local_a_in += -ax;
     }
 
     shared_sum[tid] = local_a_in;
@@ -339,14 +319,10 @@ void disk_plane_curve_tiled_kernel(
     if (tid == 0) {
         double a_in = shared_sum[0];
         double v2 = R * a_in;
-
-        if (v2 > 0.0) {
-            v_out[radius_idx] = sqrt(v2);
-        } else {
-            v_out[radius_idx] = 0.0;
-        }
+        v_out[radius_idx] = (v2 > 0.0) ? sqrt(v2) : 0.0;
     }
 }
+
 
 static EulerRotation identity_rotation() {
     EulerRotation r;
@@ -453,7 +429,7 @@ extern "C" void compute_single_orbital_disk_curve_cuda(
     {
         int curve_blocks = (int)radius_count;
         int curve_threads = 256;
-        size_t shared_bytes = curve_threads * sizeof(MassCell) + curve_threads * sizeof(double);
+        size_t shared_bytes = curve_threads * sizeof(double);
 
         disk_plane_curve_tiled_kernel<<<curve_blocks, curve_threads, shared_bytes>>>(
             d_cells,
@@ -547,7 +523,7 @@ extern "C" void compute_superposition_disk_curve_cuda(
     {
         int curve_blocks = (int)radius_count;
         int curve_threads = 256;
-        size_t shared_bytes = curve_threads * sizeof(MassCell) + curve_threads * sizeof(double);
+        size_t shared_bytes = curve_threads * sizeof(double);
 
         disk_plane_curve_tiled_kernel<<<curve_blocks, curve_threads, shared_bytes>>>(
             d_cells,
@@ -573,4 +549,48 @@ cleanup:
 
 extern "C" EulerRotation make_identity_rotation_cuda() {
     return identity_rotation();
+}
+
+extern "C" void compute_disk_plane_rotation_curve(
+    const MassCell* host_cells,
+    size_t cell_count,
+    const double* host_radii,
+    double* host_v_out,
+    size_t radius_count,
+    double softening_kpc
+) {
+    MassCell* d_cells = nullptr;
+    double* d_radii = nullptr;
+    double* d_v_out = nullptr;
+
+    cudaMalloc(&d_cells, cell_count * sizeof(MassCell));
+    cudaMalloc(&d_radii, radius_count * sizeof(double));
+    cudaMalloc(&d_v_out, radius_count * sizeof(double));
+
+    cudaMemcpy(d_cells, host_cells, cell_count * sizeof(MassCell), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_radii, host_radii, radius_count * sizeof(double), cudaMemcpyHostToDevice);
+
+    int curve_blocks = (int)radius_count;
+    int curve_threads = 256;
+    size_t shared_bytes = curve_threads * sizeof(double);
+
+    disk_plane_curve_tiled_kernel<<<curve_blocks, curve_threads, shared_bytes>>>(
+        d_cells,
+        cell_count,
+        d_radii,
+        d_v_out,
+        radius_count,
+        softening_kpc
+    );
+
+    if (!check_cuda(cudaDeviceSynchronize(), "compute_disk_plane_rotation_curve wrapper")) {
+        goto cleanup;
+    }
+
+    cudaMemcpy(host_v_out, d_v_out, radius_count * sizeof(double), cudaMemcpyDeviceToHost);
+
+cleanup:
+    cudaFree(d_cells);
+    cudaFree(d_radii);
+    cudaFree(d_v_out);
 }
