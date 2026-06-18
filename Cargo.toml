@@ -3,7 +3,7 @@ members = [
     "orbital_basis",
     "cuda_kernels",
     "nbody_integrator",
-    "curve_fitter",
+    "curve_fitter", "data_io",
 ]
 resolver = "2"
 
