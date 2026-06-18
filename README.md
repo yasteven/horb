@@ -81,6 +81,17 @@ The dark matter halos generating electrons makes it the actual negative charge c
 
 I am 85% sure stars are electrons and 15% sure stars are positrons, mostly due to the photonic mechnaism . 
 
+## CUDA Build Note
+
+The CUDA shared library `libhorb_cuda.so` is intentionally ignored by git because it is a local build artifact. On a fresh clone, build it before running CUDA tests:
+
+```bash
+cd cuda_kernels/cuda
+./build.sh
+cd ../..
+LD_LIBRARY_PATH="$PWD/cuda_kernels/cuda:${LD_LIBRARY_PATH:-}" cargo test
+```
+
 ## License
 
 This project is dual-licensed under either:
