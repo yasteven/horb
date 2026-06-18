@@ -4,36 +4,47 @@ Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Gala
 
 ## Current Best Result
 
-The current best Milky Way candidate is a morphology-constrained hydrogenic `3d_z2` halo tested against the Sofue 2020 unified Milky Way rotation curve using a literature bulge+disk baryonic model.
+The current best Milky Way candidate is a morphology-constrained hydrogenic `3d_z2` halo tested against the Sofue 2020 unified Milky Way rotation curve using a literature bulge+disk baryonic model and a CUDA direct-summation disk-plane force calculation.
 
 | Parameter | Value |
 |---|---:|
 | Orbital state | `3d_z2` |
 | Orbital scale `a0_star` | `1.0 kpc` |
 | HORB dark halo mass | `2.5e11 M_sun` |
+| HORB force model | CUDA disk-plane direct summation |
+| Grid size | `96^3` mass cells |
+| Grid extent | `±80 kpc` |
+| Softening length | `0.25 kpc` |
 | Baryon model | Sofue literature bulge+disk |
 | Stellar disk mass | `3.41e10 M_sun` |
 | Stellar disk scale | `3.19 kpc` |
 | Bulge mass | `1.652e10 M_sun` |
 | Bulge scale | `0.522 kpc` |
 
-Using the same literature baryonic model for every halo, the HORB candidate is compared directly against NFW, pseudo-isothermal, and Burkert halo baselines, with all curves plotted against the Sofue 2020 unified Milky Way rotation curve.
+Using the same literature baryonic model for every halo, the CUDA HORB candidate is compared directly against the previous spherical HORB approximation and against NFW, pseudo-isothermal, and Burkert halo baselines, with all curves plotted against the Sofue 2020 unified Milky Way rotation curve.
 
-![HORB literature-baryon candidate versus classical halo models and the Milky Way rotation curve](images/mw_literature_baryons_total_models_vs_sofue2020.png)
+![CUDA HORB disk-plane force candidate versus classical halo models and the Milky Way rotation curve](images/mw_cuda_horb_diskplane_total_vs_sofue2020.png)
 
-This benchmark replaces the earlier toy-baryon result. The candidate shown here is the best chi-square point from the current literature-baryon scan and remains close to the best raw-RMS point.
+This benchmark replaces the earlier spherical-enclosed-mass approximation. The CUDA calculation evaluates the actual disk-plane gravitational response of the non-spherical `3d_z2` orbital density field. The result lowers the mid-radius HORB peak relative to the spherical approximation, which is exactly the region where the spherical model overshot the observed Milky Way rotation curve.
 
 The plot is generated reproducibly by:
 
 ```bash
-./scripts/run_mw_literature_baryons_model_comparison.sh 1.0 2.5e11 2.5e11
-```
+LD_LIBRARY_PATH="$PWD/cuda_kernels/cuda:${LD_LIBRARY_PATH:-}" \
+cargo run -p cuda_kernels --bin test_horb_disk_plane_curve -- \
+  1.0 2.5e11 96 80 0.25
 
-The current scoring reports are written to:
+cargo run -q -p curve_fitter -- compare_dm_fixed_baselines \
+  3d_z2 1.0 2.5e11 2.5e11 \
+  5.0 15.0 8.0 80.0 \
+  > curves/spherical_horb_compare_a1.0_m2.5e11.csv
 
-```text
-reports/mw_literature_baryons_horb_score_inner.csv
-reports/mw_literature_baryons_horb_score_all.csv
+./scripts/plot_cuda_total_vs_mw.py \
+  --cuda-csv curves/cuda_horb_diskplane_a1.000_m2.500e11_n96.csv \
+  --dm-compare-csv curves/spherical_horb_compare_a1.0_m2.5e11.csv \
+  --rc-csv data/milky_way/sofue_2020_standard_rc.csv \
+  --baryons-csv data/milky_way/sofue_literature_baryons.csv \
+  -o plots/mw_cuda_horb_diskplane_total_vs_sofue2020.png
 ```
 
 
