@@ -174,6 +174,9 @@ def main():
             total_mass = 0.0
 
             for local_idx, weight in zip(res["combo"], res["weights"]):
+                if weight <= 1.0e-10:
+                    continue
+
                 c = curves[local_idx]
                 mass = weight * c["ref_mass"]
                 total_mass += mass
