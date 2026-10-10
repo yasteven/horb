@@ -2,6 +2,36 @@
 
 Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Galaxy Dark Matter Halos
 
+## Reality has a fractal geometry. Modern Physics is a cult of continuum religion.
+
+- **Step 0:** Modern philosiphy takes Physics models and derives ontology, a system built by complete morons. We need the correct ontology first.
+  
+- **Step 1:** The final fundamental laws of physics must be self-contained in the universe they describe and cannot rely on external “flying spaghetti monster” concepts. This recursion forces dynamic fractals to be the only viable geometric ontology.
+
+- **Step 2:** Classical continuum physics is built from averages and should fail at fractal scale boundaries.
+
+- **Step 3:** The clearest boundary objects where classical physics fails are atoms with quantized energy and galaxies with flat rotation curves.
+
+- **Step 4:** Assume Galaxy → Atom to define the scale factor.
+
+- **Step 5:** Apply that independently defined scale factor to the Sun’s Schwarzschild–de Sitter balance radius:
+  - Solar balance radius: $r_{\mathrm{SdS},\odot}=\left(\frac{3GM_\odot}{\Lambda c^2}\right)^{1/3}\approx3.42\times10^{18}\,\mathrm{m}$
+  - Scaled prediction: $\frac{r_{\mathrm{SdS},\odot}}{S_{G\to A}}\approx3.83\times10^{-13}\,\mathrm{m}$
+  - Electron reduced Compton wavelength: $\bar{\lambda}_e=\frac{\hbar}{m_ec}\approx3.86\times10^{-13}\,\mathrm{m}$
+  - Therefore: **Star ↔ Electron** ; Electric force is a gas-likesource/sink pressure dynamics.
+
+- **Step 6:** Apply extremal three-charge microstate counting to Sagittarius A*:
+  - Black-hole entropy: $S_{\mathrm{BH}}=\frac{4\pi GM_{\mathrm{SgrA^*}}^2}{\hbar c}\approx1.94\times10^{90}$
+  - Three-charge entropy: $S_{\mathrm{BH}}=2\pi\sqrt{Q_1Q_5N}$
+  - Equal-channel depth: $\ln Q_i=\frac{1}{3}\ln(Q_1Q_5N)\approx137.37$
+  - Quantized register depth: $\left\lfloor\ln Q_i\right\rfloor=137$
+  - This gives a finite, quantized crossing condition and the photonic mechanism.
+
+- **Step 7:** The fractal continues beyond atoms and galaxies; the next lower scales appears as dark matter.
+
+- **Step 8:** HORB tests the claim by fitting galactic rotation curves with hydrogenic orbital structure. And they beat every PhD-developed model.
+
+
 ## Current Best Result
 
 The current best Milky Way candidate is a morphology-constrained hydrogenic `3d_z2` halo tested against the Sofue 2020 unified Milky Way rotation curve using a literature bulge+disk baryonic model and a CUDA direct-summation disk-plane force calculation.
@@ -57,35 +87,6 @@ The **HORB** (`Hydrogenic Orbitals Radial Basis`) engine is built to test a radi
 $$\rho_{\Omega}(\theta) \propto \left(3\cos^2\theta - 1\right)^2$$
 
 reproduces the distinctive bipolar lobe geometry, equatorial waist, and $54.74^\circ$ nodal cone opening structure of the Milky Way's Fermi bubbles. 
-
-### The Fractal Connection
-
-- **Step 0:** Modern philosiphy takes Physics models and derives ontology, a system built by complete morons. We need the correct ontology first.
-  
-- **Step 1:** The final fundamental laws of physics must be self-contained and cannot rely on external “flying spaghetti monster” concepts. This recursion forces dynamic fractals to be the only viable geometric ontology.
-
-- **Step 2:** Classical physics is built from averages and should fail at fractal scale boundaries.
-
-- **Step 3:** The clearest boundary objects where classical physics fails are atoms with quantized energy and galaxies with flat rotation curves.
-
-- **Step 4:** Assume Galaxy → Atom to define the scale factor.
-
-- **Step 5:** Apply that independently defined scale factor to the Sun’s Schwarzschild–de Sitter balance radius:
-  - Solar balance radius: $r_{\mathrm{SdS},\odot}=\left(\frac{3GM_\odot}{\Lambda c^2}\right)^{1/3}\approx3.42\times10^{18}\,\mathrm{m}$
-  - Scaled prediction: $\frac{r_{\mathrm{SdS},\odot}}{S_{G\to A}}\approx3.83\times10^{-13}\,\mathrm{m}$
-  - Electron reduced Compton wavelength: $\bar{\lambda}_e=\frac{\hbar}{m_ec}\approx3.86\times10^{-13}\,\mathrm{m}$
-  - Therefore: **Star ↔ Electron**
-
-- **Step 6:** Apply extremal three-charge microstate counting to Sagittarius A*:
-  - Black-hole entropy: $S_{\mathrm{BH}}=\frac{4\pi GM_{\mathrm{SgrA^*}}^2}{\hbar c}\approx1.94\times10^{90}$
-  - Three-charge entropy: $S_{\mathrm{BH}}=2\pi\sqrt{Q_1Q_5N}$
-  - Equal-channel depth: $\ln Q_i=\frac{1}{3}\ln(Q_1Q_5N)\approx137.37$
-  - Quantized register depth: $\left\lfloor\ln Q_i\right\rfloor=137$
-  - This gives a finite, quantized crossing condition and the photonic mechanism.
-
-- **Step 7:** The fractal continues beyond atoms and galaxies; the next lower scales appears as dark matter.
-
-- **Step 8:** HORB tests the claim by fitting galactic rotation curves with hydrogenic orbital structure. And they beat every PhD-developed model.
 
 
 
