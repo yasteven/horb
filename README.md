@@ -2,6 +2,57 @@
 
 Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Galaxy Dark Matter Halos
 
+## Milky Way: rotation curve and fitted dark density
+
+**Six curves, one dataset:** the best found HORB superposition, a single
+`3d_z2` HORB orbital, NFW, Burkert, Einasto, and baryons alone. Every halo
+uses the same fixed baryons and observed error bars. The single orbital and
+all three classical halos have their parameters fitted to the same data.
+
+![Milky Way: HORB superposition and single orbital, NFW, Burkert, Einasto, and baryons compared with Sofue observations](images/mw_rotation_highlight.png)
+
+![Milky Way: signed dark-density slice of the exact superposition above, with central detail and orbital weights](images/mw_density_highlight.png)
+
+## Andromeda: rotation curve and fitted dark density
+
+The same comparison using Corbelli et al. (2010) observations and fixed
+Geehan et al. (2006) baryons. Each density map uses its rotation fit's exact
+weights; amber is positive density and cyan is negative density.
+
+![Andromeda: HORB superposition and single orbital, NFW, Burkert, Einasto, and baryons compared with Corbelli observations](images/m31_rotation_highlight.png)
+
+![Andromeda: signed dark-density slice of the exact superposition above, with central detail and orbital weights](images/m31_density_highlight.png)
+
+<!-- HORB_HIGHLIGHT_SCORES_START -->
+
+| In-sample RMS (km/s) | Milky Way · 5–80 kpc | Andromeda · 8.5–36.5 kpc |
+|---|---:|---:|
+| HORB superposition · 4 terms | **2.05** | **3.32** |
+| HORB single `3d_z2` · fitted mass + scale | 25.90 | 20.35 |
+| NFW · fitted mass + scale | 9.29 | 10.54 |
+| Burkert · fitted mass + scale | 6.97 | 11.60 |
+| Einasto · fitted mass + scale + shape | 6.70 | 9.51 |
+| Baryons alone · fixed | 124.03 | 86.42 |
+
+<!-- HORB_HIGHLIGHT_SCORES_END -->
+
+“Best” here means the lowest converged weighted χ² found after trying all
+31,931 subsets of up to four terms in the documented 30-member dictionary.
+MW had no failed fits; two M31 subsets did not converge. These are in-sample
+comparisons with different model flexibility, not a model-probability test.
+The M31 Einasto fit reaches the configured lower shape bound, `alpha=0.03`.
+The M31 baryonic baseline has no separately resolved gas component. The
+density maps depict fitted models, not unique reconstructions from observations.
+
+```sh
+./run.sh --release do readme-highlights          # rebuild all four figures from recorded fits
+./run.sh --release do readme-highlights --refit  # repeat both complete subset searches too
+```
+
+The PNGs, fitted weights, scores and plotted curves are committed. The command
+also exports PDF figures. See [figure methods and reproduction](docs/readme_highlights.md)
+and [the numerical records](data/highlights/README.md).
+
 ## Project tool
 
 Use `./run.sh` for the operations menu, or run commands directly:
@@ -63,7 +114,7 @@ workflow writes the fitted curve, signed component weights, candidate rankings,
 a reproducibility report, and rotation/density graphs. A CUDA direct-force
 quadrature backend is also available with `do signed-fit cuda`.
 
-The default example run selects three components and gives **4.43 km/s RMS**
+The default fast beam-search example selects three components and gives **4.43 km/s RMS**
 on the 29 Sofue observations in the fitted 5–80 kpc interval. This is an
 in-sample result with fixed baryons. See [signed-density fitting](docs/signed_density.md)
 for the equations, search controls, example weights and validation limits.
@@ -82,7 +133,7 @@ no separately resolved gas component.
 ./run.sh --release do m31-signed-fit cpu --name m31_anneal --search anneal
 ```
 
-The default run selected three signed terms with **3.43 km/s in-sample RMS**.
+The default fast beam-search run selected three signed terms with **3.43 km/s in-sample RMS**.
 Sources, baryonic assumptions, input hashes and fit settings are included in
 the report. See [the M31 data and reproduction notes](data/m31/README.md).
 M31 is a separate dataset from SPARC's 175 galaxies.

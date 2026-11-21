@@ -1,0 +1,147 @@
+//! Rebuild the four README figures from recorded fits, or repeat the full search.
+use crate::runner::{python, strings, Runner};
+use anyhow::{bail, Result};
+
+pub fn run(r: &mut Runner, args: &[&str]) -> Result<()> {
+    if args == ["--help"] {
+        println!(
+            "./run.sh [--release] do readme-highlights [--refit]\n\
+Default: rebuild both galaxies' six-model comparisons and matching densities\n\
+from the recorded selected weights, checking their inputs and scores.\n\
+--refit: repeat all 31,931 subsets per galaxy (up to four signed terms).\n\
+NFW, Burkert, Einasto and single 3d_z2 mass/scale are refitted each time.\n\
+Outputs: images/*_highlight.png, plots/*_highlight.pdf, data/highlights/*.\n\
+CPU only; --refit can take several minutes. No Git operations are performed."
+        );
+        return Ok(());
+    }
+    if !args.is_empty() && args != ["--refit"] {
+        bail!("usage: ./run.sh do readme-highlights [--refit]");
+    }
+    r.exec(
+        python(),
+        &strings(&["-c", "import numpy, scipy, matplotlib"]),
+        None,
+    )?;
+    crate::signed::m31_data(r)?;
+    // Bound BLAS threading for these small matrices; no global environment changes.
+    r.env.insert("OPENBLAS_NUM_THREADS".into(), "1".into());
+    r.env.insert("OMP_NUM_THREADS".into(), "1".into());
+    for (name, rc, baryons, minimum, maximum, basis_maximum) in [
+        (
+            "mw",
+            "data/milky_way/sofue_2020_standard_rc.csv",
+            "data/milky_way/sofue_literature_baryons.csv",
+            "5",
+            "80",
+            "100",
+        ),
+        (
+            "m31",
+            "reports/m31_inputs/rotation_curve.csv",
+            "reports/m31_inputs/baryons.csv",
+            "8.5",
+            "36.5",
+            "60",
+        ),
+    ] {
+        let basis = format!("reports/{name}_showcase_basis.csv");
+        crate::signed::basis(
+            r,
+            &[
+                "signed",
+                "cpu",
+                "--out",
+                &basis,
+                "--rc-csv",
+                rc,
+                "--states",
+                "1s,2s,2p_z,3s,3p_z,3d_z2",
+                "--scales",
+                "0.5,1,2,4,8",
+                "--r-min",
+                "0.5",
+                "--r-max",
+                basis_maximum,
+                "--r-step",
+                "0.5",
+                "--n-radial",
+                "128",
+                "--ref-mass",
+                "1e11",
+            ],
+        )?;
+        let prefix = format!("reports/{name}_showcase");
+        let (report, weights) = if args == ["--refit"] {
+            let mut fit = vec![
+                "signed",
+                "--basis-csv",
+                &basis,
+                "--rc-csv",
+                rc,
+                "--baryons-csv",
+                baryons,
+                "--out-prefix",
+                &prefix,
+                "--r-min",
+                minimum,
+                "--r-max",
+                maximum,
+                "--max-components",
+                "4",
+                "--search",
+                "exhaustive",
+                "--budget",
+                "40000",
+                "--criterion",
+                "chi2",
+                "--ridge",
+                "0",
+                "--max-abs-weight",
+                "20",
+            ];
+            if name == "m31" {
+                fit.extend(["--dataset-meta", "reports/m31_inputs/dataset.json"]);
+            }
+            crate::signed::fit(r, &fit)?;
+            (format!("{prefix}.json"), format!("{prefix}_weights.csv"))
+        } else {
+            (
+                format!("data/highlights/{name}_fit.json"),
+                format!("data/highlights/{name}_weights.csv"),
+            )
+        };
+        let density = format!("curves/{name}_showcase_density_xz.csv");
+        r.curve(
+            &[
+                "signed_density",
+                "--weights",
+                &weights,
+                "--out",
+                &density,
+                "--extent",
+                "40",
+                "--bins",
+                "401",
+            ],
+            None,
+        )?;
+        r.python(
+            "make_readme_highlights",
+            &[
+                "--galaxy",
+                name,
+                "--fit-report",
+                &report,
+                "--weights",
+                &weights,
+                "--basis-csv",
+                &basis,
+                "--density-csv",
+                &density,
+            ],
+            None,
+        )?;
+    }
+    Ok(())
+}

@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "model": "signed_linear_orbital_density",
+  "geometry": "azimuthal_mean",
+  "config": {
+    "basis_csv": "reports/m31_showcase_basis.csv",
+    "rc_csv": "reports/m31_inputs/rotation_curve.csv",
+    "baryons_csv": "reports/m31_inputs/baryons.csv",
+    "dataset_meta": "reports/m31_inputs/dataset.json",
+    "out_prefix": "reports/m31_showcase",
+    "r_min": 8.5,
+    "r_max": 36.5,
+    "max_components": 4,
+    "search": "exhaustive",
+    "beam_width": 6,
+    "budget": 40000,
+    "seed": 42,
+    "max_abs_weight": 20,
+    "ridge": 0.0,
+    "criterion": "chi2",
+    "weights": "signed"
+  },
+  "inputs": {
+    "basis": {
+      "path": "reports/m31_showcase_basis.csv",
+      "sha256": "c748c6e39f804daf15c161a82a63f4fb32decc22cb6516d6154efa3325d41f9e"
+    },
+    "observations": {
+      "path": "reports/m31_inputs/rotation_curve.csv",
+      "sha256": "40d8f117110522a51dd8fb7aa222814580da7e703e790b9fda80c1e2ab54fc97"
+    },
+    "baryons": {
+      "path": "reports/m31_inputs/baryons.csv",
+      "sha256": "2d68c8532a797c201dcbb046a7e55ba30b24ddfa714e4c1d9eac84a85f827236"
+    },
+    "dataset_metadata": {
+      "path": "reports/m31_inputs/dataset.json",
+      "sha256": "cad3314302ee83228f4159bd2232bd6d18ebc3c6a308efa67a4b8d4108a8b5af"
+    }
+  },
+  "software": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "basis_count": 30,
+  "evaluated_subsets": 31931,
+  "failed_subsets": 2,
+  "budget_reached": false,
+  "n_observations": 29,
+  "r_fit_requested_kpc": [
+    8.5,
+    36.5
+  ],
+  "r_guard_kpc": [
+    0.5,
+    60.0
+  ],
+  "guard_count": 477,
+  "k": 4,
+  "chi2": 4.48305308834146,
+  "chi2_per_point": 0.15458803752901587,
+  "rms_kms": 3.315225251273664,
+  "selection_score": 4.48305308834146,
+  "min_total_v2_kms2": 9.997165761888027e-09,
+  "matrix_rank": 4,
+  "condition_number": 144.0622670829515,
+  "coefficient_bound_reached": false,
+  "net_mass_msun": 768584269246.6844,
+  "positive_mass_msun": 1822215421949.387,
+  "negative_mass_msun": -1053631152702.7026,
+  "components": [
+    {
+      "a0_star_kpc": 0.5,
+      "basis_id": 5,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 2,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "2s",
+      "weight": -0.9262043416860777,
+      "signed_mass_msun": -92620434168.60777
+    },
+    {
+      "a0_star_kpc": 1.0,
+      "basis_id": 16,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "3s",
+      "weight": 2.2001368748003007,
+      "signed_mass_msun": 220013687480.03006
+    },
+    {
+      "a0_star_kpc": 2.0,
+      "basis_id": 22,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 1,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "3p_z",
+      "weight": 16.02201734469357,
+      "signed_mass_msun": 1602201734469.357
+    },
+    {
+      "a0_star_kpc": 2.0,
+      "basis_id": 27,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 2,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "3d_z2",
+      "weight": -9.610107185340949,
+      "signed_mass_msun": -961010718534.0948
+    }
+  ],
+  "selection_note": "chi2 + ridge*sum(w^2) + k*log(N) for bic; adaptive basis search makes this a heuristic complexity score, not a model probability",
+  "domain_note": "positivity checked on the reported guard grid; no guarantee between samples or outside it; fit scores are in-sample",
+  "dataset": {
+    "schema_version": 1,
+    "galaxy": "M31 (Andromeda)",
+    "dataset_id": "m31_corbelli2010_geehan2006",
+    "rotation_curve": {
+      "reference": "Corbelli et al. (2010), A&A 511, A89, Table 1",
+      "url": "https://arxiv.org/html/0912.4133v1",
+      "doi": "10.1051/0004-6361/200913297",
+      "distance_kpc": 785,
+      "points": 29,
+      "fit_range_kpc": [
+        8.5,
+        36.5
+      ],
+      "errors": "Published Eq. 5: half the difference between galaxy-side means plus their mean dispersion; not standard errors of the mean. No covariance matrix is supplied.",
+      "geometry": "Published tilted-ring deprojection retained; no additional inclination correction",
+      "excluded_inner_region": "Authors exclude R<8 kpc because of non-circular motions; no fabricated central points",
+      "pdf_checked_sha256": "66aadd6a9d71570da56e95ac908caf37820c4ab187d1f329091c03d53ed08658"
+    },
+    "baryons": {
+      "schema_version": 1,
+      "model": "Geehan2006_ML3.3_fixed_baryons",
+      "reference": "Geehan et al. (2006), MNRAS 366, 996, Table 2, (M/L_R)_d=3.3 column",
+      "url": "https://arxiv.org/html/astro-ph/0501240v2",
+      "doi": "10.1111/j.1365-2966.2005.09863.x",
+      "parameters": {
+        "bulge_mass_msun": 32000000000.0,
+        "bulge_scale_kpc": 0.61,
+        "disk_mass_msun": 72000000000.0,
+        "disk_scale_kpc": 5.4,
+        "black_hole_mass_msun": 56000000.0
+      },
+      "geometry": "Spherical Hernquist bulge, infinitesimally thin exponential disk, central point mass",
+      "plot_label": "fixed Geehan baryons (no separate gas)",
+      "notes": [
+        "Parameters are fixed to the rounded published values, not fitted to the Corbelli rotation curve.",
+        "This simplified literature baseline has no separately resolved gas component. The fitted residual can absorb gas and baryonic-model error; it is not a uniquely measured dark-matter distribution.",
+        "The source model adopts 784 kpc; the rotation-curve source adopts 785 kpc. Published values are retained without a distance rescaling.",
+        "This combines Corbelli's observations with Geehan's baryonic baseline; it does not reproduce Corbelli's fitted Sersic bulge, finite-thickness disk and measured gas decomposition."
+      ]
+    },
+    "inputs": {
+      "observations": {
+        "sha256": "40d8f117110522a51dd8fb7aa222814580da7e703e790b9fda80c1e2ab54fc97"
+      },
+      "baryons": {
+        "sha256": "2d68c8532a797c201dcbb046a7e55ba30b24ddfa714e4c1d9eac84a85f827236"
+      },
+      "source_table": {
+        "name": "corbelli2010_table1.csv",
+        "sha256": "8d7ef991a9850f6d14c42db154daf4adceff2c49e5af78ea295ac16a7b06d6b5"
+      },
+      "model_parameters": {
+        "name": "geehan2006_model.json",
+        "sha256": "ec85d0d6fa0002959e244988cb0bfbca3f870aaf3181484195cfe73a1c3eadcc"
+      }
+    },
+    "notes": [
+      "M31 is not in the SPARC 175-galaxy sample.",
+      "Fit errors use the tabulated error bars as diagonal weights; a small chi2/N is not a calibrated probability.",
+      "The deprojected curve includes a warp; HORB evaluates an axisymmetric flat-plane approximation.",
+      "Parameters are fixed to the rounded published values, not fitted to the Corbelli rotation curve.",
+      "This simplified literature baseline has no separately resolved gas component. The fitted residual can absorb gas and baryonic-model error; it is not a uniquely measured dark-matter distribution.",
+      "The source model adopts 784 kpc; the rotation-curve source adopts 785 kpc. Published values are retained without a distance rescaling.",
+      "This combines Corbelli's observations with Geehan's baryonic baseline; it does not reproduce Corbelli's fitted Sersic bulge, finite-thickness disk and measured gas decomposition."
+    ]
+  },
+  "fitted_observations_columns": [
+    "R_kpc",
+    "Vobs_kms",
+    "eV_kms",
+    "v2_baryons_kms2",
+    "v2_dark_signed_kms2"
+  ],
+  "fitted_observations": [
+    [
+      8.5,
+      232.0,
+      11.0,
+      35025.163248417026,
+      20342.84300651679
+    ],
+    [
+      9.5,
+      240.7,
+      8.8,
+      34456.39038640411,
+      23713.437527629605
+    ],
+    [
+      10.5,
+      247.6,
+      6.5,
+      33782.522803890955,
+      26874.751537586475
+    ],
+    [
+      11.5,
+      249.1,
+      10.7,
+      33007.29677109144,
+      29787.283530498986
+    ],
+    [
+      12.5,
+      251.2,
+      13.5,
+      32144.512461780905,
+      32148.349235599693
+    ],
+    [
+      13.5,
+      252.6,
+      7.6,
+      31212.17254692298,
+      33706.78100165488
+    ],
+    [
+      14.5,
+      253.2,
+      5.6,
+      30229.1638258384,
+      34382.68403560999
+    ],
+    [
+      15.5,
+      253.8,
+      6.5,
+      29213.439082883186,
+      34263.473862059465
+    ],
+    [
+      16.5,
+      251.6,
+      7.1,
+      28181.094108180416,
+      33546.20816613917
+    ],
+    [
+      17.5,
+      247.3,
+      5.2,
+      27145.978624744337,
+      32471.943202623494
+    ],
+    [
+      18.5,
+      241.9,
+      8.1,
+      26119.621002427943,
+      31274.116956608355
+    ],
+    [
+      19.5,
+      233.6,
+      4.6,
+      25111.330972096668,
+      30147.022823876352
+    ],
+    [
+      20.5,
+      227.4,
+      5.5,
+      24128.396221446405,
+      29232.17698220898
+    ],
+    [
+      21.5,
+      224.0,
+      5.3,
+      23176.321009995085,
+      28617.409674059985
+    ],
+    [
+      22.5,
+      223.2,
+      5.4,
+      22259.07533887938,
+      28343.430404417115
+    ],
+    [
+      23.5,
+      227.3,
+      7.0,
+      21379.336201131933,
+      28413.743691063348
+    ],
+    [
+      24.5,
+      226.2,
+      6.0,
+      20538.710717715312,
+      28805.165184572772
+    ],
+    [
+      25.5,
+      226.4,
+      8.4,
+      19737.936209543223,
+      29477.368179315657
+    ],
+    [
+      26.5,
+      223.6,
+      9.5,
+      18977.055528643996,
+      30380.744270219482
+    ],
+    [
+      27.5,
+      218.9,
+      12.0,
+      18255.56795766114,
+      31462.404845067915
+    ],
+    [
+      28.5,
+      218.8,
+      9.9,
+      17572.55713362714,
+      32670.452581060952
+    ],
+    [
+      29.5,
+      223.5,
+      10.6,
+      16926.798054638588,
+      33956.790951583695
+    ],
+    [
+      30.5,
+      225.8,
+      10.1,
+      16316.84548265097,
+      35278.77849959581
+    ],
+    [
+      31.5,
+      223.2,
+      11.6,
+      15741.10609253219,
+      36600.018888146384
+    ],
+    [
+      32.5,
+      224.7,
+      32.1,
+      15197.896623448354,
+      37890.53703486921
+    ],
+    [
+      33.5,
+      237.4,
+      7.8,
+      14685.490120950082,
+      39126.54343291024
+    ],
+    [
+      34.5,
+      231.5,
+      22.1,
+      14202.152154260884,
+      40289.94234374035
+    ],
+    [
+      35.5,
+      238.0,
+      32.0,
+      13746.168677342368,
+      41367.69913140428
+    ],
+    [
+      36.5,
+      240.1,
+      38.2,
+      13315.866989313043,
+      42351.14890237863
+    ]
+  ]
+}

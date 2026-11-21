@@ -120,7 +120,7 @@ fn every_workflow_and_legacy_alias_builds_a_dry_run_plan() {
         );
         count += 1;
     }
-    assert_eq!(count, 35);
+    assert_eq!(count, 36);
     let alias = tool(&["--dry-run", "do", "scan_cuda_mw_basis.sh"]);
     assert!(alias.status.success());
     assert!(String::from_utf8_lossy(&alias.stderr).contains("--bin scan_horb_cuda_mw_basis"));
@@ -266,4 +266,41 @@ fn child_failure_reaches_cli() {
         .unwrap();
     assert!(!result.status.success());
     assert!(String::from_utf8_lossy(&result.stderr).contains("23"));
+}
+
+#[test]
+fn highlights_use_recorded_weights_and_refit_only_when_requested() {
+    for refit in [false, true] {
+        let mut args = vec!["--dry-run", "--release", "do", "readme-highlights"];
+        if refit {
+            args.push("--refit");
+        }
+        let out = tool(&args);
+        assert!(
+            out.status.success(),
+            "{}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+        let plan = String::from_utf8(out.stderr).unwrap();
+        assert_eq!(plan.matches("make_readme_highlights.py").count(), 2);
+        assert_eq!(plan.contains("fit_signed_density.py"), refit);
+        assert!(!plan.contains("nvcc"));
+        for galaxy in ["mw", "m31"] {
+            let prefix = if refit {
+                format!("reports/{galaxy}_showcase")
+            } else {
+                format!("data/highlights/{galaxy}")
+            };
+            assert!(plan.contains(&format!("signed_density --weights {prefix}_weights.csv")));
+        }
+        if refit {
+            assert!(plan.contains("--criterion chi2 --ridge 0"));
+            assert!(plan.contains("--search exhaustive --budget 40000"));
+        }
+    }
+    assert!(
+        !tool(&["--dry-run", "do", "readme-highlights", "--mystery"])
+            .status
+            .success()
+    );
 }

@@ -1,0 +1,172 @@
+{
+  "galaxy": "Andromeda",
+  "sources": [
+    "https://arxiv.org/abs/0912.4133",
+    "https://arxiv.org/abs/astro-ph/0501240"
+  ],
+  "scores": {
+    "baryons": {
+      "rms_kms": 86.41934960296885,
+      "chi2": 3143.693173153898,
+      "n": 29
+    },
+    "superposition": {
+      "rms_kms": 3.315225251273664,
+      "chi2": 4.48305308834146,
+      "n": 29
+    },
+    "single": {
+      "rms_kms": 20.34677635540775,
+      "chi2": 76.57541578528004,
+      "n": 29,
+      "log10_parameters": [
+        11.274921817686932,
+        0.10611192130219833
+      ],
+      "parameter_names": [
+        "total_mass_msun",
+        "scale_kpc"
+      ],
+      "parameters": [
+        188331002281.02692,
+        1.2767678001050133
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          1.6989700043360187
+        ]
+      ],
+      "reference_radius_kpc": 36.5,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    },
+    "nfw": {
+      "rms_kms": 10.540857094648823,
+      "chi2": 31.72102566907995,
+      "n": 29,
+      "log10_parameters": [
+        11.428288870501989,
+        1.0965428543816553
+      ],
+      "parameter_names": [
+        "mass_within_reference_msun",
+        "scale_kpc"
+      ],
+      "parameters": [
+        268095096350.8876,
+        12.489436791022479
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ]
+      ],
+      "reference_radius_kpc": 36.5,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    },
+    "burkert": {
+      "rms_kms": 11.60422884646013,
+      "chi2": 33.56912317863267,
+      "n": 29,
+      "log10_parameters": [
+        11.403968623210845,
+        0.8257293988353928
+      ],
+      "parameter_names": [
+        "mass_within_reference_msun",
+        "scale_kpc"
+      ],
+      "parameters": [
+        253494547983.29587,
+        6.694673462432682
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ]
+      ],
+      "reference_radius_kpc": 36.5,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    },
+    "einasto": {
+      "rms_kms": 9.508419141013079,
+      "chi2": 29.94220825939532,
+      "n": 29,
+      "log10_parameters": [
+        11.456240911029903,
+        2.0697591338242147,
+        -1.5228787452803374
+      ],
+      "parameter_names": [
+        "mass_within_reference_msun",
+        "scale_kpc",
+        "alpha"
+      ],
+      "parameters": [
+        285917614044.2821,
+        117.42461199542655,
+        0.03000000000000001
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ],
+        [
+          -1.5228787452803376,
+          0.3010299956639812
+        ]
+      ],
+      "reference_radius_kpc": 36.5,
+      "parameter_count": 3,
+      "bound_reached": true,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    }
+  },
+  "fit_range_kpc": [
+    8.5,
+    36.5
+  ],
+  "baryons": "Fixed Geehan bulge + thin disk + central mass; no separate gas",
+  "selection": "Lowest converged weighted chi2 in the enumerated <=4-term dictionary; no model-probability claim.",
+  "density": {
+    "slice": "y=0",
+    "extent_kpc": 40.0,
+    "bins": 401,
+    "min_msun_per_kpc3": -26888202383.664127,
+    "max_msun_per_kpc3": 326164932.53990746
+  },
+  "validation": "Weights, signed-density CSV, input snapshot, fitted scores and total-force guard checked before rendering."
+}

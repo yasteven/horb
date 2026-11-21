@@ -13,6 +13,7 @@ const STATES: &str = "1s,2p_z,2p_x,2p_y,3d_z2,3d_x2_y2,3d_xy,3d_xz,3d_yz";
 
 // (command, former script stem, positional arguments). Old names are aliases.
 pub const COMMANDS: &[(&str, &str, &str)] = &[
+    ("readme-highlights", "highlights", "[--refit]"),
     (
         "m31-signed-fit",
         "andromeda",
@@ -138,6 +139,7 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
     // Validate argument counts before creating outputs or launching commands.
     let maximum = match name {
         "signed-fit" | "m31-signed-fit" => usize::MAX,
+        "readme-highlights" => 1,
         "make-curve" | "orbital-views" => 2,
         "cuda-candidate" => 7,
         "mw-comparison" => 5,
@@ -161,6 +163,7 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
 fn run_inner(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
     r.dirs()?;
     match name {
+        "readme-highlights" => crate::highlights::run(r, args)?,
         "signed-fit" => crate::signed::workflow(r, args)?,
         "m31-signed-fit" => crate::signed::m31_workflow(r, args)?,
         "make-curve" => {

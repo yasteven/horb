@@ -46,3 +46,10 @@ component prescription or tabulated signed baryonic forces (`r_kpc`,
 is verified against the actual input hashes and copied into the fit report.
 Legacy shell workflows are available as `./run.sh do legacy-*` commands; the
 original shell files remain recoverable through Git history.
+## README figure generation
+
+Use `./run.sh --release do readme-highlights` for the four featured figures.
+`make_readme_highlights.py` validates and renders each matched pair;
+`horb_highlights.py` supplies refitted single-orbital/classical forces and an
+independent signed-density audit. Source weights, plotted curves and score
+tables are tracked in `data/highlights/`. See [methods and reproduction](../docs/readme_highlights.md).

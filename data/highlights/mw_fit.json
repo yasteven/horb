@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "model": "signed_linear_orbital_density",
+  "geometry": "azimuthal_mean",
+  "config": {
+    "basis_csv": "reports/mw_showcase_basis.csv",
+    "rc_csv": "data/milky_way/sofue_2020_standard_rc.csv",
+    "baryons_csv": "data/milky_way/sofue_literature_baryons.csv",
+    "dataset_meta": null,
+    "out_prefix": "reports/mw_showcase",
+    "r_min": 5.0,
+    "r_max": 80.0,
+    "max_components": 4,
+    "search": "exhaustive",
+    "beam_width": 6,
+    "budget": 40000,
+    "seed": 42,
+    "max_abs_weight": 20,
+    "ridge": 0.0,
+    "criterion": "chi2",
+    "weights": "signed"
+  },
+  "inputs": {
+    "basis": {
+      "path": "reports/mw_showcase_basis.csv",
+      "sha256": "e7ff4297a2b116c5541ca917e007c0e308a5f2df1f393f31c6accfa7aca1ba4f"
+    },
+    "observations": {
+      "path": "data/milky_way/sofue_2020_standard_rc.csv",
+      "sha256": "a86eec69e7d0541ea6c08637986ed1a0a331627dce1ddd2a63f974ef9932e0af"
+    },
+    "baryons": {
+      "path": "data/milky_way/sofue_literature_baryons.csv",
+      "sha256": "22dccc64234d615bf0d6535d722caaceaf8af1541fc5602513a606d668e11bbb"
+    }
+  },
+  "software": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "basis_count": 30,
+  "evaluated_subsets": 31931,
+  "failed_subsets": 0,
+  "budget_reached": false,
+  "n_observations": 29,
+  "r_fit_requested_kpc": [
+    5.0,
+    80.0
+  ],
+  "r_guard_kpc": [
+    0.5,
+    100.0
+  ],
+  "guard_count": 1021,
+  "k": 4,
+  "chi2": 0.7164677414617553,
+  "chi2_per_point": 0.02470578418833639,
+  "rms_kms": 2.0526373014902757,
+  "selection_score": 0.7164677414617553,
+  "min_total_v2_kms2": 30269.716415472012,
+  "matrix_rank": 4,
+  "condition_number": 76.64234695278786,
+  "coefficient_bound_reached": false,
+  "net_mass_msun": 804422305191.0619,
+  "positive_mass_msun": 804422305191.0619,
+  "negative_mass_msun": 0.0,
+  "components": [
+    {
+      "a0_star_kpc": 1.0,
+      "basis_id": 6,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 2,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "2s",
+      "weight": 0.611077856632269,
+      "signed_mass_msun": 61107785663.2269
+    },
+    {
+      "a0_star_kpc": 1.0,
+      "basis_id": 16,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "3s",
+      "weight": 0.9281731542202752,
+      "signed_mass_msun": 92817315422.02753
+    },
+    {
+      "a0_star_kpc": 2.0,
+      "basis_id": 27,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 2,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "3d_z2",
+      "weight": 1.8374668000675898,
+      "signed_mass_msun": 183746680006.75897
+    },
+    {
+      "a0_star_kpc": 8.0,
+      "basis_id": 29,
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 2,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "normalization": "analytic_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 1,
+      "softening_kpc": 0.0,
+      "state": "3d_z2",
+      "weight": 4.667505240990485,
+      "signed_mass_msun": 466750524099.04846
+    }
+  ],
+  "selection_note": "chi2 + ridge*sum(w^2) + k*log(N) for bic; adaptive basis search makes this a heuristic complexity score, not a model probability",
+  "domain_note": "positivity checked on the reported guard grid; no guarantee between samples or outside it; fit scores are in-sample",
+  "fitted_observations_columns": [
+    "R_kpc",
+    "Vobs_kms",
+    "eV_kms",
+    "v2_baryons_kms2",
+    "v2_dark_signed_kms2"
+  ],
+  "fitted_observations": [
+    [
+      5.476,
+      234.1,
+      5.3,
+      24524.679722461744,
+      30097.37088231989
+    ],
+    [
+      6.024,
+      237.2,
+      5.7,
+      23694.062673575263,
+      32776.80271139518
+    ],
+    [
+      6.626,
+      239.5,
+      5.0,
+      22814.716946321016,
+      34539.348812213284
+    ],
+    [
+      7.289,
+      240.1,
+      4.1,
+      21882.018947716824,
+      35467.37276486621
+    ],
+    [
+      8.018,
+      239.0,
+      4.4,
+      20897.976480567322,
+      35863.22904563417
+    ],
+    [
+      8.82,
+      236.7,
+      5.4,
+      19865.80864087219,
+      36178.36666502694
+    ],
+    [
+      9.702,
+      234.5,
+      6.0,
+      18792.864063333873,
+      36868.73710182368
+    ],
+    [
+      10.672,
+      234.2,
+      7.1,
+      17689.109214060096,
+      38241.42359189791
+    ],
+    [
+      11.739,
+      237.1,
+      9.8,
+      16566.769028868453,
+      40348.62343673412
+    ],
+    [
+      12.913,
+      242.8,
+      12.4,
+      15439.702987234803,
+      42974.760047851545
+    ],
+    [
+      14.204,
+      248.5,
+      13.3,
+      14323.379580951754,
+      45719.951419946476
+    ],
+    [
+      15.625,
+      249.7,
+      14.8,
+      13231.255253145162,
+      48150.56942328467
+    ],
+    [
+      17.187,
+      246.2,
+      17.4,
+      12177.883497405535,
+      49924.80371261088
+    ],
+    [
+      18.906,
+      243.3,
+      18.3,
+      11172.911346064717,
+      50871.8334020994
+    ],
+    [
+      20.797,
+      243.9,
+      17.5,
+      10224.96885790456,
+      50972.074607501076
+    ],
+    [
+      22.876,
+      245.6,
+      15.6,
+      9339.73641300155,
+      50303.8104928498
+    ],
+    [
+      25.164,
+      243.7,
+      15.2,
+      8518.682572574333,
+      48983.39613209635
+    ],
+    [
+      27.68,
+      237.3,
+      16.1,
+      7762.420240884543,
+      47141.70632629454
+    ],
+    [
+      30.448,
+      229.6,
+      15.5,
+      7068.639339439611,
+      44922.40661089036
+    ],
+    [
+      33.493,
+      222.5,
+      14.1,
+      6434.213232827844,
+      42490.561415946344
+    ],
+    [
+      36.842,
+      215.0,
+      14.0,
+      5855.339580671569,
+      40024.787684665185
+    ],
+    [
+      40.527,
+      207.1,
+      13.8,
+      5327.557034560137,
+      37693.00176548335
+    ],
+    [
+      44.579,
+      200.3,
+      12.7,
+      4847.0022645432755,
+      35630.92661115256
+    ],
+    [
+      49.037,
+      194.7,
+      11.9,
+      4409.368249144153,
+      33919.60548899792
+    ],
+    [
+      53.941,
+      189.8,
+      11.3,
+      4010.974831605335,
+      32584.89370957981
+    ],
+    [
+      59.335,
+      186.2,
+      10.4,
+      3648.3980605903794,
+      31599.82649158481
+    ],
+    [
+      65.268,
+      184.7,
+      9.6,
+      3318.449222069022,
+      30892.98220806911
+    ],
+    [
+      71.795,
+      183.9,
+      9.3,
+      3018.1703154858465,
+      30359.00006605257
+    ],
+    [
+      78.975,
+      181.4,
+      11.0,
+      2744.9387882031033,
+      29872.26354548449
+    ]
+  ]
+}

@@ -1,4 +1,5 @@
 mod dump;
+mod highlights;
 mod runner;
 mod signed;
 mod workflows;

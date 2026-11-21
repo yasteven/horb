@@ -269,3 +269,12 @@ referenced moved archive scripts now invoke the appropriate programs directly.
 CSV aggregation handles quoted fields, and rankings use column names instead
 of positional shell sorting. A few historical graph filenames now use the full
 candidate stem printed in the command trace.
+## README figures
+
+`./run.sh --release do readme-highlights` regenerates the Milky Way and
+Andromeda six-model rotation comparisons and matching signed-density maps.
+It uses the committed selected orbital weights, validates their inputs and
+scores, and refits the single orbital plus NFW, Burkert and Einasto. Add
+`--refit` to repeat the complete ≤4-term superposition searches as well.
+PNGs go to `images/`, PDFs to `plots/`, and numerical records to
+`data/highlights/`. See [the methods](../docs/readme_highlights.md).
