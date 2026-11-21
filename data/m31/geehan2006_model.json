@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "model": "Geehan2006_ML3.3_fixed_baryons",
+  "reference": "Geehan et al. (2006), MNRAS 366, 996, Table 2, (M/L_R)_d=3.3 column",
+  "url": "https://arxiv.org/html/astro-ph/0501240v2",
+  "doi": "10.1111/j.1365-2966.2005.09863.x",
+  "parameters": {
+    "bulge_mass_msun": 32000000000.0,
+    "bulge_scale_kpc": 0.61,
+    "disk_mass_msun": 72000000000.0,
+    "disk_scale_kpc": 5.4,
+    "black_hole_mass_msun": 56000000.0
+  },
+  "geometry": "Spherical Hernquist bulge, infinitesimally thin exponential disk, central point mass",
+  "plot_label": "fixed Geehan baryons (no separate gas)",
+  "notes": [
+    "Parameters are fixed to the rounded published values, not fitted to the Corbelli rotation curve.",
+    "This simplified literature baseline has no separately resolved gas component. The fitted residual can absorb gas and baryonic-model error; it is not a uniquely measured dark-matter distribution.",
+    "The source model adopts 784 kpc; the rotation-curve source adopts 785 kpc. Published values are retained without a distance rescaling.",
+    "This combines Corbelli's observations with Geehan's baryonic baseline; it does not reproduce Corbelli's fitted Sersic bulge, finite-thickness disk and measured gas decomposition."
+  ]
+}

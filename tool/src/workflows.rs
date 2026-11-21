@@ -13,6 +13,16 @@ const STATES: &str = "1s,2p_z,2p_x,2p_y,3d_z2,3d_x2_y2,3d_xy,3d_xz,3d_yz";
 
 // (command, former script stem, positional arguments). Old names are aliases.
 pub const COMMANDS: &[(&str, &str, &str)] = &[
+    (
+        "m31-signed-fit",
+        "andromeda",
+        "[cpu|cuda] [OPTIONS; use --help]",
+    ),
+    (
+        "signed-fit",
+        "signed_density_workflow",
+        "[cpu|cuda] [OPTIONS; use --help]",
+    ),
     ("make-curve", "scripts_make_curve", "[a0=1.5 mass=1e11]"),
     ("density-axes", "scan_dz2_density_axes", ""),
     ("fermi-scales", "scan_dz2_fermi_scales", ""),
@@ -127,6 +137,7 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
         .with_context(|| format!("unknown workflow '{name}'; use './run.sh do list'"))?;
     // Validate argument counts before creating outputs or launching commands.
     let maximum = match name {
+        "signed-fit" | "m31-signed-fit" => usize::MAX,
         "make-curve" | "orbital-views" => 2,
         "cuda-candidate" => 7,
         "mw-comparison" => 5,
@@ -150,6 +161,8 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
 fn run_inner(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
     r.dirs()?;
     match name {
+        "signed-fit" => crate::signed::workflow(r, args)?,
+        "m31-signed-fit" => crate::signed::m31_workflow(r, args)?,
         "make-curve" => {
             let p = defaults(args, &["1.5", "1e11"])?;
             r.curve(

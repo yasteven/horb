@@ -33,7 +33,7 @@
 //! | length   | kpc  |
 //! | mass     | M_sun|
 //! | velocity | km/s |
-//! | G        | 4.301e-3 kpc (km/s)^2 M_sun^-1 |
+//! | G        | 4.3009e-6 kpc (km/s)^2 M_sun^-1 |
 
 /*
  * Keep M_enc(r) radial-only
@@ -55,6 +55,7 @@ So start spherical, then upgrade.
 pub mod angular;
 pub mod baryons;
 pub mod density;
+pub mod signed_gravity;
 pub mod halo_models;
 pub mod presets;
 pub mod radial;
@@ -117,13 +118,13 @@ impl OrbitalConfig {
                 reason: format!("|m|={} must be <= l={l}", m.abs()),
             });
         }
-        if a0_star <= 0.0 {
+        if !a0_star.is_finite() || a0_star <= 0.0 {
             return Err(OrbitalError::InvalidParameter {
                 name: "a0_star",
                 reason: "must be positive (kpc)".into(),
             });
         }
-        if dm_mass <= 0.0 {
+        if !dm_mass.is_finite() || dm_mass <= 0.0 {
             return Err(OrbitalError::InvalidParameter {
                 name: "dm_mass",
                 reason: "must be positive (M_sun)".into(),

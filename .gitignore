@@ -23,3 +23,8 @@ print_horb_rust_debug.sh
 __pycache__/
 *.pyc
 /cuda_kernels/cuda/libhorb_cuda.so
+
+# Downloaded installers, patches and ad-hoc source dumps
+/patch_horb_*.rs
+/horb_*.patch
+/cat_all_scripts.txt

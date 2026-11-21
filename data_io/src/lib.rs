@@ -4,6 +4,8 @@ use anyhow::{Context, Result};
 use serde::Deserialize;
 use std::path::Path;
 
+pub mod signed_basis;
+
 #[derive(Debug, Clone, Deserialize)]
 pub struct RotationCurveRow {
     #[serde(rename = "R_kpc")]
@@ -46,6 +48,15 @@ impl RotationCurve {
         for rec in rdr.deserialize() {
             let row: RotationCurveRow =
                 rec.with_context(|| format!("failed to parse row in {}", path.display()))?;
+            if !row.r_kpc.is_finite()
+                || row.r_kpc <= 0.0
+                || !row.vobs_kms.is_finite()
+                || row.vobs_kms < 0.0
+                || !row.ev_kms.is_finite()
+                || row.ev_kms <= 0.0
+            {
+                anyhow::bail!("rotation curve requires positive finite radii/errors and nonnegative finite speeds");
+            }
             rows.push(row);
         }
 

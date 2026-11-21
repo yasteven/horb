@@ -120,7 +120,7 @@ fn every_workflow_and_legacy_alias_builds_a_dry_run_plan() {
         );
         count += 1;
     }
-    assert_eq!(count, 33);
+    assert_eq!(count, 35);
     let alias = tool(&["--dry-run", "do", "scan_cuda_mw_basis.sh"]);
     assert!(alias.status.success());
     assert!(String::from_utf8_lossy(&alias.stderr).contains("--bin scan_horb_cuda_mw_basis"));
@@ -152,6 +152,99 @@ fn cuda_plan_keeps_arguments_and_cpu_build_excludes_cuda() {
     assert!(
         text.contains("--release --bin write_horb_cuda_curve_basis -- 3d_z2 0.9 2.5e11 64 80 0.25")
     );
+}
+
+#[test]
+fn signed_workflow_routes_raw_force_generation_and_fit_options() {
+    for backend in ["cpu", "cuda"] {
+        let out = tool(&[
+            "--dry-run",
+            "do",
+            "signed-fit",
+            backend,
+            "--states",
+            "1s,3d_z2",
+            "--scales",
+            "1,2",
+            "--search",
+            "anneal",
+            "--seed",
+            "17",
+            "--max-components",
+            "2",
+        ]);
+        assert!(
+            out.status.success(),
+            "{}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+        let plan = String::from_utf8(out.stderr).unwrap();
+        assert!(plan.contains("--states 1s,3d_z2"));
+        assert!(plan.contains("--search anneal"));
+        assert!(plan.contains("--seed 17"));
+        assert!(plan.contains("signed_density --weights"));
+        assert!(plan.contains("plot_signed_density.py"));
+        if backend == "cuda" {
+            assert!(plan.contains("--bin write_signed_basis_cuda"));
+        } else {
+            assert!(plan.contains("-- signed_basis"));
+            assert!(!plan.contains("nvcc"));
+        }
+    }
+    assert!(!tool(&["--dry-run", "do", "signed-fit", "--mystery", "1"])
+        .status
+        .success());
+}
+
+#[test]
+fn andromeda_routes_its_own_data_and_radius_defaults() {
+    let data = tool(&["--dry-run", "data", "m31"]);
+    assert!(data.status.success());
+    assert!(String::from_utf8_lossy(&data.stderr).contains("make_m31_data.py"));
+    for name in ["m31-signed-fit", "andromeda"] {
+        let out = tool(&["--dry-run", "do", name]);
+        assert!(
+            out.status.success(),
+            "{}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+        let plan = String::from_utf8(out.stderr).unwrap();
+        assert!(plan.contains("make_m31_data.py"));
+        assert!(plan.contains("--r-min 8.5 --r-max 36.5"));
+        assert!(plan.contains("--r-min 0.5 --r-max 60"));
+        assert!(plan.contains("--dataset-meta reports/m31_inputs/dataset.json"));
+        assert!(plan.contains("plots/m31_signed_cpu_rotation.png"));
+        assert!(!plan.contains("sofue"));
+    }
+    let out = tool(&[
+        "--dry-run",
+        "do",
+        "m31-signed-fit",
+        "--name",
+        "m31_anneal",
+        "--r-min",
+        "10",
+        "--search",
+        "anneal",
+    ]);
+    assert!(out.status.success());
+    let plan = String::from_utf8(out.stderr).unwrap();
+    assert!(plan.contains("--r-min 10 --r-max 36.5"));
+    assert!(plan.contains("--search anneal"));
+    assert!(plan.contains("m31_anneal_rotation.png"));
+    let custom = tool(&[
+        "--dry-run",
+        "do",
+        "m31-signed-fit",
+        "--rc-csv",
+        "custom.csv",
+        "--baryons-csv",
+        "custom_b.csv",
+    ]);
+    assert!(custom.status.success());
+    let plan = String::from_utf8(custom.stderr).unwrap();
+    assert!(!plan.contains("--dataset-meta"));
+    assert!(!plan.contains("make_m31_data.py"));
 }
 
 #[cfg(unix)]

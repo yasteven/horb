@@ -25,13 +25,24 @@ executable file permissions and shebangs are not required.
 - `tests/`: comparison, scoring and new/archived CSV plotting checks.
 - `make_*contact_sheet*.py`: contact sheets from generated graphs.
 - `make_mw_sofue2020_curve.py`, `convert_sofue2020_to_standard_rc.py`: MW input data.
+- `make_m31_data.py`: offline Corbelli M31 curve, fixed Geehan thin-disk
+  baryons and provenance with input hashes; invoked by `./run.sh data m31`.
 - `measure_xz_lobe_extent.py`: morphology measurements.
 - `fit_cuda_orbital_basis_wavelets.py`: existing positive density-basis fitter.
+- `fit_signed_density.py`, `horb_signed/`: signed force-basis fitting, component
+  search and constrained weight optimization; invoked by `./run.sh fit signed`.
+- `plot_signed_fit.py`, `plot_signed_density.py`: fitted velocity, signed force
+  contributions and signed density maps.
+- `compare_signed_basis.py`: CPU/quadrature force-convergence checks.
 - `archive/make_mw_starter_curve.py`: historical starter data, available through
   `./run.sh python make_mw_starter_curve`.
 
 Halo comparison plots and summaries include Einasto when present in the CSV.
 Archived files without it still work and print a regeneration reminder.
-The original fitter and baryonic prescription are unchanged.
+The original positive-only fitter remains available for historical workflows.
+The new signed fitter preserves force signs. It accepts either the existing
+component prescription or tabulated signed baryonic forces (`r_kpc`,
+`v2_baryons_kms2`), including the M31 thin-disk model. Optional `--dataset-meta`
+is verified against the actual input hashes and copied into the fit report.
 Legacy shell workflows are available as `./run.sh do legacy-*` commands; the
 original shell files remain recoverable through Git history.

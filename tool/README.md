@@ -7,8 +7,9 @@ output paths are interpreted from the repository root.
 The Rust `horb-tool` crate owns process execution, parameter sweeps, CSV report
 aggregation, graph opening and source dumps. `run.sh` is the only shell script.
 Einasto is available alongside NFW, pseudo-isothermal and Burkert in the halo
-comparison commands. The signed-density fitter and additional galaxies remain
-planned work. See [the Einasto notes](../docs/einasto.md) for the model and scoring
+comparison commands. Signed orbital-density fitting is available through
+`do signed-fit`; `do m31-signed-fit` fits Andromeda's published HI curve.
+See [the Einasto notes](../docs/einasto.md) for the model and scoring
 conventions.
 
 ## Everyday commands
@@ -26,6 +27,8 @@ conventions.
 
 ./run.sh do make-curve
 ./run.sh do mw-comparison
+./run.sh --release do signed-fit cpu  # sparse signed weights + rotation/density graphs
+./run.sh --release do m31-signed-fit cpu  # Andromeda with bundled data and provenance
 ./run.sh do cuda-candidate       # a0=1.0, mass=2.5e11, n=96, extent=80, eps=0.25
 ./run.sh do orbital-views 1.5 1e11
 ./run.sh graphs
@@ -74,6 +77,58 @@ Add `--cuda-csv curves/YOUR_CUDA_CURVE.csv` to include the disk-plane HORB
 result. Old CSVs remain readable and emit a reminder to regenerate them when
 they lack Einasto columns.
 
+## Signed density fits
+
+```sh
+./run.sh do signed-fit --help
+./run.sh --release do signed-fit cpu
+./run.sh --release do signed-fit cpu --name mw_anneal --search anneal --seed 42 --budget 3000
+./run.sh --release do signed-fit cuda
+```
+
+The interactive menu also has `s` for the CPU signed fit and `g` for the CUDA
+fit. Defaults search the 30 combinations of six orbital states and five
+scales, with up to four components. `--weights nonnegative` runs a control
+fit. The CPU backend uses nonspherical disk-plane multipoles; CUDA uses
+direct quadrature of the same azimuthally averaged orbital densities.
+
+To generate a basis once and reuse it for searches:
+
+```sh
+./run.sh --release basis signed cpu --out reports/my_basis.csv \
+  --states 1s,2s,2p_z,3s,3p_z,3d_z2 --scales 0.5,1,2,4,8 \
+  --rc-csv data/milky_way/sofue_2020_standard_rc.csv
+./run.sh fit signed --basis-csv reports/my_basis.csv \
+  --rc-csv data/milky_way/sofue_2020_standard_rc.csv \
+  --baryons-csv data/milky_way/sofue_literature_baryons.csv \
+  --out-prefix reports/my_fit --search anneal --seed 42
+./run.sh plot signed-fit --fit-prefix reports/my_fit -o plots/my_fit.png
+```
+
+Use `fit signed --help` and `basis signed cpu --help` for all options.
+Output filenames for the complete workflow start with `mw_signed_cpu` or
+`mw_signed_cuda`; `--name` selects a different stem. The report records the
+parameters and input hashes. See [the mathematical and validation notes](../docs/signed_density.md).
+
+For Andromeda use `do m31-signed-fit` (alias `do andromeda`) or menu entry
+`a`. It defaults to the 29 Corbelli et al. measurements at 8.5–36.5 kpc and
+fixed Geehan baryons, with a 0.5–60 kpc force guard domain. `data m31`
+prepares the observations, baryonic force table and provenance offline.
+Outputs use `m31_signed_cpu`/`m31_signed_cuda`, or your `--name`.
+All signed-fit controls are available, including annealing and nonnegative
+control fits. See [the data source and assumptions](../data/m31/README.md).
+
+Delivered Rust update installers now apply their explicit source/data file
+list, run CPU and Python checks, stage those paths, commit, then push `HEAD`
+to the current branch's configured upstream. Existing part-2/3 files are
+included so new source files do not get left untracked. Other staged files
+are preserved and excluded from that commit. A normal, non-forced push is
+used; conflicts or authentication failures are reported without discarding
+the local commit. Re-running the installer retries the push without creating
+an empty commit. `--check` changes nothing; `--no-push` applies, checks and
+commits locally. Unexpected edits to an update's files stop installation
+before any file is written. Source dumps and downloaded installers are ignored.
+
 ## Source dump for a conversation
 
 `./run.sh dump` reads current files from disk. It includes tracked source with
@@ -102,7 +157,7 @@ current working tree is newer than the remote repository.
 ## Dependencies and CUDA
 
 Install Rust/Cargo with `rustfmt`. The tool itself has no CUDA dependency.
-The plotting programs use Python 3, NumPy, Matplotlib and Pillow:
+The plotting/fitting programs use Python 3, NumPy, SciPy, Matplotlib and Pillow:
 
 ```sh
 python3 -m venv .venv

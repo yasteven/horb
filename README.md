@@ -43,8 +43,49 @@ mass at the reference radius, and total curves use the same baryonic model.
 The two comparison workflows write graphs and score tables for every model.
 These are fixed-parameter diagnostics; the defaults are not optimized fits.
 See [the Einasto model notes](docs/einasto.md) for the equations, CSV fields,
-normalization and scoring ranges. Signed-density fitting and the additional
-galaxy datasets are separate planned steps.
+normalization and scoring ranges. M31 fitting is available below; the full
+SPARC importer remains planned.
+
+## Signed orbital-density fitting
+
+The fitter now searches orbital choices, scales from a configurable grid,
+component counts, and **positive or negative density weights**. It adds signed
+disk-plane force contributions before computing the total circular speed.
+
+```sh
+./run.sh --release do signed-fit cpu
+./run.sh view
+./run.sh view plots/mw_signed_cpu_density.png
+```
+
+The default CPU calculation uses nonspherical, axisymmetric multipoles. The
+workflow writes the fitted curve, signed component weights, candidate rankings,
+a reproducibility report, and rotation/density graphs. A CUDA direct-force
+quadrature backend is also available with `do signed-fit cuda`.
+
+The default example run selects three components and gives **4.43 km/s RMS**
+on the 29 Sofue observations in the fitted 5–80 kpc interval. This is an
+in-sample result with fixed baryons. See [signed-density fitting](docs/signed_density.md)
+for the equations, search controls, example weights and validation limits.
+
+## Andromeda (M31)
+
+The repository includes Corbelli et al. (2010), Table 1: **29 observed HI
+rotation-curve points from 8.5 to 36.5 kpc**, with the published error bars.
+The workflow prepares the data offline and uses a fixed Geehan et al. (2006)
+bulge, thin exponential disk and central mass. This simplified baseline has
+no separately resolved gas component.
+
+```sh
+./run.sh --release do m31-signed-fit cpu
+./run.sh view plots/m31_signed_cpu_rotation.png
+./run.sh --release do m31-signed-fit cpu --name m31_anneal --search anneal
+```
+
+The default run selected three signed terms with **3.43 km/s in-sample RMS**.
+Sources, baryonic assumptions, input hashes and fit settings are included in
+the report. See [the M31 data and reproduction notes](data/m31/README.md).
+M31 is a separate dataset from SPARC's 175 galaxies.
 
 ## Reality has a fractal geometry. Modern Physics is a cult of continuum religion.
 
@@ -76,9 +117,9 @@ galaxy datasets are separate planned steps.
 - **Step 8:** HORB tests the claim by fitting galactic rotation curves with hydrogenic orbital structure. And they beat every PhD-developed model.
 
 
-## Current Best Result
+## Earlier single-orbital benchmark
 
-The current best Milky Way candidate is a morphology-constrained hydrogenic `3d_z2` halo tested against the Sofue 2020 unified Milky Way rotation curve using a literature bulge+disk baryonic model and a CUDA direct-summation disk-plane force calculation.
+The earlier single-orbital Milky Way candidate is a morphology-constrained hydrogenic `3d_z2` halo tested against the Sofue 2020 unified Milky Way rotation curve using a literature bulge+disk baryonic model and a CUDA direct-summation disk-plane force calculation.
 
 | Parameter | Value |
 |---|---:|

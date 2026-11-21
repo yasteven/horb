@@ -1,5 +1,6 @@
 mod dump;
 mod runner;
+mod signed;
 mod workflows;
 
 use anyhow::{bail, Context, Result};
@@ -21,9 +22,12 @@ Usage: ./run.sh [--dry-run] [--release] COMMAND [ARGS...]
   run curve [ARGS...]        Run curve_fitter; no args generates the default curve
   run cuda BIN [ARGS...]     Build CUDA library and run one CUDA binary
   run nbody [ARGS...]        Run the existing integrator entry point
+  basis signed [cpu|cuda] OPTIONS  Generate signed orbital force curves
+  fit signed OPTIONS        Fit orbital choices/counts and signed density weights
   do list                   List reproducible build/run/plot workflows
   do NAME [ARGS...]          Run a workflow (old script stems also accepted)
   data mw                   Regenerate Sofue MW data and standard RC CSV
+  data m31                  Prepare Corbelli M31 data and fixed Geehan baryons
   python list               List Python plotting / analysis programs
   python NAME [ARGS...]      Run an existing Python program by stem
   plot NAME [ARGS...]        Run plot_NAME.py (or a full script stem)
@@ -98,13 +102,14 @@ fn dispatch(r: &mut Runner, args: &[String]) -> Result<()> {
                 workflows::run(r, name, &rest[1..])?;
             }
         }
-        "data" => {
-            if rest != ["mw"] {
-                bail!("usage: ./run.sh data mw");
-            }
-            workflows::mw_data(r)?;
-        }
+        "data" => match rest.as_slice() {
+            ["mw"] => workflows::mw_data(r)?,
+            ["m31"] | ["andromeda"] => signed::m31_data(r)?,
+            _ => bail!("usage: ./run.sh data mw|m31"),
+        },
         "run" | "r" => run(r, &rest)?,
+        "basis" => signed::basis(r, &rest)?,
+        "fit" => signed::fit(r, &rest)?,
         "python" | "plot" => {
             let name = rest.first().copied().unwrap_or("list");
             if name == "list" {
@@ -368,7 +373,7 @@ fn view(r: &Runner, name: &str) -> Result<()> {
 fn doctor(r: &Runner) -> Result<()> {
     let checks = [
         ("Rust / Cargo", cargo(), strings(&["--version"])),
-        ("Python plotting", python(), strings(&["-c", "import numpy, matplotlib, PIL; print('NumPy', numpy.__version__, 'Matplotlib', matplotlib.__version__, 'Pillow', PIL.__version__)"])),
+        ("Python plotting/fitting", python(), strings(&["-c", "import numpy, scipy, matplotlib, PIL; print('NumPy', numpy.__version__, 'SciPy', scipy.__version__, 'Matplotlib', matplotlib.__version__, 'Pillow', PIL.__version__)"])),
         ("CUDA (optional)", std::env::var_os("HORB_NVCC").unwrap_or_else(|| if Path::new("/usr/local/cuda/bin/nvcc").is_file() { "/usr/local/cuda/bin/nvcc".into() } else { "nvcc".into() }), strings(&["--version"])),
     ];
     for (label, program, args) in checks {
@@ -406,7 +411,7 @@ fn doctor(r: &Runner) -> Result<()> {
 
 fn menu(r: &mut Runner) -> Result<()> {
     loop {
-        println!("\nHORB · Operations\n  1  Build CPU\n  2  Build all (CUDA)\n  3  Check CPU\n  4  Run CUDA Milky Way candidate\n  5  Make orbital density graphs\n  6  List graphs\n  7  View latest graph\n  8  Dump current source\n  9  Dump source + input data\n  d  Dependency checks\n  l  List workflows\n  h  Help\n  q  Quit");
+        println!("\nHORB · Operations\n  1  Build CPU\n  2  Build all (CUDA)\n  3  Check CPU\n  4  Run CUDA Milky Way candidate\n  5  Make orbital density graphs\n  6  List graphs\n  7  View latest graph\n  8  Dump current source\n  9  Dump source + input data\n  s  Fit signed orbital densities (CPU multipoles)\n  g  Fit signed orbital densities (CUDA quadrature)\n  a  Fit Andromeda / M31 (CPU multipoles)\n  d  Dependency checks\n  l  List workflows\n  h  Help\n  q  Quit");
         print!("> ");
         io::stdout().flush()?;
         let mut input = String::new();
@@ -424,6 +429,9 @@ fn menu(r: &mut Runner) -> Result<()> {
             "7" => strings(&["view"]),
             "8" => strings(&["dump"]),
             "9" => strings(&["dump", "--data"]),
+            "s" => strings(&["do", "signed-fit", "cpu"]),
+            "g" => strings(&["do", "signed-fit", "cuda"]),
+            "a" => strings(&["do", "m31-signed-fit", "cpu"]),
             "d" => strings(&["doctor"]),
             "l" => strings(&["do", "list"]),
             "h" => strings(&["help"]),

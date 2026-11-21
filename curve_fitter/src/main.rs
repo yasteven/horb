@@ -18,6 +18,24 @@ fn main() -> Result<()> {
     let mode = &args[1];
 
     match mode.as_str() {
+        "signed_basis" => data_io::signed_basis::write_library(
+            &args[2..],
+            "cpu_multipole",
+            |cfg, radii, options| {
+                if options.softening != 0.0 {
+                    bail!("CPU multipoles are unsoftened; use --softening 0");
+                }
+                radii
+                    .iter()
+                    .map(|r| {
+                        Ok(orbital_basis::signed_gravity::disk_plane_v2(
+                            cfg, *r, options.nr,
+                        )?)
+                    })
+                    .collect()
+            },
+        )?,
+        "signed_density" => data_io::signed_basis::write_density(&args[2..])?,
         "curve" => {
             if args.len() != 5 {
                 print_usage_and_exit()?;
@@ -192,6 +210,7 @@ fn print_usage_and_exit() -> Result<()> {
          cargo run -p curve_fitter -- compare_dm_fixed_baselines <state> <a0_star_kpc> <horb_mass_msun> <baseline_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc> [einasto_r_minus2_kpc [einasto_alpha]]\n\
          \n\
          states: 1s, 3d_z2\n\
+         signed density commands: signed_basis --help, signed_density --help\n\
          halo_kind: piso, nfw, burkert, einasto\n\
          Einasto defaults: r_minus2 = NFW scale in comparisons, alpha = 0.18.\n\
          \n\

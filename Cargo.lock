@@ -67,6 +67,8 @@ name = "cuda_kernels"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "data_io",
+ "orbital_basis",
 ]
 
 [[package]]
@@ -84,6 +86,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "csv",
+ "orbital_basis",
  "serde",
  "tempfile",
 ]

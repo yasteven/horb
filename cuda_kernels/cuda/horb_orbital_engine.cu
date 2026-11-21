@@ -594,3 +594,53 @@ cleanup:
     cudaFree(d_radii);
     cudaFree(d_v_out);
 }
+
+// Signed density fits must preserve R*a_in, including negative values. The
+// historical speed API above deliberately keeps its old behavior.
+__global__ void disk_plane_signed_v2_kernel(
+    const MassCell* cells, size_t count, const double* radii, double* out,
+    size_t radius_count, double softening
+) {
+    size_t i = blockIdx.x;
+    if (i >= radius_count) return;
+    extern __shared__ double sums[];
+    double r = radii[i];
+    double total = 0.0;
+    for (size_t j = threadIdx.x; j < count; j += blockDim.x) {
+        double dx = r - cells[j].x;
+        double d2 = dx*dx + cells[j].y*cells[j].y + cells[j].z*cells[j].z + softening*softening;
+        total += G_KPC * r * cells[j].m * dx / (d2*sqrt(d2));
+    }
+    sums[threadIdx.x] = total;
+    __syncthreads();
+    for (int stride = blockDim.x / 2; stride > 0; stride >>= 1) {
+        if (threadIdx.x < stride) sums[threadIdx.x] += sums[threadIdx.x + stride];
+        __syncthreads();
+    }
+    if (threadIdx.x == 0) out[i] = sums[0];
+}
+
+extern "C" int compute_disk_plane_signed_v2_cuda(
+    const MassCell* cells, size_t count, const double* radii, double* out,
+    size_t radius_count, double softening
+) {
+    if (!cells || !radii || !out || count == 0 || radius_count == 0 ||
+        radius_count > 100001 || !std::isfinite(softening) || softening < 0.0) return 0;
+    MassCell* dc = nullptr;
+    double* dr = nullptr;
+    double* dk = nullptr;
+    bool ok = check_cuda(cudaMalloc(&dc, count*sizeof(MassCell)), "signed cells allocation");
+    if (ok) ok = check_cuda(cudaMalloc(&dr, radius_count*sizeof(double)), "signed radii allocation");
+    if (ok) ok = check_cuda(cudaMalloc(&dk, radius_count*sizeof(double)), "signed force allocation");
+    if (ok) ok = check_cuda(cudaMemcpy(dc,cells,count*sizeof(MassCell),cudaMemcpyHostToDevice), "signed cells copy");
+    if (ok) ok = check_cuda(cudaMemcpy(dr,radii,radius_count*sizeof(double),cudaMemcpyHostToDevice), "signed radii copy");
+    if (ok) {
+        disk_plane_signed_v2_kernel<<<(unsigned int)radius_count,256,256*sizeof(double)>>>(dc,count,dr,dk,radius_count,softening);
+        ok = check_cuda(cudaGetLastError(), "signed force launch");
+    }
+    if (ok) ok = check_cuda(cudaDeviceSynchronize(), "signed force execution");
+    if (ok) ok = check_cuda(cudaMemcpy(out,dk,radius_count*sizeof(double),cudaMemcpyDeviceToHost), "signed force result");
+    cudaFree(dc); cudaFree(dr); cudaFree(dk);
+    if (ok) for (size_t i=0; i<radius_count; ++i) if (!std::isfinite(out[i])) return 0;
+    return ok ? 1 : 0;
+}
