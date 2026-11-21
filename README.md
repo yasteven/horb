@@ -9,6 +9,8 @@ Use `./run.sh` for the operations menu, or run commands directly:
 ```sh
 ./run.sh build all                 # CUDA + Rust (Jetson Orin default: sm_87)
 ./run.sh check                     # CPU tests and tool format check
+./run.sh check plots               # Python comparison/scoring/plot tests
+./run.sh do mw-comparison          # CPU comparison, including Einasto
 ./run.sh do cuda-candidate         # build, run and plot the current MW candidate
 ./run.sh do orbital-views 1.5 1e11  # make density graphs
 ./run.sh graphs                    # list graphs
@@ -22,6 +24,27 @@ new source files, plus branch/commit details, for sharing current code in a
 conversation. All operations live in the Rust `tool/` crate; the previous shell
 workflows have been migrated. See [tool/README.md](tool/README.md) for commands,
 dependencies, scan overrides, dry runs and the old-to-new command mapping.
+
+## Classical halo comparisons
+
+The comparison suite includes **NFW, pseudo-isothermal, Burkert and Einasto**.
+Einasto uses the slope-minus-two radius `r_minus2` and shape parameter `alpha`;
+the default MW comparison uses `r_minus2=15 kpc`, `alpha=0.18`. Both are
+configurable. Each classical baseline is normalized to the specified enclosed
+mass at the reference radius, and total curves use the same baryonic model.
+
+```sh
+./run.sh run curve halo einasto 15 2.5e11 80 0.18
+./run.sh do mw-comparison 1.0 2.5e11 2.5e11 15.0 0.18
+./run.sh do cuda-candidate 1.0 2.5e11 96 80 0.25 15.0 0.18
+./run.sh view
+```
+
+The two comparison workflows write graphs and score tables for every model.
+These are fixed-parameter diagnostics; the defaults are not optimized fits.
+See [the Einasto model notes](docs/einasto.md) for the equations, CSV fields,
+normalization and scoring ranges. Signed-density fitting and the additional
+galaxy datasets are separate planned steps.
 
 ## Reality has a fractal geometry. Modern Physics is a cult of continuum religion.
 
@@ -73,6 +96,10 @@ The current best Milky Way candidate is a morphology-constrained hydrogenic `3d_
 | Bulge scale | `0.522 kpc` |
 
 Using the same literature baryonic model for every halo, the CUDA HORB candidate is compared directly against the previous spherical HORB approximation and against NFW, pseudo-isothermal, and Burkert halo baselines, with all curves plotted against the Sofue 2020 unified Milky Way rotation curve.
+
+The embedded image below records that earlier three-baseline comparison.
+Regenerating it with `do cuda-candidate` now also includes Einasto and writes
+all-model score tables; the archived image itself has not been replaced.
 
 ![CUDA HORB disk-plane force candidate versus classical halo models and the Milky Way rotation curve](images/mw_cuda_horb_diskplane_total_vs_sofue2020.png)
 

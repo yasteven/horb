@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
+from horb_common import has_einasto, einasto_label
 
 
 def main():
@@ -24,6 +25,8 @@ def main():
     ax.plot(r, data["v_piso_kms"], label="pseudo-isothermal")
     ax.plot(r, data["v_nfw_kms"], label="NFW")
     ax.plot(r, data["v_burkert_kms"], label="Burkert")
+    if has_einasto(data):
+        ax.plot(r, data["v_einasto_kms"], label=einasto_label(data))
 
     ax.set_xlabel("R [kpc]")
     ax.set_ylabel("v_DM [km/s]")

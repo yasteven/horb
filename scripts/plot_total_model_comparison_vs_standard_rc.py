@@ -6,39 +6,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
-G_KPC = 4.3009e-6
-
-
-def baryon_velocity_component(kind, mass, scale, r):
-    r = np.asarray(r)
-
-    if kind in ("disk", "exponential_disk", "exponential-disk"):
-        x = r / scale
-        menc = mass * (1.0 - np.exp(-x) * (1.0 + x))
-    elif kind in ("bulge", "hernquist", "hernquist_bulge", "hernquist-bulge"):
-        menc = mass * r**2 / (r + scale) ** 2
-    else:
-        raise ValueError(f"unknown baryon component kind: {kind}")
-
-    return np.sqrt(np.where(r > 0, G_KPC * menc / r, 0.0))
-
-
-def load_baryon_velocity_squared(path, r):
-    rows = np.genfromtxt(path, delimiter=",", names=True, dtype=None, encoding=None)
-
-    if rows.shape == ():
-        rows = np.array([rows], dtype=rows.dtype)
-
-    v2 = np.zeros_like(r, dtype=float)
-
-    for row in rows:
-        kind = str(row["kind"])
-        mass = float(row["mass_msun"])
-        scale = float(row["scale_kpc"])
-        v = baryon_velocity_component(kind, mass, scale, r)
-        v2 += v**2
-
-    return v2
+from horb_common import load_baryon_velocity_squared, has_einasto, einasto_label
 
 
 def main():
@@ -81,6 +49,9 @@ def main():
     ax.plot(r, v_nfw_total, linestyle="--", linewidth=2.0, label="NFW + same baryons")
     ax.plot(r, v_piso_total, linestyle="--", linewidth=2.0, label="pISO + same baryons")
     ax.plot(r, v_burkert_total, linestyle="--", linewidth=2.0, label="Burkert + same baryons")
+    if has_einasto(dm):
+        ax.plot(r, np.sqrt(dm["v_einasto_kms"]**2 + v_baryon2), linestyle="-.",
+                linewidth=2.0, label=einasto_label(dm) + " + same baryons")
     ax.plot(r, v_baryon, linestyle=":", linewidth=1.8, label="literature baryons only")
 
     ax.set_xlabel("R [kpc]")

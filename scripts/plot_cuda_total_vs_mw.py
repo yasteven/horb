@@ -6,39 +6,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
-G_KPC = 4.3009e-6
-
-
-def baryon_velocity_component(kind, mass, scale, r):
-    r = np.asarray(r)
-
-    if kind in ("disk", "exponential_disk", "exponential-disk"):
-        x = r / scale
-        menc = mass * (1.0 - np.exp(-x) * (1.0 + x))
-    elif kind in ("bulge", "hernquist", "hernquist_bulge", "hernquist-bulge"):
-        menc = mass * r**2 / (r + scale) ** 2
-    else:
-        raise ValueError(f"unknown baryon component kind: {kind}")
-
-    return np.sqrt(np.where(r > 0, G_KPC * menc / r, 0.0))
-
-
-def load_baryon_velocity_squared(path, r):
-    rows = np.genfromtxt(path, delimiter=",", names=True, dtype=None, encoding=None)
-
-    if rows.shape == ():
-        rows = np.array([rows], dtype=rows.dtype)
-
-    v2 = np.zeros_like(r, dtype=float)
-
-    for row in rows:
-        kind = str(row["kind"])
-        mass = float(row["mass_msun"])
-        scale = float(row["scale_kpc"])
-        v = baryon_velocity_component(kind, mass, scale, r)
-        v2 += v**2
-
-    return v2
+from horb_common import load_baryon_velocity_squared, has_einasto, einasto_label
 
 
 def interp_to(r_target, r_source, v_source):
@@ -59,8 +27,9 @@ def main():
     dm = np.genfromtxt(args.dm_compare_csv, delimiter=",", names=True)
     rc = np.genfromtxt(args.rc_csv, delimiter=",", names=True, dtype=None, encoding=None)
 
-    r = cuda["r_kpc"]
-    v_cuda_dm = cuda["v_horb_cuda_kms"]
+    common = (cuda["r_kpc"] >= dm["r_kpc"][0]) & (cuda["r_kpc"] <= dm["r_kpc"][-1])
+    r = cuda["r_kpc"][common]
+    v_cuda_dm = cuda["v_horb_cuda_kms"][common]
 
     v_baryon2 = load_baryon_velocity_squared(args.baryons_csv, r)
     v_baryon = np.sqrt(v_baryon2)
@@ -95,6 +64,10 @@ def main():
     ax.plot(r, v_nfw_total, linestyle="--", linewidth=1.9, label="NFW + same baryons")
     ax.plot(r, v_piso_total, linestyle="--", linewidth=1.9, label="pISO + same baryons")
     ax.plot(r, v_burkert_total, linestyle="--", linewidth=1.9, label="Burkert + same baryons")
+    if has_einasto(dm):
+        v_einasto = interp_to(r, dm["r_kpc"], dm["v_einasto_kms"])
+        ax.plot(r, np.sqrt(v_einasto**2 + v_baryon2), linestyle="-.",
+                linewidth=1.9, label=einasto_label(dm) + " + same baryons")
     ax.plot(r, v_baryon, linestyle=":", linewidth=1.8, label="literature baryons only")
 
     ax.set_xlabel("R [kpc]")

@@ -6,9 +6,10 @@ output paths are interpreted from the repository root.
 
 The Rust `horb-tool` crate owns process execution, parameter sweeps, CSV report
 aggregation, graph opening and source dumps. `run.sh` is the only shell script.
-The existing Rust/CUDA models and Python plotting/numerical programs retain
-their calculations. This change does not implement the planned signed-density
-fitter, Einasto profile or additional galaxies.
+Einasto is available alongside NFW, pseudo-isothermal and Burkert in the halo
+comparison commands. The signed-density fitter and additional galaxies remain
+planned work. See [the Einasto notes](../docs/einasto.md) for the model and scoring
+conventions.
 
 ## Everyday commands
 
@@ -20,6 +21,7 @@ fitter, Einasto profile or additional galaxies.
 ./run.sh build all               # CUDA shared library, then all Rust crates
 ./run.sh check                   # tool format check and CPU workspace tests
 ./run.sh check all               # same, with CUDA tests (requires CUDA hardware)
+./run.sh check plots             # Python comparison/scoring/plot tests
 ./run.sh --release build all
 
 ./run.sh do make-curve
@@ -38,6 +40,39 @@ fitter, Einasto profile or additional galaxies.
 `b`, `c`, `r`, and `d` alias `build`, `check`, `run`, and `dump`. `source` also
 aliases `dump`. With redirected stdin, bare `./run.sh` prints help instead of
 waiting for menu input.
+
+## Halo comparisons
+
+```sh
+./run.sh run curve halo einasto 15 2.5e11 80 0.18
+./run.sh do mw-comparison 1.0 2.5e11 2.5e11 15.0 0.18
+./run.sh do cuda-candidate 1.0 2.5e11 96 80 0.25 15.0 0.18
+```
+
+The last two workflow arguments are optional Einasto `r_minus2` in kpc and
+`alpha`, defaulting to `15.0` and `0.18`. Earlier argument forms still work.
+The CUDA numerical kernel receives its original five arguments; Einasto is
+evaluated analytically on the CPU for the comparison.
+
+Both workflows write a comparison CSV and PNG, plus `_score_inner.csv` and
+`_score_common.csv` reports under `reports/`. Output names include the Einasto
+scale and shape. The inner range is 5–25 kpc; the common range is 5–80 kpc,
+restricted further to available model radii. Every row uses the same selected
+observations and baryons. Reports contain RMS, chi-squared and chi-squared per
+point, not a reduced chi-squared with fitted degrees of freedom.
+
+To score an existing comparison without rerunning the models:
+
+```sh
+./run.sh python score_dm_comparison \
+  --dm-compare-csv curves/YOUR_COMPARISON.csv \
+  --rc-csv data/milky_way/sofue_2020_standard_rc.csv \
+  --baryons-csv data/milky_way/sofue_literature_baryons.csv
+```
+
+Add `--cuda-csv curves/YOUR_CUDA_CURVE.csv` to include the disk-plane HORB
+result. Old CSVs remain readable and emit a reminder to regenerate them when
+they lack Einasto columns.
 
 ## Source dump for a conversation
 

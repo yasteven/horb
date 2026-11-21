@@ -2,6 +2,7 @@
 
 use anyhow::{bail, Result};
 use data_io::RotationCurve;
+use orbital_basis::halo_models::DEFAULT_EINASTO_ALPHA;
 use orbital_basis::{
     BaryonComponent, BaryonComponentKind, BaryonicModel, ClassicalHalo, ClassicalHaloKind,
     DensityField, MultiBaryonicModel, OrbitalConfig,
@@ -61,7 +62,7 @@ fn main() -> Result<()> {
         }
 
         "halo" => {
-            if args.len() != 6 {
+            if !(6..=7).contains(&args.len()) {
                 print_usage_and_exit()?;
             }
 
@@ -70,12 +71,24 @@ fn main() -> Result<()> {
             let m_ref_msun: f64 = args[4].parse()?;
             let r_ref_kpc: f64 = args[5].parse()?;
 
-            let halo = ClassicalHalo::from_mass_at_radius(kind, scale_kpc, m_ref_msun, r_ref_kpc)?;
+            let halo = if kind == ClassicalHaloKind::Einasto {
+                let alpha = args
+                    .get(6)
+                    .map(|s| s.parse())
+                    .transpose()?
+                    .unwrap_or(DEFAULT_EINASTO_ALPHA);
+                ClassicalHalo::einasto_from_mass_at_radius(scale_kpc, alpha, m_ref_msun, r_ref_kpc)?
+            } else {
+                if args.len() != 6 {
+                    bail!("the optional alpha argument applies only to Einasto");
+                }
+                ClassicalHalo::from_mass_at_radius(kind, scale_kpc, m_ref_msun, r_ref_kpc)?
+            };
             print_halo_curve(&halo)?;
         }
 
         "compare_dm" => {
-            if args.len() != 9 {
+            if !(9..=11).contains(&args.len()) {
                 print_usage_and_exit()?;
             }
 
@@ -112,11 +125,12 @@ fn main() -> Result<()> {
                 r_ref_kpc,
             )?;
 
-            print_dm_comparison_curve(&field, &piso, &nfw, &burkert)?;
+            let einasto = comparison_einasto(&args[9..], scale_nfw, dm_mass, r_ref_kpc)?;
+            print_dm_comparison_curve(&field, &piso, &nfw, &burkert, &einasto)?;
         }
 
         "compare_dm_fixed_baselines" => {
-            if args.len() != 10 {
+            if !(10..=12).contains(&args.len()) {
                 print_usage_and_exit()?;
             }
 
@@ -154,7 +168,8 @@ fn main() -> Result<()> {
                 r_ref_kpc,
             )?;
 
-            print_dm_comparison_curve(&field, &piso, &nfw, &burkert)?;
+            let einasto = comparison_einasto(&args[10..], scale_nfw, baseline_mass, r_ref_kpc)?;
+            print_dm_comparison_curve(&field, &piso, &nfw, &burkert, &einasto)?;
         }
         "fit_standard_rc" => print_standard_rc_fit_score(&args[2..])?,
 
@@ -172,18 +187,40 @@ fn print_usage_and_exit() -> Result<()> {
          cargo run -p curve_fitter -- density    <state> <a0_star_kpc> <dm_mass_msun>\n\
          cargo run -p curve_fitter -- xz         <state> <a0_star_kpc> <dm_mass_msun>\n\
          cargo run -p curve_fitter -- total      <state> <a0_star_kpc> <dm_mass_msun> <disk_mass_msun> <disk_scale_kpc> <bulge_mass_msun> <bulge_scale_kpc>\n\
-         cargo run -p curve_fitter -- halo       <halo_kind> <scale_kpc> <m_ref_msun> <r_ref_kpc>\n\
-         cargo run -p curve_fitter -- compare_dm <state> <a0_star_kpc> <dm_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc>\n\
-         cargo run -p curve_fitter -- compare_dm_fixed_baselines <state> <a0_star_kpc> <horb_mass_msun> <baseline_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc>\n\
+         cargo run -p curve_fitter -- halo       <halo_kind> <scale_kpc> <m_ref_msun> <r_ref_kpc> [einasto_alpha]\n\
+         cargo run -p curve_fitter -- compare_dm <state> <a0_star_kpc> <dm_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc> [einasto_r_minus2_kpc [einasto_alpha]]\n\
+         cargo run -p curve_fitter -- compare_dm_fixed_baselines <state> <a0_star_kpc> <horb_mass_msun> <baseline_mass_msun> <piso_rc_kpc> <nfw_rs_kpc> <burkert_r0_kpc> <r_ref_kpc> [einasto_r_minus2_kpc [einasto_alpha]]\n\
          \n\
          states: 1s, 3d_z2\n\
-         halo_kind: piso, nfw, burkert\n\
+         halo_kind: piso, nfw, burkert, einasto\n\
+         Einasto defaults: r_minus2 = NFW scale in comparisons, alpha = 0.18.\n\
          \n\
          examples:\n\
          cargo run -p curve_fitter -- halo nfw 15.0 1e11 80.0\n\
          cargo run -p curve_fitter -- compare_dm 3d_z2 1.5 1e11 5.0 15.0 8.0 80.0\n\
          cargo run -p curve_fitter -- compare_dm_fixed_baselines 3d_z2 1.5 5e10 1e11 5.0 15.0 8.0 80.0"
     )
+}
+
+fn comparison_einasto(
+    args: &[String],
+    default_scale: f64,
+    mass: f64,
+    radius: f64,
+) -> Result<ClassicalHalo> {
+    let scale = args
+        .first()
+        .map(|s| s.parse())
+        .transpose()?
+        .unwrap_or(default_scale);
+    let alpha = args
+        .get(1)
+        .map(|s| s.parse())
+        .transpose()?
+        .unwrap_or(DEFAULT_EINASTO_ALPHA);
+    Ok(ClassicalHalo::einasto_from_mass_at_radius(
+        scale, alpha, mass, radius,
+    )?)
 }
 
 fn build_field(state: &str, a0_star: &str, dm_mass: &str) -> Result<DensityField> {
@@ -278,8 +315,10 @@ fn print_dm_comparison_curve(
     piso: &ClassicalHalo,
     nfw: &ClassicalHalo,
     burkert: &ClassicalHalo,
+    einasto: &ClassicalHalo,
 ) -> Result<()> {
-    println!("r_kpc,v_horb_kms,v_piso_kms,v_nfw_kms,v_burkert_kms,m_horb_msun,m_piso_msun,m_nfw_msun,m_burkert_msun");
+    // Append columns so existing column positions remain usable.
+    println!("r_kpc,v_horb_kms,v_piso_kms,v_nfw_kms,v_burkert_kms,m_horb_msun,m_piso_msun,m_nfw_msun,m_burkert_msun,v_einasto_kms,m_einasto_msun,einasto_r_minus2_kpc,einasto_alpha,einasto_rho_minus2_msun_per_kpc3");
 
     let r_min = 0.05;
     let r_max = 80.0;
@@ -303,8 +342,10 @@ fn print_dm_comparison_curve(
         let v_burkert = burkert.circular_velocity(r);
 
         println!(
-            "{:.6},{:.6},{:.6},{:.6},{:.6},{:.6e},{:.6e},{:.6e},{:.6e}",
-            r, v_horb, v_piso, v_nfw, v_burkert, m_horb, m_piso, m_nfw, m_burkert
+            "{:.6},{:.6},{:.6},{:.6},{:.6},{:.6e},{:.6e},{:.6e},{:.6e},{:.6},{:.6e},{:.12e},{:.12e},{:.12e}",
+            r, v_horb, v_piso, v_nfw, v_burkert, m_horb, m_piso, m_nfw, m_burkert,
+            einasto.circular_velocity(r), einasto.enclosed_mass(r), einasto.scale_kpc,
+            einasto.einasto_alpha, einasto.density_norm_msun_per_kpc3
         );
     }
 

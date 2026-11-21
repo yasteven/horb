@@ -14,7 +14,7 @@ Usage: ./run.sh [--dry-run] [--release] COMMAND [ARGS...]
 
   (no arguments)             Interactive menu (help when stdin is not a terminal)
   build [cpu|all|cuda|tool]   Build Rust; all also builds CUDA (default: cpu)
-  check [cpu|all|tool]       Format check for tool + tests (default: cpu)
+  check [cpu|all|tool|plots] Tests; plots checks Python comparisons (default: cpu)
   fmt                       Format the tool crate
   doctor                    Check Rust, Python plotting packages, CUDA and viewer
   run list                  List project binaries
@@ -201,9 +201,24 @@ fn build(r: &mut Runner, args: &[&str]) -> Result<()> {
 
 fn check(r: &mut Runner, args: &[&str]) -> Result<()> {
     if args.len() > 1 {
-        bail!("usage: ./run.sh check [cpu|all|tool]");
+        bail!("usage: ./run.sh check [cpu|all|tool|plots]");
     }
     let target = args.first().copied().unwrap_or("cpu");
+    if target == "plots" {
+        return r.exec(
+            python(),
+            &strings(&[
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                "scripts/tests",
+                "-p",
+                "test_*.py",
+            ]),
+            None,
+        );
+    }
     if !["cpu", "all", "tool"].contains(&target) {
         bail!("unknown check target '{target}'");
     }

@@ -5,25 +5,7 @@ from pathlib import Path
 import numpy as np
 
 
-def score(name, r_model, v_model, mw, r_min, r_max):
-    mask = (mw["R_kpc"] >= r_min) & (mw["R_kpc"] <= r_max)
-    r_obs = mw["R_kpc"][mask]
-
-    # Accept either old Sofue helper schema or standard RC schema.
-    if "Vobs_kms" in mw.dtype.names:
-        v_obs = mw["Vobs_kms"][mask]
-        err = mw["eV_kms"][mask]
-    else:
-        v_obs = mw["v_kms"][mask]
-        err = mw["v_err_kms"][mask]
-
-    v_interp = np.interp(r_obs, r_model, v_model)
-    resid = v_interp - v_obs
-    rms = np.sqrt(np.mean(resid**2))
-    chi2 = np.sum((resid / err) ** 2)
-    n = len(r_obs)
-
-    return name, r_min, r_max, n, rms, chi2, chi2 / n
+from horb_common import has_einasto, score
 
 
 def main():
@@ -41,6 +23,8 @@ def main():
 
     r = total["r_kpc"]
     v_baryon2 = total["v_disk_kms"]**2 + total["v_bulge_kms"]**2
+    common = (r >= dm["r_kpc"][0]) & (r <= dm["r_kpc"][-1])
+    r, v_baryon2 = r[common], v_baryon2[common]
 
     models = {
         "HORB+baryons": np.sqrt(np.interp(r, dm["r_kpc"], dm["v_horb_kms"])**2 + v_baryon2),
@@ -49,6 +33,8 @@ def main():
         "Burkert+baryons": np.sqrt(np.interp(r, dm["r_kpc"], dm["v_burkert_kms"])**2 + v_baryon2),
         "baryons_only": np.sqrt(v_baryon2),
     }
+    if has_einasto(dm):
+        models["Einasto+baryons"] = np.sqrt(np.interp(r, dm["r_kpc"], dm["v_einasto_kms"])**2 + v_baryon2)
 
     print("model,r_min,r_max,n,rms_kms,chi2,chi2_per_point")
     for name, v in models.items():

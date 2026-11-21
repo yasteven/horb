@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
+from horb_common import has_einasto, einasto_label
 
 
 def main():
@@ -28,6 +29,8 @@ def main():
     v_disk = total["v_disk_kms"]
     v_bulge = total["v_bulge_kms"]
     v_baryon2 = v_disk**2 + v_bulge**2
+    common = (r >= dm["r_kpc"][0]) & (r <= dm["r_kpc"][-1])
+    r, v_baryon2 = r[common], v_baryon2[common]
 
     # Interpolate DM comparison onto the total-curve radius grid if needed.
     v_horb_dm = np.interp(r, dm["r_kpc"], dm["v_horb_kms"])
@@ -69,6 +72,10 @@ def main():
     ax.plot(r, v_nfw_total, linestyle="--", linewidth=2.0, label="NFW + baryons")
     ax.plot(r, v_piso_total, linestyle="--", linewidth=2.0, label="pISO + baryons")
     ax.plot(r, v_burkert_total, linestyle="--", linewidth=2.0, label="Burkert + baryons")
+    if has_einasto(dm):
+        v_einasto = np.interp(r, dm["r_kpc"], dm["v_einasto_kms"])
+        ax.plot(r, np.sqrt(v_einasto**2 + v_baryon2), linestyle="-.",
+                linewidth=2.0, label=einasto_label(dm) + " + baryons")
 
     ax.plot(r, v_baryon_total, linestyle=":", linewidth=1.8, label="baryons only")
 

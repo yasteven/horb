@@ -14,13 +14,90 @@ fn no_input_and_unknown_commands_are_noninteractive() {
     assert!(help.status.success());
     assert!(String::from_utf8_lossy(&help.stdout).contains("dump [--data]"));
     assert!(!tool(&["unknown-command"]).status.success());
-    assert!(
-        !tool(&["do", "cuda-candidate", "1", "2", "3", "4", "5", "6"])
-            .status
-            .success()
-    );
+    assert!(!tool(&[
+        "do",
+        "cuda-candidate",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+    ])
+    .status
+    .success());
     assert!(!tool(&["python", "../../arbitrary-file"]).status.success());
     assert!(!tool(&["view", "0"]).status.success());
+}
+
+#[test]
+fn einasto_parameters_reach_comparisons_but_not_cuda_kernel() {
+    for args in [
+        vec![
+            "--dry-run",
+            "do",
+            "mw-comparison",
+            "1.0",
+            "2.5e11",
+            "2e11",
+            "18",
+            "0.25",
+        ],
+        vec![
+            "--dry-run",
+            "do",
+            "cuda-candidate",
+            "1.0",
+            "2.5e11",
+            "96",
+            "80",
+            "0.25",
+            "18",
+            "0.25",
+        ],
+    ] {
+        let result = tool(&args);
+        assert!(
+            result.status.success(),
+            "{}",
+            String::from_utf8_lossy(&result.stderr)
+        );
+        let plan = String::from_utf8(result.stderr).unwrap();
+        assert!(plan.contains("5.0 15.0 8.0 80.0 18 0.25"));
+        assert!(plan.contains("einasto_rs18_alpha0.25"));
+        assert!(plan.contains("score_dm_comparison.py"));
+        assert!(plan.contains("_score_inner.csv"));
+        assert!(plan.contains("_score_common.csv"));
+        if args[2] == "cuda-candidate" {
+            let kernel = plan
+                .lines()
+                .find(|l| l.contains("--bin test_horb_disk_plane_curve"))
+                .unwrap();
+            assert!(kernel.ends_with("-- 1.0 2.5e11 96 80 0.25"));
+            assert!(plan.contains("--cuda-csv"));
+        }
+    }
+    for bad in ["0", "-1", "NaN", "inf", "not-a-number"] {
+        let result = tool(&[
+            "--dry-run",
+            "do",
+            "cuda-candidate",
+            "1.0",
+            "2.5e11",
+            "96",
+            "80",
+            "0.25",
+            "15",
+            bad,
+        ]);
+        assert!(!result.status.success());
+        assert!(!String::from_utf8_lossy(&result.stderr).contains("nvcc"));
+    }
+    let plots = tool(&["--dry-run", "check", "plots"]);
+    assert!(plots.status.success());
+    assert!(String::from_utf8_lossy(&plots.stderr).contains("unittest discover"));
 }
 
 #[test]

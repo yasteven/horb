@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 import numpy as np
+from horb_common import has_einasto
 
 
 def summarize(name, r, v):
@@ -33,6 +34,8 @@ def main():
         summarize("NFW", r, data["v_nfw_kms"]),
         summarize("Burkert", r, data["v_burkert_kms"]),
     ]
+    if has_einasto(data):
+        rows.append(summarize("Einasto", r, data["v_einasto_kms"]))
 
     print("model,vmax_kms,r_vmax_kpc,v8_kms,v20_kms,v50_kms,v80_kms,decline_20_to_80_kms")
     for row in rows:

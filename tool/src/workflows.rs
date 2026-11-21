@@ -19,7 +19,7 @@ pub const COMMANDS: &[(&str, &str, &str)] = &[
     (
         "cuda-candidate",
         "run_cuda_mw_3dz2_candidate",
-        "[a0=1.0 mass=2.5e11 n=96 extent=80 softening=0.25]",
+        "[a0=1.0 mass=2.5e11 n=96 extent=80 softening=0.25 einasto_rs=15.0 alpha=0.18]",
     ),
     (
         "cuda-scan",
@@ -41,7 +41,7 @@ pub const COMMANDS: &[(&str, &str, &str)] = &[
     (
         "mw-comparison",
         "run_mw_literature_baryons_model_comparison",
-        "[a0=1.0 mass=2.5e11 baseline_mass=2.5e11]",
+        "[a0=1.0 mass=2.5e11 baseline_mass=2.5e11 einasto_rs=15.0 alpha=0.18]",
     ),
     ("summary", "summarize_total_curve", "CSV"),
     ("orbital-views", "plot_orbital_views", "[a0=1.5 mass=1e11]"),
@@ -128,9 +128,10 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
     // Validate argument counts before creating outputs or launching commands.
     let maximum = match name {
         "make-curve" | "orbital-views" => 2,
-        "cuda-candidate" => 5,
+        "cuda-candidate" => 7,
+        "mw-comparison" => 5,
         "cuda-scan" | "cuda-basis" | "cuda-wavefunction" => 6,
-        "mw-comparison" | "fermi-extent40" | "legacy-standard-scan" => 3,
+        "fermi-extent40" | "legacy-standard-scan" => 3,
         "legacy-multi-scan" => 4,
         "summary" | "morphology-scan" | "fermi-plots" | "fermi-extent" | "legacy-milestone3"
         | "legacy-disk-scan" | "legacy-mass-scan" => 1,
@@ -284,7 +285,8 @@ pub fn mw_data(r: &Runner) -> Result<()> {
 }
 
 fn cuda_candidate(r: &mut Runner, args: &[&str]) -> Result<()> {
-    let p = defaults(args, &["1.0", "2.5e11", "96", "80", "0.25"])?;
+    let p = defaults(args, &["1.0", "2.5e11", "96", "80", "0.25", "15.0", "0.18"])?;
+    let einasto = einasto_tag(p[5], p[6])?;
     // Match the writer's Rust formatting exactly (also for small exponents).
     let a: f64 = p[0].parse()?;
     let mass: f64 = p[1].parse()?;
@@ -297,12 +299,16 @@ fn cuda_candidate(r: &mut Runner, args: &[&str]) -> Result<()> {
         "curves/cuda_horb_diskplane_a{a:.3}_m{mass:.3e}_n{}.csv",
         p[2]
     );
-    let sph = format!("curves/spherical_horb_compare_a{}_m{}.csv", p[0], p[1]);
-    let plot = format!(
-        "plots/mw_cuda_horb_diskplane_total_vs_sofue2020_a{}_m{}_n{}.png",
+    let sph = format!(
+        "curves/spherical_horb_compare_a{}_m{}_{einasto}.csv",
+        p[0], p[1]
+    );
+    let tag = format!(
+        "mw_cuda_horb_diskplane_total_vs_sofue2020_a{}_m{}_n{}_{einasto}",
         p[0], p[1], p[2]
     );
-    r.cuda("test_horb_disk_plane_curve", &p, None)?;
+    let plot = format!("plots/{tag}.png");
+    r.cuda("test_horb_disk_plane_curve", &p[..5], None)?;
     r.curve(
         &[
             "compare_dm_fixed_baselines",
@@ -314,6 +320,8 @@ fn cuda_candidate(r: &mut Runner, args: &[&str]) -> Result<()> {
             "15.0",
             "8.0",
             "80.0",
+            p[5],
+            p[6],
         ],
         Some(&sph),
     )?;
@@ -332,7 +340,8 @@ fn cuda_candidate(r: &mut Runner, args: &[&str]) -> Result<()> {
             &plot,
         ],
         None,
-    )
+    )?;
+    comparison_scores(r, &sph, Some(&cuda), &tag)
 }
 
 fn cuda_scan(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
@@ -467,12 +476,14 @@ fn cuda_rebuild(r: &mut Runner) -> Result<()> {
 }
 
 fn mw_comparison(r: &Runner, args: &[&str]) -> Result<()> {
-    let p = defaults(args, &["1.0", "2.5e11", "2.5e11"])?;
+    let p = defaults(args, &["1.0", "2.5e11", "2.5e11", "15.0", "0.18"])?;
+    let einasto = einasto_tag(p[3], p[4])?;
     mw_data(r)?;
-    let dm = format!(
-        "curves/mw_lit_baryons_dm_compare_a{}_m{}_base{}.csv",
+    let tag = format!(
+        "mw_lit_baryons_dm_compare_a{}_m{}_base{}_{einasto}",
         p[0], p[1], p[2]
     );
+    let dm = format!("curves/{tag}.csv");
     r.curve(
         &[
             "compare_dm_fixed_baselines",
@@ -484,6 +495,8 @@ fn mw_comparison(r: &Runner, args: &[&str]) -> Result<()> {
             "15.0",
             "8.0",
             "80.0",
+            p[3],
+            p[4],
         ],
         Some(&dm),
     )?;
@@ -497,9 +510,9 @@ fn mw_comparison(r: &Runner, args: &[&str]) -> Result<()> {
             "--baryons-csv",
             BARYONS,
             "-o",
-            "plots/mw_literature_baryons_total_models_vs_sofue2020.png",
+            &format!("plots/{tag}.png"),
             "--title",
-            "Milky Way: HORB vs classical halos + literature baryons",
+            "Milky Way: spherical HORB vs fixed halo profiles + literature baryons",
         ],
         None,
     )?;
@@ -517,6 +530,42 @@ fn mw_comparison(r: &Runner, args: &[&str]) -> Result<()> {
                 max,
             ],
             Some(&out),
+        )?;
+    }
+    comparison_scores(r, &dm, None, &tag)
+}
+
+fn einasto_tag(scale: &str, alpha: &str) -> Result<String> {
+    for (name, value) in [("Einasto r_minus2", scale), ("Einasto alpha", alpha)] {
+        let number: f64 = value.parse().with_context(|| format!("invalid {name}"))?;
+        if !number.is_finite() || number <= 0.0 {
+            bail!("{name} must be finite and positive");
+        }
+    }
+    Ok(format!("einasto_rs{scale}_alpha{alpha}"))
+}
+
+fn comparison_scores(r: &Runner, dm: &str, cuda: Option<&str>, tag: &str) -> Result<()> {
+    for (range, max) in [("inner", "25"), ("common", "80")] {
+        let mut args = vec![
+            "--dm-compare-csv",
+            dm,
+            "--rc-csv",
+            RC,
+            "--baryons-csv",
+            BARYONS,
+            "--r-min",
+            "5",
+            "--r-max",
+            max,
+        ];
+        if let Some(path) = cuda {
+            args.extend(["--cuda-csv", path]);
+        }
+        r.python(
+            "score_dm_comparison",
+            &args,
+            Some(&format!("reports/{tag}_score_{range}.csv")),
         )?;
     }
     Ok(())
