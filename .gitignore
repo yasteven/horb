@@ -15,3 +15,11 @@ print_horb_rust_debug.sh
 /plots/
 /reports/
 /curves/
+
+# Project tool outputs and local environments
+/dumps/
+/cat_all_horb*.txt
+/.venv/
+__pycache__/
+*.pyc
+/cuda_kernels/cuda/libhorb_cuda.so

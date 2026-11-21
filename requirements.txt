@@ -1,0 +1,4 @@
+# Used by the existing plotting and analysis programs; install in a virtualenv.
+numpy>=1.24
+matplotlib>=3.7
+Pillow>=9

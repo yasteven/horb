@@ -2,6 +2,27 @@
 
 Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Galaxy Dark Matter Halos
 
+## Project tool
+
+Use `./run.sh` for the operations menu, or run commands directly:
+
+```sh
+./run.sh build all                 # CUDA + Rust (Jetson Orin default: sm_87)
+./run.sh check                     # CPU tests and tool format check
+./run.sh do cuda-candidate         # build, run and plot the current MW candidate
+./run.sh do orbital-views 1.5 1e11  # make density graphs
+./run.sh graphs                    # list graphs
+./run.sh view                      # open the latest graph
+./run.sh dump                      # uniquely named current-source dump
+./run.sh dump --data               # source dump including input tables
+```
+
+Use `./run.sh build` for a CPU-only build. Source dumps include local edits and
+new source files, plus branch/commit details, for sharing current code in a
+conversation. All operations live in the Rust `tool/` crate; the previous shell
+workflows have been migrated. See [tool/README.md](tool/README.md) for commands,
+dependencies, scan overrides, dry runs and the old-to-new command mapping.
+
 ## Reality has a fractal geometry. Modern Physics is a cult of continuum religion.
 
 - **Step 0:** Modern philosiphy takes Physics models and derives ontology, a system built by complete morons. We need the correct ontology first.
@@ -60,21 +81,7 @@ This benchmark replaces the earlier spherical-enclosed-mass approximation. The C
 The plot is generated reproducibly by:
 
 ```bash
-LD_LIBRARY_PATH="$PWD/cuda_kernels/cuda:${LD_LIBRARY_PATH:-}" \
-cargo run -p cuda_kernels --bin test_horb_disk_plane_curve -- \
-  1.0 2.5e11 96 80 0.25
-
-cargo run -q -p curve_fitter -- compare_dm_fixed_baselines \
-  3d_z2 1.0 2.5e11 2.5e11 \
-  5.0 15.0 8.0 80.0 \
-  > curves/spherical_horb_compare_a1.0_m2.5e11.csv
-
-./scripts/plot_cuda_total_vs_mw.py \
-  --cuda-csv curves/cuda_horb_diskplane_a1.000_m2.500e11_n96.csv \
-  --dm-compare-csv curves/spherical_horb_compare_a1.0_m2.5e11.csv \
-  --rc-csv data/milky_way/sofue_2020_standard_rc.csv \
-  --baryons-csv data/milky_way/sofue_literature_baryons.csv \
-  -o plots/mw_cuda_horb_diskplane_total_vs_sofue2020.png
+./run.sh do cuda-candidate 1.0 2.5e11 96 80 0.25
 ```
 
 
@@ -95,10 +102,8 @@ reproduces the distinctive bipolar lobe geometry, equatorial waist, and $54.74^\
 The CUDA shared library `libhorb_cuda.so` is intentionally ignored by git because it is a local build artifact. On a fresh clone, build it before running CUDA tests:
 
 ```bash
-cd cuda_kernels/cuda
-./build.sh
-cd ../..
-LD_LIBRARY_PATH="$PWD/cuda_kernels/cuda:${LD_LIBRARY_PATH:-}" cargo test
+./run.sh build all
+./run.sh check all
 ```
 
 ## License
