@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "dataset": "SPARC 175 disk galaxies",
+  "reference": "Lelli, McGaugh & Schombert (2016), AJ 152, 157",
+  "doi": "10.3847/0004-6256/152/6/157",
+  "website": "https://astroweb.cwru.edu/SPARC/",
+  "retrieved_utc": "2026-11-21",
+  "galaxies": 175,
+  "rotation_curve_points": 3391,
+  "files": {
+    "SPARC_Lelli2016c.mrt": {
+      "url": "https://astroweb.cwru.edu/SPARC/SPARC_Lelli2016c.mrt",
+      "sha256": "5aa0501f6b0d881fa579030e315e7b5b6ef561a5bd3a07472f9929c7e5728243"
+    },
+    "MassModels_Lelli2016c.mrt": {
+      "url": "https://astroweb.cwru.edu/SPARC/MassModels_Lelli2016c.mrt",
+      "sha256": "9108994b12cc401b94a1768beca61c53ec354779385c9c9cc571049f3043244c"
+    }
+  },
+  "independent_check": {
+    "url": "https://astroweb.cwru.edu/SPARC/Rotmod_LTG.zip",
+    "sha256": "0a80cc90714828cc28b7dd57923576714d209f2490328c087c4a4ad607faf588",
+    "result": "All 175 individual rotation/mass-model files agree numerically with the bundled combined table; distances agree with the catalog. ZIP not needed at runtime."
+  }
+}

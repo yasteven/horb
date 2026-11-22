@@ -2,6 +2,7 @@ mod dump;
 mod highlights;
 mod runner;
 mod signed;
+mod sparc;
 mod workflows;
 
 use anyhow::{bail, Context, Result};
@@ -29,6 +30,8 @@ Usage: ./run.sh [--dry-run] [--release] COMMAND [ARGS...]
   do NAME [ARGS...]          Run a workflow (old script stems also accepted)
   data mw                   Regenerate Sofue MW data and standard RC CSV
   data m31                  Prepare Corbelli M31 data and fixed Geehan baryons
+  data sparc [OPTIONS]      Prepare all 175 published SPARC curves and baryons
+  do sparc-fit [OPTIONS]    Fit SPARC galaxies, resume, and create a plot gallery
   python list               List Python plotting / analysis programs
   python NAME [ARGS...]      Run an existing Python program by stem
   plot NAME [ARGS...]        Run plot_NAME.py (or a full script stem)
@@ -106,7 +109,8 @@ fn dispatch(r: &mut Runner, args: &[String]) -> Result<()> {
         "data" => match rest.as_slice() {
             ["mw"] => workflows::mw_data(r)?,
             ["m31"] | ["andromeda"] => signed::m31_data(r)?,
-            _ => bail!("usage: ./run.sh data mw|m31"),
+            ["sparc", args @ ..] => sparc::data(r, args)?,
+            _ => bail!("usage: ./run.sh data mw|m31|sparc"),
         },
         "run" | "r" => run(r, &rest)?,
         "basis" => signed::basis(r, &rest)?,
@@ -412,7 +416,7 @@ fn doctor(r: &Runner) -> Result<()> {
 
 fn menu(r: &mut Runner) -> Result<()> {
     loop {
-        println!("\nHORB · Operations\n  1  Build CPU\n  2  Build all (CUDA)\n  3  Check CPU\n  4  Run CUDA Milky Way candidate\n  5  Make orbital density graphs\n  6  List graphs\n  7  View latest graph\n  8  Dump current source\n  9  Dump source + input data\n  s  Fit signed orbital densities (CPU multipoles)\n  g  Fit signed orbital densities (CUDA quadrature)\n  a  Fit Andromeda / M31 (CPU multipoles)\n  d  Dependency checks\n  l  List workflows\n  h  Help\n  q  Quit");
+        println!("\nHORB · Operations\n  1  Build CPU\n  2  Build all (CUDA)\n  3  Check CPU\n  4  Run CUDA Milky Way candidate\n  5  Make orbital density graphs\n  6  List graphs\n  7  View latest graph\n  8  Dump current source\n  9  Dump source + input data\n  s  Fit signed orbital densities (CPU multipoles)\n  g  Fit signed orbital densities (CUDA quadrature)\n  a  Fit Andromeda / M31 (CPU multipoles)\n  p  Fit all 175 SPARC galaxies (CPU, resumable)\n  d  Dependency checks\n  l  List workflows\n  h  Help\n  q  Quit");
         print!("> ");
         io::stdout().flush()?;
         let mut input = String::new();
@@ -433,6 +437,7 @@ fn menu(r: &mut Runner) -> Result<()> {
             "s" => strings(&["do", "signed-fit", "cpu"]),
             "g" => strings(&["do", "signed-fit", "cuda"]),
             "a" => strings(&["do", "m31-signed-fit", "cpu"]),
+            "p" => strings(&["do", "sparc-fit"]),
             "d" => strings(&["doctor"]),
             "l" => strings(&["do", "list"]),
             "h" => strings(&["help"]),

@@ -126,7 +126,7 @@ where
         bail!("invalid radius grid (at most 100000 intervals)");
     }
     let mut radii: Vec<f64> = (0..=((hi - lo) / step).floor() as usize)
-        .map(|i| lo + i as f64 * step)
+        .map(|i| (lo + i as f64 * step).min(hi))
         .collect();
     radii.push(hi);
     if let Some(path) = o.get("--rc-csv") {
@@ -278,6 +278,28 @@ pub fn write_density(args: &[String]) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn tabulated_domain_never_grows_from_floating_point_roundoff() {
+        // DDO170's last uniform-grid point rounded above its published radius.
+        let tmp = tempfile::tempdir().unwrap();
+        let out = tmp.path().join("basis.csv");
+        let rc = tmp.path().join("observations.csv");
+        std::fs::write(&rc, "R_kpc,Vobs_kms,eV_kms\n1.87,10,1\n3.14,20,1\n12.33,30,1\n").unwrap();
+        let args = vec![
+            "--out".into(), out.to_string_lossy().into(), "--states".into(), "1s".into(),
+            "--scales".into(), "1".into(), "--r-min".into(), "1.87".into(),
+            "--r-max".into(), "12.33".into(), "--r-step".into(), "0.08171875".into(),
+            "--rc-csv".into(), rc.to_string_lossy().into(),
+        ];
+        write_library(&args, "cpu_multipole", |_, radii, _| {
+            assert!(radii.iter().all(|r| (1.87..=12.33).contains(r)));
+            for observed in [1.87, 3.14, 12.33] {
+                assert!(radii.contains(&observed));
+            }
+            Ok(vec![1.0; radii.len()])
+        }).unwrap();
+    }
+
     #[test]
     fn export_preserves_outward_forces_and_failure_preserves_previous_file() {
         let tmp = tempfile::tempdir().unwrap();

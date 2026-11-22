@@ -1,5 +1,42 @@
 use std::process::Command;
 
+#[test]
+fn sparc_builds_once_and_forwards_batch_options_without_cuda() {
+    let output = tool(&[
+        "--dry-run",
+        "--release",
+        "do",
+        "sparc-fit",
+        "--galaxies",
+        "NGC2403,DDO154",
+        "--jobs",
+        "2",
+        "--name",
+        "pilot",
+    ]);
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let plan = String::from_utf8(output.stderr).unwrap();
+    assert_eq!(plan.matches("--message-format=json").count(), 1);
+    assert!(plan.contains("--validate-only"));
+    assert!(plan.contains("--curve-bin"));
+    assert!(plan.contains("target/release/curve_fitter"));
+    assert!(plan.contains("--galaxies NGC2403,DDO154 --jobs 2 --name pilot"));
+    assert!(!plan.contains("nvcc"));
+    assert!(!tool(&["--dry-run", "do", "sparc-fit", "--jbos", "2"])
+        .status
+        .success());
+    assert!(!tool(&["--dry-run", "do", "sparc-fit", "--jobs"])
+        .status
+        .success());
+    let data = tool(&["--dry-run", "data", "sparc"]);
+    assert!(data.status.success());
+    assert!(String::from_utf8_lossy(&data.stderr).contains("make_sparc_data.py"));
+}
+
 fn tool(args: &[&str]) -> std::process::Output {
     Command::new(env!("CARGO_BIN_EXE_horb-tool"))
         .env_remove("HORB_CUDA_ARCH")
@@ -120,7 +157,7 @@ fn every_workflow_and_legacy_alias_builds_a_dry_run_plan() {
         );
         count += 1;
     }
-    assert_eq!(count, 36);
+    assert_eq!(count, 37);
     let alias = tool(&["--dry-run", "do", "scan_cuda_mw_basis.sh"]);
     assert!(alias.status.success());
     assert!(String::from_utf8_lossy(&alias.stderr).contains("--bin scan_horb_cuda_mw_basis"));

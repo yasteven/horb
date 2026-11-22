@@ -53,3 +53,11 @@ Use `./run.sh --release do readme-highlights` for the four featured figures.
 `horb_highlights.py` supplies refitted single-orbital/classical forces and an
 independent signed-density audit. Source weights, plotted curves and score
 tables are tracked in `data/highlights/`. See [methods and reproduction](../docs/readme_highlights.md).
+## SPARC batch additions
+
+Use `./run.sh data sparc` to normalize the bundled 175-galaxy tables, or
+`./run.sh --release do sparc-fit --name sparc175 --jobs 2` to prepare, fit and
+plot the full sample with verified resume. `make_sparc_data.py` and
+`horb_sparc/` handle published inputs/provenance; `fit_sparc.py` orchestrates
+the existing signed-density fitter and plotting programs. Details:
+[SPARC workflow](../docs/sparc.md).

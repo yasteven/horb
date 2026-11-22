@@ -42,8 +42,10 @@ def main():
         axes[1].set_xlim(max(r[0],low-margin),min(r[-1],high+margin))
         source=dataset.get("rotation_curve",{}).get("reference","Supplied rotation curve")
         baryon_label=dataset.get("baryons",{}).get("plot_label","fixed baryonic model")
-        note=(source+" · "+baryon_label+"\n"
-              "Fit evaluated only in the shaded range; curves outside it are extrapolations.")
+        domain_note = ("Published radii only; fixed baryons; in-sample fit."
+                       if dataset.get("dataset_id") == "sparc_lelli2016" else
+                       "Fit evaluated only in the shaded range; curves outside it are extrapolations.")
+        note=source+" · "+baryon_label+"\n"+domain_note
         fig.text(0.5,0.015,note,ha="center",fontsize=8,color="0.35")
     fig.tight_layout(rect=(0,0.06 if dataset else 0,1,1))
     args.out.parent.mkdir(parents=True,exist_ok=True)

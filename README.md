@@ -53,6 +53,23 @@ The PNGs, fitted weights, scores and plotted curves are committed. The command
 also exports PDF figures. See [figure methods and reproduction](docs/readme_highlights.md)
 and [the numerical records](data/highlights/README.md).
 
+## Fit all 175 SPARC galaxies
+
+The official SPARC catalog and all **3,391 rotation-curve measurements** are
+bundled with their gas, disk and bulge contributions. The batch workflow fits
+signed orbital densities, saves matching rotation/density plots, and builds a
+searchable gallery. Completed fits are verified and skipped when resuming.
+
+```sh
+./run.sh --release do sparc-fit --name sparc175 --jobs 2
+./run.sh view plots/sparc/sparc175/index.html
+```
+
+All 175 galaxies are included, with published quality flags preserved. Defaults
+use fixed disk/bulge M/L = 0.5/0.7 and a 30-column orbital dictionary scaled to
+each galaxy. Scores describe the fitted observations. See [SPARC commands and
+methods](docs/sparc.md) and [the attributed source data](data/sparc/README.md).
+
 ## Project tool
 
 Use `./run.sh` for the operations menu, or run commands directly:

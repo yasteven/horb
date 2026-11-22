@@ -278,3 +278,22 @@ scores, and refits the single orbital plus NFW, Burkert and Einasto. Add
 `--refit` to repeat the complete ≤4-term superposition searches as well.
 PNGs go to `images/`, PDFs to `plots/`, and numerical records to
 `data/highlights/`. See [the methods](../docs/readme_highlights.md).
+
+## SPARC
+
+```sh
+./run.sh data sparc
+./run.sh --release do sparc-fit --name sparc175 --jobs 2
+./run.sh --release do sparc-fit --name pilot --galaxies NGC2403,DDO154 --jobs 2
+./run.sh view plots/sparc/sparc175/index.html
+./run.sh do sparc-fit --help
+```
+
+The 175-galaxy source data ship with HORB and work offline. The tool builds one
+CPU executable, then batches signed fits using each galaxy's published gas,
+disk and bulge forces. Repeat a command to resume verified complete results;
+use a new `--name` for changed scientific or plot settings. Failures are logged
+per galaxy while remaining fits continue, with a nonzero final exit status.
+`--plots none` omits PNGs; `--plots rotation` omits density slices. The default
+creates both. Reports and plots are under `reports/sparc/NAME/` and
+`plots/sparc/NAME/`. See [the full method/options](../docs/sparc.md).
