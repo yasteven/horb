@@ -76,8 +76,9 @@ same observations:
 
 The displayed RMS is the unweighted velocity residual RMS, not the optimized
 statistic and not reduced χ². The score tables also record χ² and χ²/N. The
-plots show only the fitted radial interval. Residual panels show the five halo
-models; the baryons-only curve is shown in the main panel.
+plots show only the fitted radial interval. Each README rotation figure uses
+one full-height panel for all six curves, with per-model RMS values alongside
+it. The separate signed-density figure follows below it in the README.
 
 ## What “best superposition” means
 

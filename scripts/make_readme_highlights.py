@@ -66,31 +66,20 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
     g = GALAXIES[galaxy]
     lo, hi = report["r_fit_requested_kpc"]
     header(fig, galaxy, "Rotation curve", f"{g['source']}  ·  {len(obs)} observations  ·  {lo:g}–{hi:g} kpc  ·  shared fixed baryons")
-    ax = fig.add_axes([.07, .355, .64, .425])
-    res = fig.add_axes([.07, .17, .64, .145], sharex=ax)
+    # Use the full chart height for the rotation curves alongside their RMS.
+    ax = fig.add_axes([.07, .17, .64, .61])
     # Draw the selected superposition last so its path stays visible at overlaps.
     for name in reversed(MODELS):
         ax.plot(r, curves[name], color=COLORS[name], ls=STYLES[name],
                 lw=3 if name == "superposition" else 1.8, zorder=3 if name == "superposition" else 2)
-        if name != "baryons":
-            res.plot(obs["R_kpc"], predictions[name]-obs["Vobs_kms"], color=COLORS[name],
-                     ls=STYLES[name], lw=2.3 if name == "superposition" else 1.2)
     ax.errorbar(obs["R_kpc"], obs["Vobs_kms"], yerr=obs["eV_kms"], fmt="o", ms=4,
                 mfc=INK, mec=BG, mew=.7, ecolor="#b9c4d3", elinewidth=.8, capsize=2, zorder=5)
-    res.axhline(0, color=INK, alpha=.5, lw=.8)
-    res.fill_between(obs["R_kpc"], -obs["eV_kms"], obs["eV_kms"], color=INK, alpha=.055)
-    for a in (ax, res):
-        a.grid(axis="y")
-        a.spines[["top", "right"]].set_visible(False)
-        a.set_xlim(lo, hi)
-    ax.tick_params(labelbottom=False)
+    ax.grid(axis="y")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.set_xlim(lo, hi)
+    ax.set_xlabel("Galactocentric radius  [kpc]")
     ax.set_ylabel("Circular speed  [km/s]", labelpad=12)
     ax.set_ylim(0, max(np.max(obs["Vobs_kms"]+obs["eV_kms"]), max(np.max(v) for v in curves.values()))*1.08)
-    res.set(xlabel="Galactocentric radius  [kpc]", ylabel="Δv  [km/s]")
-    res.yaxis.labelpad = 12
-    # Residuals show all five halo models; baryons-only is in the main panel.
-    limit = max(10, max(np.max(np.abs(predictions[n]-obs["Vobs_kms"])) for n in MODELS if n != "baryons")*1.15)
-    res.set_ylim(-limit, limit)
     fig.text(.755, .777, "MODEL", color=MUTED, size=9, weight="bold")
     fig.text(.951, .777, "RMS · km/s", color=MUTED, size=9, ha="right")
     for i, name in enumerate(MODELS):
@@ -105,7 +94,7 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
         if name == "einasto" and scores[name]["bound_reached"]:
             description = f"α = {scores[name]['parameters'][2]:g} (parameter bound)"
         fig.text(.79, y-.026, description, color=MUTED, size=8)
-    fig.text(.755, .19, "●  Observations with published errors\n\nΔv = model − observations\nShading = published error bars", size=9, color=MUTED, linespacing=1.4)
+    fig.text(.755, .255, "●  Observations with published errors", size=9, color=MUTED)
     fig.text(.07, .080, g["note"], color=MUTED, size=9)
     fig.text(.07, .049, "In-sample fits. Superposition selected by weighted χ² over the documented ≤4-term dictionary; model flexibility differs.", color=MUTED, size=8.7)
     save(fig, output)
