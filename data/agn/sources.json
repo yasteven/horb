@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "retrieved_utc": "2026-11-25",
+  "radio_rows": 280,
+  "xray_catalog_rows": 280,
+  "xray_observed_rows": 213,
+  "crossmatch_sparc_rows": 51,
+  "files": {
+    "lemmings_radio_2021.csv": {
+      "sha256": "f4b056c76b6e9ed188accdc2f6c9d7bb2fb6752c07dd6ec2b09375f9ef6aac30",
+      "origin": "Baldi et al. 2021 LeMMINGs III Table 1; distances from Papers I/II"
+    },
+    "lemmings_radio_table1.tex": {
+      "sha256": "c2d9eb2c1d297a16b5cc08afa0b8c21e40207a55e1bc16c7692648342f2b7902",
+      "origin": "Unchanged author-supplied Table 1 from arXiv:2109.06205v1; CC BY 4.0"
+    },
+    "lemmings_xray_2022.csv": {
+      "sha256": "90470a5cedd10ce9e34709e1bfe597a26cc58acffa3ea13fd326d74758ec3756",
+      "origin": "Williams et al. 2022 LeMMINGs IV Tables 1/2 (HTML full-table IDs S7.T8/S7.T9)"
+    },
+    "simbad_aliases.csv": {
+      "sha256": "2e8cfb4053360bbd7a16c1803c20d8735d5647288cabdd820d6a4bc4a12d2674",
+      "origin": "SIMBAD TAP identifiers for non-direct SPARC names, retrieved 2026-11-25"
+    },
+    "reference_fit_weights.csv": {
+      "sha256": "2734acfd04f96d54af48de0d59ae7349fd097c2b5c84ff96b60e5e53a69c891d",
+      "origin": "Full-precision files from the bundled SPARC reference run; validated against its summary"
+    },
+    "external_targets.csv": {
+      "sha256": "61c47dc4a85023ec2bdecd7cd156c9a36a74a491dc4368a7d96c2c8dcb476d9c",
+      "origin": "HORB curated source-linked target inventory; not new rotation measurements"
+    },
+    "jet_evidence.csv": {
+      "sha256": "1f4704a6c77c1855f5f051ec2c87c81f6470efcda8086bea27038c2bf9a44ed1",
+      "origin": "HORB source-linked jet/lobe evidence annotations"
+    },
+    "jet_power_estimates.csv": {
+      "sha256": "5cebd5b5177cae62fc976e39bb750af4efee6de3a06d1819332beb4626f7b207",
+      "origin": "Published empirical mechanical-power estimates; separate from monochromatic luminosity"
+    }
+  },
+  "references": [
+    {
+      "id": "Baldi2018_I",
+      "url": "https://arxiv.org/abs/1802.02162",
+      "doi": "10.1093/mnras/sty342",
+      "table": "1 (distances); A1 (jet morphology details)"
+    },
+    {
+      "id": "Baldi2021_II",
+      "url": "https://arxiv.org/abs/2011.03062",
+      "doi": "10.1093/mnras/staa3519",
+      "table": "1 (distances)"
+    },
+    {
+      "id": "Baldi2021_III",
+      "url": "https://arxiv.org/abs/2109.06205",
+      "doi": "10.1093/mnras/stab2613",
+      "table": "1 (all 280)"
+    },
+    {
+      "id": "Williams2022_IV",
+      "url": "https://arxiv.org/abs/2111.09077",
+      "doi": "10.1093/mnras/stab3310",
+      "table": "1 (280), 2 (213)"
+    },
+    {
+      "id": "SIMBAD",
+      "url": "https://simbad.idia.ac.za/simbad/sim-tap/sync",
+      "query": "SELECT ident.id,basic.main_id,basic.ra,basic.dec,ids.ids FROM ident JOIN basic ON ident.oidref=basic.oid JOIN ids ON ids.oidref=basic.oid WHERE ident.id IN ('CamB','D512-2','D564-8','D631-7','DDO 64','DDO 154','DDO 161','DDO 168','DDO 170','ESO079-G014','ESO116-G012','ESO444-G084','ESO563-G021','F561-1','F563-1','F563-V1','F563-V2','F565-V2','F567-2','F568-1','F568-3','F568-V1','F571-8','F571-V1','F574-1','F574-2','F579-V1','F583-1','F583-4','IC 4202','KK98-251','NGC 24','NGC 55','NGC 100','NGC 247','NGC 289','NGC 300','NGC 801','NGC 1090','NGC 1705','NGC 2915','NGC 2955','NGC 2998','NGC 3109','NGC 3521','NGC 3741','NGC 3769','NGC 3972','NGC 4010','NGC 4068','NGC 4085','NGC 4389','NGC 6195','NGC 6674','NGC 6789','NGC 7793','NGC 7814','PGC 51017','UGC 128','UGC 191','UGC 634','UGC 731','UGC 891','UGC 1230','UGC 1281','UGC 2023','UGC 2259','UGC 2455','UGC 2487','UGC 2885','UGC 2916','UGC 2953','UGC 3205','UGC 3546','UGC 3580','UGC 4278','UGC 4305','UGC 4325','UGC 4483','UGC 4499','UGC 5005','UGC 5253','UGC 5414','UGC 5716','UGC 5721','UGC 5750','UGC 5764','UGC 5829','UGC 5918','UGC 5986','UGC 5999','UGC 6399','UGC 6446','UGC 6614','UGC 6628','UGC 6667','UGC 6786','UGC 6787','UGC 6818','UGC 6917','UGC 6923','UGC 6930','UGC 6973','UGC 6983','UGC 7089','UGC 7125','UGC 7151','UGC 7232','UGC 7261','UGC 7323','UGC 7399','UGC 7524','UGC 7559','UGC 7577','UGC 7603','UGC 7608','UGC 7690','UGC 7866','UGC 8286','UGC 8490','UGC 8550','UGC 8699','UGC 8837','UGC 9037','UGC 9133','UGC 9992','UGC 10310','UGC 11455','UGC 11557','UGC 11820','UGC 11914','UGC 12506','UGC 12632','UGC 12732','UGCA 281','UGCA 442','UGCA 444')"
+    }
+  ],
+  "retrieved_source_hashes": {
+    "l1.txt": {
+      "sha256": "b807886be0731d9c923e86f587fa80f8653ff94571232dafd42bca46676a85dc",
+      "url": "https://arxiv.org/html/1802.02162"
+    },
+    "l2html": {
+      "sha256": "251a3d23fc8a4848ffcff5bb96910c5966011a7ff8ae5a94333fb884e39263d1",
+      "url": "https://arxiv.org/html/2011.03062"
+    },
+    "l3html": {
+      "sha256": "3568f6e9a38b32e7ac838d0a97f883deb6f3e905696d5337b751bb9b980a3758",
+      "url": "https://arxiv.org/html/2109.06205"
+    },
+    "l3src": {
+      "sha256": "b20d90c480c2f615a55d86295fea0d155ff125419f664e9bd946fe5270ea7fe0",
+      "url": "https://arxiv.org/src/2109.06205"
+    },
+    "l4html": {
+      "sha256": "c4e62d6d681920a7a27b3f1c2a75a618b303236b6dc1f74ba12ed2cc14fe6edf",
+      "url": "https://arxiv.org/html/2111.09077"
+    }
+  },
+  "fit_summary_sha256": "e4ab049b1a95f8e4fa225156579207b4912015ba74351c98f833b147f1719db1",
+  "fit_run_sha256": "4feebf3d29023df7ec394369b1a3114bcf65ed59527b760f5040e4a4800d3d13",
+  "validation": [
+    "All 280 core/total radio luminosities and limit signs independently agree between HTML and author TeX table.",
+    "All 175 full-precision weight sets agree with reference component counts and signed masses.",
+    "Aliases match catalog identifiers exactly after whitespace and leading-zero normalization; no fuzzy-name matching."
+  ],
+  "conventions": [
+    "Radio log L in erg/s is nu Lnu: log10 Lnu [W/Hz] = log10 nuLnu [erg/s] - 7 - log10(1.5e9).",
+    "Published distances retained; optional comparison values rescaled to SPARC distance by 2 log10(D_SPARC/D_publication).",
+    "Radio and X-ray upper limits retained; no missing value or upper limit is set to zero.",
+    "X-ray luminosities are nuclear-aperture source measurements; a detection alone does not prove an AGN or a jet.",
+    "No external-target rotation points have been imported; archived cubes and published models are not treated as independent sampled curves."
+  ]
+}

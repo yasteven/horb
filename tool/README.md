@@ -311,3 +311,13 @@ per galaxy while remaining fits continue, with a nonzero final exit status.
 `--plots none` omits PNGs; `--plots rotation` omits density slices. The default
 creates both. Reports and plots are under `reports/sparc/NAME/` and
 `plots/sparc/NAME/`. See [the full method/options](../docs/sparc.md).
+
+## AGN and jet sample
+
+`./run.sh data agn` validates the bundled LeMMINGs/SIMBAD snapshot and exports
+the 51 SPARC matches, their rotation measurements, activity-strength ranks,
+upper limits and existing full-precision orbital weights under `reports/agn/`.
+It works offline and performs no new fits. Use `--fits-dir reports/sparc/NAME`
+to analyze a different run, and `--out-dir PATH` to choose the output directory.
+Unmatched and unobserved galaxies remain explicitly unclassified.
+See [targets, units and analysis method](../docs/agn_rotation_sample.md).

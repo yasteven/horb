@@ -74,3 +74,14 @@ plot the full sample with verified resume. `make_sparc_data.py` and
 `horb_sparc/` handle published inputs/provenance; `fit_sparc.py` orchestrates
 the existing signed-density fitter and plotting programs. Details:
 [SPARC workflow](../docs/sparc.md).
+
+## AGN/jet catalog
+
+`make_agn_catalog.py`, available as `./run.sh data agn`, joins verified SPARC
+identifiers to the bundled nuclear radio and X-ray catalogs. It exports actual
+rotation points and full-precision signed weights, with absolute-mass
+concentration metrics. Radio luminosity, empirical mechanical jet power and
+X-ray/optical radiative measurements retain their distinct units and meanings.
+All source data and limits are attributed in `data/agn/`; the external quasar
+and radio-galaxy target inventory records whether numerical rotation data have
+actually been imported. See [the guide](../docs/agn_rotation_sample.md).

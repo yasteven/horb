@@ -1,0 +1,8 @@
+sparc_name,other_name,jet_evidence,description,source_url
+UGC02487,NGC1167,resolved_jet_lobes,Compact restarted jet and roughly 240-kpc outer lobes,https://doi.org/10.1051/0004-6361/201935931
+UGC03546,NGC2273,resolved_jet_lobes,"Twin jet with extended emission, morphology E in Table A1",https://doi.org/10.1093/mnras/sty342
+NGC2841,NGC2841,resolved_jet_lobes,LINER with triple/twin-jet morphology C,https://doi.org/10.1093/mnras/sty342
+NGC4051,NGC4051,resolved_jet_lobes,Seyfert with triple morphology C; only seven SPARC rotation points,https://doi.org/10.1093/mnras/sty342
+NGC5005,NGC5005,resolved_jet_lobes,LINER with double-lobed morphology D,https://doi.org/10.1093/mnras/sty342
+NGC5985,NGC5985,resolved_jet_lobes,LINER with double-lobed morphology D,https://doi.org/10.1093/mnras/sty342
+UGC11914,NGC7217,resolved_jet_lobes,LINER with triple morphology C,https://doi.org/10.1093/mnras/sty342

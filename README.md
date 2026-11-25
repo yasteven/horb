@@ -241,6 +241,28 @@ yet been evaluated.
 ./run.sh view reports/swells/j2141_comparison/j2141_lensing.png
 ```
 
+## AGN and radio-jet comparison sample
+
+The activity catalog matches **51 SPARC galaxies** (1,472 rotation points) to
+LeMMINGs radio and nuclear X-ray measurements. It includes 21 optical
+Seyfert/LINER nuclei, seven priorities with resolved jet/lobe evidence, and
+comparison galaxies with measured upper limits. NGC 1167 (UGC02487), with a
+rotation curve reaching 80.38 kpc, is the strongest detected radio core in this
+overlap. The export joins these observations to the existing signed orbital
+weights and their concentration metrics.
+
+```sh
+./run.sh data agn
+./run.sh data agn --fits-dir reports/sparc/sparc175 --out-dir reports/agn_latest
+```
+
+[Target list and analysis guide](docs/agn_rotation_sample.md) ·
+[Data and provenance](data/agn/README.md).
+The guide also identifies five nearby PG quasar hosts with published rotation
+profiles, Mrk 231, the giant-jet spiral J2345−0449 and six radio-galaxy CO disks.
+Those external curves still need numerical import. This update prepares the
+weight/activity comparison; it makes no statistical correlation claim.
+
 ## License
 
 This project is dual-licensed under either:

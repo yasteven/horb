@@ -1,0 +1,281 @@
+name,canonical_name,hubble_type,optical_class,optical_class_raw,radio_loud_flag,jetted_hii_flag,distance_mpc,radio_detection,radio_morphology,sigma_star_kms,sigma_star_kms_limit,log_mbh_msun,log_mbh_msun_limit,log_oiii_erg_s,log_oiii_erg_s_limit,log_eddington_ratio,log_eddington_ratio_limit,log_core_nuLnu_erg_s,log_core_nuLnu_erg_s_limit,log_total_nuLnu_erg_s,log_total_nuLnu_erg_s_limit,log_core_Lnu_W_Hz,frequency_GHz,source
+NGC 7817,NGC7817,SAbc,HII,H,0,0,31.5,U,,66.7,detection,6.21,detection,39.29,detection,-1.51,detection,35.64,upper,,,19.463909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 10,IC10,IBm?,HII,H,0,0,1.3,U,,35.5,detection,5.11,detection,37.13,detection,-2.57,detection,32.91,upper,,,16.733909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 147,NGC147,dE5 pec,ALG,ALG,0,0,0.7,U,,22.0,detection,4.28,detection,,,,,32.39,upper,,,16.213909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 185,NGC185,dE3 pec,LINER,L,0,0,0.7,U,,19.9,detection,4.1,detection,34.63,detection,-4.06,detection,32.33,upper,,,16.153909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 205,NGC205,dE5 pec,ALG,ALG,0,0,0.7,U,,23.3,detection,4.34,detection,,,,,32.36,upper,,,16.183909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 221,NGC221,E2,ALG,ALG,0,0,0.7,U,,72.1,detection,6.36,detection,,,,,32.33,upper,,,16.153909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 224,NGC224,SAb,ALG,ALG,0,0,0.7,U,,169.8,detection,7.84,detection,,,,,32.32,upper,,,16.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 266,NGC266,SBab,LINER,L,0,0,62.4,I,A,229.6,detection,8.37,detection,39.43,detection,-3.53,detection,36.94,detection,37.02,detection,20.763909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 278,NGC278,SABb,HII,H,0,0,11.8,I,A,47.6,detection,5.62,detection,37.47,detection,-2.74,detection,34.81,detection,35.83,detection,18.633909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 315,NGC315,E+,LINER,LRL,1,0,65.8,I,A,303.7,detection,8.92,detection,39.43,detection,-4.02,detection,39.58,detection,39.61,detection,23.403909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 404,NGC404,SA0,LINER,L,0,0,2.4,U,,40.0,detection,5.65,detection,37.16,detection,-3.08,detection,33.28,upper,,,17.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 410,NGC410,E+,LINER,L,0,0,70.6,I,A,299.7,detection,8.84,detection,39.32,upper,-4.11,upper,37.26,detection,37.53,detection,21.083909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 507,NGC507,SA0,ALG,ALG,0,0,65.7,I,A,307.7,detection,8.88,detection,,,,,36.86,detection,37.07,detection,20.683909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 598,NGC598,SAcd,HII,H,0,0,0.7,U,,21.0,detection,4.2,detection,34.63,upper,-4.16,upper,32.43,upper,,,16.253909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 1727,IC1727,SBM,LINER,L,0,0,8.2,U,,136.8,detection,7.47,detection,37.34,detection,-4.72,detection,34.55,upper,,,18.373909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 672,NGC672,SBcd,HII,H,0,0,7.5,U,,64.3,upper,6.15,upper,37.66,detection,-3.08,detection,34.55,upper,,,18.373909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 697,NGC697,SABc,HII,H,0,0,41.6,U,,75.0,detection,6.42,detection,37.86,detection,-3.15,detection,35.95,upper,,,19.773909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 777,NGC777,E1,LINER,LRL,1,0,66.5,I,A,324.1,detection,8.97,detection,38.38,detection,-5.18,detection,36.77,detection,36.98,detection,20.593909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 783,NGC783,SAc,HII,H,0,0,68.1,U,,101.4,detection,6.94,detection,38.81,detection,-2.68,detection,36.12,upper,,,19.943909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 784,NGC784,SBdm,HII,H,0,0,4.7,U,,35.5,detection,5.11,detection,37.68,detection,-2.02,detection,34.19,upper,,,18.013909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 812,NGC812,SAB0/a pec,HII,H,0,0,108.8,U,,120.9,detection,7.25,detection,38.68,detection,-3.16,detection,36.7,upper,,,20.523909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 818,NGC818,SABc,HII,H,0,0,59.4,U,,151.3,detection,7.64,detection,38.46,detection,-3.77,detection,36.14,upper,,,19.963909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 841,NGC841,SABab,LINER,L,0,0,59.5,U,,159.2,detection,7.73,detection,38.74,detection,-3.58,detection,36.19,upper,,,20.013909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 890,NGC890,SAB0,ALG,ALG,0,0,53.4,U,,210.9,detection,8.22,detection,,,,,36.06,upper,,,19.883909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 891,NGC891,SAb?,HII,H,0,0,9.6,unI,,73.1,detection,6.37,detection,36.29,detection,-4.66,detection,34.65,upper,,,18.473909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 925,NGC925,SABd,HII,H,0,0,9.4,U,,71.9,detection,6.34,detection,37.21,detection,-3.72,detection,34.55,upper,,,18.373909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 959,NGC959,SAdm,HII,H,0,0,10.1,U,,43.6,detection,5.47,detection,37.4,detection,-2.66,detection,34.65,upper,,,18.473909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 972,NGC972,SAab,HII,j H,0,1,21.4,I,B,102.8,detection,6.97,detection,38.64,detection,-2.92,detection,35.31,detection,36.06,detection,19.133909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 239,IC239,SAB(rs)cd,HII,H,0,0,16.8,U,,92.3,detection,6.78,detection,36.93,upper,-4.4,upper,34.98,upper,,,18.803909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1003,NGC1003,SA(s)cd,HII,H,0,0,10.7,U,,,,,,37.23,detection,,,34.58,upper,,,18.403909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1023,NGC1023,SB(rs)0-,ALG,ALG,0,0,10.5,U,,204.5,detection,7.62,detection,,,,,34.57,upper,,,18.393909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1058,NGC1058,SA(rs)c,LINER,L,0,0,9.1,U,,31.0,detection,4.88,detection,35.95,detection,-3.48,detection,34.41,upper,,,18.233909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1156,NGC1156,IB(s)m,HII,H,0,0,6.4,U,,35.9,detection,5.13,detection,39.15,detection,-0.53,detection,34.15,upper,,,17.973909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1161,NGC1161,SA0,LINER,LRL,1,0,25.9,I,A,258.4,detection,8.58,detection,38.13,detection,-5.0,detection,36.57,detection,36.69,detection,20.393909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1167,NGC1167,SA0-,LINER,LRL,1,0,65.3,I,A,216.9,detection,8.27,detection,40.17,detection,-2.65,detection,39.65,detection,39.76,detection,23.473909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1169,NGC1169,SAB(r)b,LINER,L,0,0,33.7,U,,181.3,detection,7.96,detection,38.58,detection,-3.93,detection,35.66,upper,,,19.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1186,NGC1186,SB(r)bc:,HII,H,0,0,35.4,I,E,119.8,detection,7.24,detection,38.95,detection,-2.84,detection,35.91,detection,36.78,detection,19.733909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1275,NGC1275,Pec,LINER,LRL,1,0,70.1,I,A,258.9,detection,8.98,detection,41.61,detection,-1.92,detection,40.97,detection,41.62,detection,24.793909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 342,IC342,SAB(rs)cd,HII,H,0,0,3.0,unI,,74.0,detection,6.41,detection,35.99,detection,-4.97,detection,33.86,upper,,,17.683909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 356,IC356,SA(s)ab pec,HII,H,0,0,18.1,I,A,156.6,detection,7.7,detection,37.57,detection,-4.68,detection,35.52,detection,35.74,detection,19.343909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1569,NGC1569,IBm,HII,H,0,0,1.6,unI,,44.0,detection,5.49,detection,36.49,detection,-3.55,detection,33.18,upper,,,17.003909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1560,NGC1560,SA(s)d spin,HII,H,0,0,3.0,I,A,33.9,detection,5.03,detection,37.38,detection,-2.2,detection,33.78,detection,34.12,detection,17.603909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 1961,NGC1961,SAB(rs)c,LINER,LRL,1,0,53.1,I,A,241.3,detection,8.29,detection,39.11,detection,-3.73,detection,37.15,detection,37.25,detection,20.973909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2146,NGC2146,SB(s)ab pec,HII,H,0,0,17.2,I,E,126.8,detection,7.33,detection,38.36,detection,-3.52,detection,36.34,detection,36.86,detection,20.163909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2273,NGC2273,SBa,Seyfert,S,0,0,28.4,I,E,148.9,detection,7.61,detection,40.43,detection,-1.77,detection,36.64,detection,37.98,detection,20.463909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2342,NGC2342,S pec,HII,H,0,0,69.5,I,E,147.3,detection,7.6,detection,39.71,detection,-2.48,detection,36.55,detection,37.64,detection,20.373909,1.5,Baldi2021_LeMMINGsIII_Table1
+UGC 3714,UGC3714,S? pec,HII,H,0,0,40.9,U,,104.0,detection,6.99,detection,38.49,detection,-3.05,detection,35.9,upper,,,19.723909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2268,NGC2268,SABbc,HII,H,0,0,34.4,U,,143.3,detection,7.55,detection,39.27,detection,-2.87,detection,35.76,upper,,,19.583909,1.5,Baldi2021_LeMMINGsIII_Table1
+UGC 3828,UGC3828,SABb,HII,j H,0,1,46.8,I,C,73.9,detection,6.39,detection,38.84,detection,-2.14,detection,36.63,detection,38.84,detection,20.453909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2336,NGC2336,SAB(r)bc,LINER,L,0,0,33.9,U,,116.2,detection,7.18,detection,38.2,detection,-3.54,detection,35.75,upper,,,19.573909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2276,NGC2276,SABc,HII,H,0,0,36.8,U,,83.5,detection,6.61,detection,38.17,detection,-3.03,detection,35.9,upper,,,19.723909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2366,NGC2366,IB(s)m,HII,H,0,0,2.9,U,,,,,,,,,,33.64,upper,,,17.463909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 467,IC467,SAB(s)c:,HII,H,0,0,27.4,unI,,64.2,detection,6.15,detection,37.15,detection,-3.55,detection,35.56,upper,,,19.383909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2300,NGC2300,SA0,ALG,ALG,0,0,31.0,I,A,261.1,detection,8.6,detection,,,,,36.23,detection,36.41,detection,20.053909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2403,NGC2403,SAB(s)cd,HII,H,0,0,4.2,U,,68.4,detection,6.26,detection,35.91,upper,-4.9,upper,33.96,upper,,,17.783909,1.5,Baldi2021_LeMMINGsIII_Table1
+UGC 4028,UGC4028,SABc?,HII,j H,0,1,52.7,I,C,80.5,detection,6.54,detection,38.88,detection,-2.25,detection,36.22,detection,36.7,detection,20.043909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2500,NGC2500,SBd,HII,H,0,0,10.1,U,,47.1,detection,5.61,detection,36.55,detection,-3.65,detection,34.71,upper,,,18.533909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2543,NGC2543,SBb,HII,H,0,0,32.9,U,,112.4,detection,7.12,detection,38.55,detection,-3.16,detection,35.65,upper,,,19.473909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2537,NGC2537,SBm pec,HII,H,0,0,9.0,U,,63.0,detection,6.11,detection,38.72,detection,-1.98,detection,34.6,upper,,,18.423909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2541,NGC2541,SAcd,HII,H,0,0,10.6,U,,53.0,detection,5.81,detection,36.8,detection,-3.6,detection,34.72,upper,,,18.543909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2549,NGC2549,SA(r)0 spin,ALG,ALG,0,0,18.8,U,,142.6,detection,7.16,detection,,,,,35.26,upper,,,19.083909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2639,NGC2639,SAa?,LINER,LRL,1,0,42.6,I,C,179.3,detection,7.94,detection,39.6,detection,-2.93,detection,37.61,detection,38.5,detection,21.433909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2634,NGC2634,E1,ALG,ALG,0,0,30.2,I,A,181.1,detection,7.96,detection,,,,,35.81,detection,35.87,detection,19.633909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2683,NGC2683,SA(rs)b,LINER,L,0,0,5.7,I,A,130.2,detection,7.38,detection,37.06,detection,-4.87,detection,34.49,detection,34.65,detection,18.313909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2681,NGC2681,SAB0/a,LINER,L,0,0,13.3,I,C,109.1,detection,7.07,detection,38.37,detection,-3.29,detection,35.51,detection,35.99,detection,19.333909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 520,IC520,SABab?,LINER,L,0,0,47.0,U,,138.1,detection,7.48,detection,39.03,detection,-3.04,detection,36.08,upper,,,19.903909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2685,NGC2685,(R)SB0+pec,LINER,L,0,0,16.2,U,,93.8,detection,6.59,detection,38.41,detection,-2.73,detection,34.82,upper,,,18.643909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2655,NGC2655,SAB0/a,LINER,LRL,1,0,24.4,I,E,159.8,detection,7.74,detection,39.44,detection,-2.89,detection,37.59,detection,37.97,detection,21.413909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2750,NGC2750,SABc,HII,H,0,0,38.4,unI,,52.4,detection,5.79,detection,39.2,detection,-1.14,detection,35.76,upper,,,19.583909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2742,NGC2742,SA(s)c:,HII,H,0,0,22.2,U,,65.6,detection,6.18,detection,37.73,detection,-3.0,detection,35.37,upper,,,19.193909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2715,NGC2715,SABc,HII,H,0,0,20.4,U,,84.6,detection,6.63,detection,37.79,detection,-3.43,detection,35.32,upper,,,19.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2770,NGC2770,SA(s)c:,HII,H,0,0,29.6,U,,81.0,detection,6.55,detection,37.56,detection,-3.54,detection,35.46,upper,,,19.283909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2768,NGC2768,E6:,LINER,LRL,1,0,23.7,I,A,181.8,detection,7.96,detection,38.61,detection,-3.9,detection,37.1,detection,37.19,detection,20.923909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2776,NGC2776,SAB(rs)c,HII,H,0,0,38.7,U,,47.7,detection,5.63,detection,38.32,detection,-1.86,detection,35.61,upper,,,19.433909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2748,NGC2748,SAbc,HII,H,0,0,23.8,U,,83.0,detection,7.65,detection,37.83,detection,-4.41,detection,35.44,upper,,,19.263909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2782,NGC2782,SAB(rs)a pec,HII,j H,0,1,37.3,I,A,183.1,detection,7.98,detection,40.0,detection,-2.53,detection,36.79,detection,37.16,detection,20.613909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2787,NGC2787,SB(r)0+,LINER,L,0,0,13.0,I,A,202.0,detection,7.61,detection,38.37,detection,-3.79,detection,36.28,detection,36.41,detection,20.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2832,NGC2832,E+2:,LINER,L,0,0,91.6,I+unI,A,334.0,detection,9.03,detection,39.05,upper,-4.53,upper,36.83,detection,37.05,detection,20.653909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2841,NGC2841,SAb,LINER,L,0,0,12.0,I,C,222.0,detection,8.31,detection,38.19,detection,-4.63,detection,34.84,detection,35.47,detection,18.663909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2859,NGC2859,(R)SB(r)0+,LINER,L,0,0,25.4,U,,188.2,detection,8.02,detection,38.57,detection,-4.0,detection,35.31,upper,,,19.133909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2903,NGC2903,SAB(rs)bc,HII,H,0,0,6.3,U,,89.0,detection,7.06,detection,37.35,detection,-4.26,detection,34.32,upper,,,18.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2950,NGC2950,(R)SB(r)0,ALG,ALG,0,0,23.3,U,,163.0,detection,7.77,detection,,,,,35.47,upper,,,19.293909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2964,NGC2964,SAB(r)bc:,HII,H,0,0,21.9,I,E,109.4,detection,6.73,detection,38.71,detection,-2.57,detection,36.03,detection,36.97,detection,19.853909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2977,NGC2977,SAb:,HII,H,0,0,40.9,U,,104.5,detection,7.0,detection,38.2,detection,-3.35,detection,35.91,upper,,,19.733909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2976,NGC2976,SAc pec,HII,H,0,0,2.1,U,,36.0,detection,5.14,detection,36.58,detection,-3.11,detection,33.24,upper,,,17.063909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3003,NGC3003,SAbc?,HII,H,0,0,24.4,U,,44.1,detection,5.49,detection,38.9,detection,-1.14,detection,35.28,upper,,,19.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 2985,NGC2985,R’)SA(rs)ab,LINER,L,0,0,22.4,I,A,140.8,detection,7.52,detection,38.69,detection,-3.38,detection,35.81,detection,36.03,detection,19.633909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3031,NGC3031,SA(s)ab,LINER,L,0,0,1.4,I,A,161.6,detection,7.81,detection,37.72,detection,-4.64,detection,35.5,detection,35.54,detection,19.323909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3027,NGC3027,SB(rs)d:,HII,H,0,0,19.5,U,,25.6,detection,4.54,detection,37.69,detection,-1.4,detection,35.29,upper,,,19.113909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3034,NGC3034,IAO spin,HII,H,0,0,5.2,unI,,129.5,detection,7.37,detection,38.33,detection,-3.59,detection,34.28,upper,,,18.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3043,NGC3043,SAb: spin,HII,H,0,0,39.1,U,,51.9,detection,5.77,detection,38.08,detection,-2.24,detection,35.91,upper,,,19.733909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3073,NGC3073,SAB0-,HII,H,0,0,19.3,U,,35.6,detection,5.12,detection,38.02,detection,-1.65,detection,35.26,upper,,,19.083909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3077,NGC3077,AO pec,HII,H,0,0,2.1,I+unI,A,32.4,detection,4.95,detection,37.15,detection,-2.35,detection,33.32,detection,34.35,detection,17.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3079,NGC3079,SB(s)c spin,LINER,L,0,0,20.4,I,C,182.3,detection,6.4,detection,37.67,detection,-3.28,detection,37.27,detection,37.75,detection,21.093909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3162,NGC3162,SAB(rs)bc,HII,H,0,0,22.2,U,,89.0,detection,6.72,detection,38.04,detection,-3.23,detection,35.19,upper,,,19.013909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3147,NGC3147,SA(rs)bc,LINER,L,0,0,40.9,I,A,219.8,detection,8.29,detection,39.54,detection,-3.3,detection,37.36,detection,37.51,detection,21.183909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3185,NGC3185,(R)SB(r)0/a,Seyfert,S,0,0,21.3,U,,79.3,detection,6.51,detection,39.44,detection,-1.62,detection,35.15,upper,,,18.973909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3190,NGC3190,SA(s)a pec spin,LINER,L,0,0,22.4,U,,188.1,detection,8.02,detection,38.71,detection,-3.86,detection,35.32,upper,,,19.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3184,NGC3184,SABcd,HII,H,0,0,8.7,U,,43.3,detection,5.46,detection,37.31,detection,-2.74,detection,34.64,upper,,,18.463909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3193,NGC3193,E2,LINER,L,0,0,23.2,U,,194.3,detection,8.08,detection,38.42,detection,-4.21,detection,35.23,upper,,,19.053909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3198,NGC3198,SBc,HII,H,0,0,10.8,I,A,46.1,detection,5.57,detection,36.97,detection,-3.19,detection,35.02,detection,35.19,detection,18.843909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3245,NGC3245,SA(r)0?,HII,H,0,0,22.2,I,E,209.9,detection,8.38,detection,38.7,detection,-4.23,detection,35.71,detection,36.36,detection,19.533909,1.5,Baldi2021_LeMMINGsIII_Table1
+IC 2574,IC2574,SAB(s)m,HII,H,0,0,3.4,U,,33.9,detection,5.03,detection,35.55,detection,-4.03,detection,33.66,upper,,,17.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3254,NGC3254,SA(s)bc,Seyfert,S,0,0,23.6,U,,117.8,detection,7.21,detection,38.6,detection,-3.16,detection,35.27,upper,,,19.093909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3294,NGC3294,SAc,HII,H,0,0,26.7,U,,56.4,detection,5.92,detection,38.33,detection,-2.18,detection,35.66,upper,,,19.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3301,NGC3301,(R’)SB(rs)0/a,LINER,L,0,0,23.3,I,A,132.3,detection,7.41,detection,38.3,upper,-3.66,upper,35.7,detection,35.86,detection,19.523909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3310,NGC3310,SAB(r)bc pec,HII,H,0,0,18.7,I,A,84.0,detection,6.7,detection,38.43,detection,-2.82,detection,35.6,detection,36.2,detection,19.423909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3319,NGC3319,SBcd,LINER,L,0,0,11.5,U,,87.4,detection,6.68,detection,37.07,detection,-4.2,detection,34.84,upper,,,18.663909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3344,NGC3344,(R)SAB(r)bc,HII,H,0,0,6.1,U,,73.6,detection,6.38,detection,38.24,detection,-2.69,detection,34.11,upper,,,17.933909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3359,NGC3359,SAB(rs)cd: pec,HII,H,0,0,19.2,U,,96.5,detection,6.86,detection,37.93,detection,-3.48,detection,35.21,upper,,,19.033909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3348,NGC3348,E0,ALG,ALG,0,0,37.8,I,C,236.4,detection,8.42,detection,,,,,36.59,detection,36.73,detection,20.413909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3395,NGC3395,SAB(rs)cd: pec,HII,H,0,0,27.4,U,,96.5,detection,6.86,detection,37.93,detection,-3.48,detection,35.32,upper,,,19.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3414,NGC3414,SA0 pec,LINER,L,0,0,23.9,I,C,236.8,detection,8.4,detection,39.06,detection,-3.95,detection,36.2,detection,36.33,detection,20.023909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3430,NGC3430,SABc,HII,H,0,0,26.7,I,E,50.4,detection,5.72,detection,37.74,detection,-2.57,detection,35.74,detection,36.19,detection,19.563909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3432,NGC3432,SBm,HII,H,0,0,7.8,I,A,37.0,detection,5.18,detection,38.0,detection,-1.77,detection,34.82,detection,34.83,detection,18.643909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3448,NGC3448,IAO,HII,H,0,0,24.5,I,A,50.7,detection,5.73,detection,39.48,detection,-0.8,detection,35.55,detection,36.35,detection,19.373909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3486,NGC3486,SAB(r)c,Seyfert,S,0,0,7.4,U,,65.0,detection,6.17,detection,37.93,detection,-2.79,detection,34.26,upper,,,18.083909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3504,NGC3504,(R)SAB(s)ab,HII,j H,0,1,26.5,I,A,119.3,detection,7.23,detection,39.88,detection,-1.9,detection,37.3,detection,37.65,detection,21.123909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3516,NGC3516,(R)SB(s)0:,Seyfert,S,0,0,38.9,I,C,181.0,detection,7.96,detection,40.8,detection,-1.71,detection,36.84,detection,36.95,detection,20.663909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3556,NGC3556,SB(s)cd spin,HII,H,0,0,14.1,U,,79.4,detection,6.52,detection,37.62,detection,-3.45,detection,34.92,upper,,,18.743909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3583,NGC3583,SBb,HII,H,0,0,34.0,U,,131.7,detection,7.4,detection,38.26,detection,-3.73,detection,35.69,upper,,,19.513909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3600,NGC3600,SAa?,HII,H,0,0,10.5,U,,49.8,detection,5.7,detection,38.21,detection,-2.08,detection,34.66,upper,,,18.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3610,NGC3610,E5:,ALG,ALG,0,0,29.2,U,,161.2,detection,7.75,detection,,,,,35.56,upper,,,19.383909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3613,NGC3613,E6,ALG,ALG,0,0,32.9,U,,220.1,detection,8.3,detection,,,,,35.69,upper,,,19.513909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3631,NGC3631,SA(s)c,HII,H,0,0,21.6,U,,43.9,detection,5.48,detection,38.01,upper,-2.02,upper,35.23,upper,,,19.053909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3646,NGC3646,Ring,LINER,L,0,0,56.8,U,,153.1,detection,7.66,detection,39.15,detection,-3.06,detection,35.98,upper,,,19.803909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3642,NGC3642,SA(r)bc:,LINER,L,0,0,27.5,U,,85.0,detection,7.42,detection,38.96,detection,-3.01,detection,35.55,upper,,,19.373909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3652,NGC3652,SAcd?,HII,H,0,0,33.5,U,,56.4,detection,5.92,detection,38.51,detection,-2.0,detection,35.73,upper,,,19.553909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3665,NGC3665,SA0,HII,j HRL,1,1,32.4,I,B,236.8,detection,8.76,detection,38.28,detection,-4.73,detection,36.85,detection,37.67,detection,20.673909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3675,NGC3675,SAb,LINER,L,0,0,12.8,I,A,108.0,detection,7.26,detection,37.79,detection,-3.85,detection,34.96,detection,35.17,detection,18.783909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3690,NGC3690,IBm pec,HII,H,0,0,40.4,unI,,47.6,detection,5.62,detection,37.04,detection,-3.13,detection,36.21,upper,,,20.033909,1.5,Baldi2021_LeMMINGsIII_Table1
+UGC 6484,UGC6484,SB(rs)c,HII,H,0,0,32.4,U,,61.1,detection,6.06,detection,37.47,detection,-3.14,detection,35.67,upper,,,19.493909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3718,NGC3718,SB(s)a pec,LINER,LRL,1,0,17.0,I,A,158.1,detection,7.72,detection,37.41,detection,-4.86,detection,36.78,detection,36.78,detection,20.603909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3726,NGC3726,SBa pec,HII,H,0,0,17.0,U,,41.5,detection,5.38,detection,37.8,detection,-2.17,detection,34.99,upper,,,18.813909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3729,NGC3729,SB(r)a pec,HII,H,0,0,17.0,I,A,76.2,detection,6.45,detection,36.6,detection,-4.4,detection,35.85,detection,36.34,detection,19.673909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3738,NGC3738,IAm,HII,H,0,0,4.3,U,,49.1,detection,5.68,detection,37.77,detection,-2.46,detection,33.89,upper,,,17.713909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3735,NGC3735,SAc: spin,Seyfert,S,0,0,41.0,I,A,140.6,detection,7.51,detection,39.88,detection,-2.18,detection,36.24,detection,36.5,detection,20.063909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3756,NGC3756,SAB(rs)bc,HII,H,0,0,23.5,U,,47.6,detection,5.62,detection,37.04,detection,-3.13,detection,35.29,upper,,,19.113909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3780,NGC3780,SA(s)c:,LINER,L,0,0,37.2,U,,89.8,detection,6.73,detection,37.43,detection,-3.85,detection,35.78,upper,,,19.603909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3813,NGC3813,SA(rs)b:,HII,H,0,0,26.4,U,,72.1,detection,6.35,detection,37.59,detection,-3.31,detection,35.53,upper,,,19.353909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3838,NGC3838,SA0/a?,ALG,ALG,0,0,24.6,unI,,141.4,detection,7.52,detection,,,,,35.44,upper,,,19.263909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3877,NGC3877,SAc,HII,H,0,0,91.6,U,,86.1,detection,6.66,detection,37.86,detection,-3.39,detection,36.47,upper,,,20.293909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3884,NGC3884,SA(r)0/a,LINER,L,0,0,91.6,I,A,208.3,detection,8.2,detection,40.2,detection,-2.55,detection,37.79,detection,37.8,detection,21.613909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3893,NGC3893,SABc,HII,H,0,0,17.0,U,,85.3,detection,6.64,detection,37.44,detection,-3.79,detection,34.96,upper,,,18.783909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3900,NGC3900,SA(r)0+,ALG,ALG,0,0,29.4,U,,139.2,detection,7.5,detection,38.35,upper,-3.7,upper,35.63,upper,,,19.453909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3898,NGC3898,SA(s)ab,LINER,L,0,0,21.9,I,A,206.5,detection,8.19,detection,38.52,detection,-4.03,detection,35.84,detection,36.11,detection,19.663909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3917,NGC3917,SA(s)ab,LINER,L,0,0,17.0,U,,38.0,detection,5.23,detection,36.9,detection,-2.88,detection,35.04,upper,,,18.863909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3938,NGC3938,SAc,HII,H,0,0,17.0,I,A,29.1,detection,4.76,detection,37.61,detection,-1.74,detection,35.16,detection,35.49,detection,18.983909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3941,NGC3941,SB(s)0,Seyfert,S,0,0,18.9,I,A,133.0,detection,7.42,detection,38.52,detection,-3.45,detection,35.46,detection,35.7,detection,19.283909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3945,NGC3945,(R)SB(rs)0+,LINER,L,0,0,22.5,I,C,191.5,detection,6.94,detection,38.39,detection,-3.1,detection,35.77,detection,35.86,detection,19.593909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3949,NGC3949,SAbc,HII,H,0,0,17.0,U,,82.0,detection,6.57,detection,37.44,detection,-3.72,detection,35.05,upper,,,18.873909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3953,NGC3953,SB(r)bc,LINER,L,0,0,17.0,U,,116.0,detection,7.33,detection,37.9,detection,-3.98,detection,35.07,upper,,,18.893909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3963,NGC3963,SAB(rs)bc,HII,H,0,0,42.7,I,A,40.9,detection,5.36,detection,38.09,detection,-1.82,detection,36.03,detection,36.09,detection,19.853909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3982,NGC3982,SAB(r)b:,Seyfert,S,0,0,17.0,I,A,73.0,detection,6.95,detection,39.83,detection,-1.67,detection,36.15,detection,36.36,detection,19.973909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3992,NGC3992,SB(rs)bc,LINER,L,0,0,17.0,U,,148.4,detection,7.51,detection,37.1,detection,-4.96,detection,35.07,upper,,,18.893909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 3998,NGC3998,SA(r)0?,LINER,LRL,1,0,21.6,I,A,304.6,detection,8.93,detection,39.56,detection,-3.92,detection,37.98,detection,37.98,detection,21.803909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4013,NGC4013,SAb,LINER,L,0,0,17.0,unI,,86.5,detection,6.67,detection,37.36,detection,-3.9,detection,35.1,upper,,,18.923909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4026,NGC4026,SA0 spin,LINER,L,0,0,17.0,U,,177.2,detection,8.26,detection,,,,,35.11,upper,,,18.933909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4036,NGC4036,SA0-,LINER,L,0,0,24.6,I,C,215.1,detection,7.89,detection,39.16,detection,-3.28,detection,35.99,detection,36.94,detection,19.813909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4041,NGC4041,SA(rs)bc:,HII,H,0,0,22.7,I,E,95.0,detection,6.83,detection,38.24,detection,-3.14,detection,35.5,detection,36.51,detection,19.323909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4051,NGC4051,SABbc,Seyfert,S,0,0,17.0,I,C,89.0,detection,6.1,detection,40.17,detection,-1.14,detection,35.29,detection,36.92,detection,19.113909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4062,NGC4062,SA(s)c,HII,H,0,0,9.7,U,,93.2,detection,6.8,detection,36.51,detection,-4.84,detection,34.63,upper,,,18.453909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4088,NGC4088,SAB(rs)bc,HII,H,0,0,17.0,U,,77.0,detection,6.79,detection,37.48,detection,-3.86,detection,35.1,upper,,,18.923909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4096,NGC4096,SAB(rs)c,HII,H,0,0,8.8,U,,79.5,detection,6.52,detection,36.15,detection,-4.92,detection,34.53,upper,,,18.353909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4100,NGC4100,(R’)SA(rs)bc,HII,H,0,0,17.0,I,A,75.5,detection,6.43,detection,37.95,detection,-3.03,detection,35.36,detection,35.76,detection,19.183909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4102,NGC4102,SAB(s)b?,HII,H,0,0,17.0,I,E,174.3,detection,7.89,detection,39.1,detection,-3.34,detection,35.91,detection,37.55,detection,19.733909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4111,NGC4111,SA(r)0+: spin,LINER,L,0,0,17.0,I+unI,A,147.9,detection,7.6,detection,38.65,detection,-3.5,detection,35.41,detection,35.83,detection,19.233909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4125,NGC4125,E6 pec,LINER,L,0,0,24.2,U,,226.7,detection,8.35,detection,38.71,detection,-4.19,detection,35.36,upper,,,19.183909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4136,NGC4136,E6 pec,HII,H,0,0,9.7,U,,38.4,detection,5.25,detection,37.39,detection,-2.41,detection,34.66,upper,,,18.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4138,NGC4138,SA(r)0+,LINER,L,0,0,17.0,U,,120.9,detection,7.25,detection,38.75,detection,-3.05,detection,35.29,upper,,,19.113909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4143,NGC4143,SAB(s)0,LINER,L,0,0,17.0,I,B,204.9,detection,7.92,detection,38.81,detection,-3.66,detection,36.13,detection,36.22,detection,19.953909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4144,NGC4144,SAB(s)cd? spin,HII,H,0,0,4.1,U,,64.3,upper,6.15,upper,36.26,detection,-4.44,lower,34.02,upper,,,17.843909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4145,NGC4145,SAB(rs)d,HII,H,0,0,20.7,U,,,,5.33,detection,36.8,detection,-3.08,detection,35.18,upper,,,19.003909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4151,NGC4151,(R’)SAB(rs)ab:,Seyfert,S,0,0,20.3,I,C,97.0,detection,7.81,detection,41.74,detection,-0.62,detection,37.75,detection,38.35,detection,21.573909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4150,NGC4150,SA(r)0?,LINER,L,0,0,9.7,U,,87.0,detection,5.94,detection,35.83,detection,-4.66,detection,34.62,upper,,,18.443909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4157,NGC4157,SAB(s)b? spin,HII,H,0,0,17.0,U,,90.1,detection,6.74,detection,36.96,detection,-4.33,detection,35.07,upper,,,18.893909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4162,NGC4162,(R)SA(rs)bc,HII,H,0,0,38.5,unI,,76.1,detection,6.44,detection,38.44,detection,-2.55,detection,35.98,upper,,,19.803909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4169,NGC4169,SA0,Seyfert,S,0,0,50.4,U,,183.0,detection,7.97,detection,38.99,detection,-3.53,detection,36.08,upper,,,19.903909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4183,NGC4183,SA(s)cd? spin,HII,H,0,0,17.0,U,,34.4,detection,5.06,detection,37.9,detection,-1.71,detection,35.17,upper,,,18.993909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4203,NGC4203,SAB0-:,LINER,L,0,0,9.7,I,A,167.0,detection,7.82,detection,38.28,detection,-4.09,detection,36.09,detection,36.11,detection,19.913909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4214,NGC4214,IAB(s)m,HII,H,0,0,3.5,U,,51.6,detection,5.76,detection,38.71,detection,-1.6,detection,33.72,upper,,,17.543909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4217,NGC4217,SAb spin,HII,H,0,0,17.0,I,C,91.3,detection,6.76,detection,36.93,detection,-4.38,detection,35.23,detection,35.96,detection,19.053909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4220,NGC4220,SA(r)0+,LINER,L,0,0,17.0,I,A,105.5,detection,7.01,detection,36.19,detection,-5.37,detection,35.25,detection,35.72,detection,19.073909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4236,NGC4236,SB(s)dm,HII,H,0,0,2.2,unI,,62.8,upper,6.11,upper,36.24,detection,-4.42,lower,33.27,upper,,,17.093909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4244,NGC4244,SA(s)cd: spin,HII,H,0,0,3.1,I,A,36.8,detection,5.17,detection,36.05,detection,-3.67,detection,33.83,detection,33.94,detection,17.653909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4242,NGC4242,SAB(s)dm,HII,H,0,0,7.5,unI,,,,,,36.3,upper,,,34.42,upper,,,18.243909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4245,NGC4245,SB(r)0/a:,HII,H,0,0,9.7,U,,82.7,detection,7.19,detection,37.36,detection,-4.38,detection,34.64,upper,,,18.463909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4251,NGC4251,SB0? spin,ALG,ALG,0,0,9.7,U,,119.4,detection,7.23,detection,,,,,34.66,upper,,,18.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4258,NGC4258,SAB(s)bc,Seyfert,S,0,0,6.8,I,A,148.0,detection,7.58,detection,38.76,detection,-3.37,detection,34.93,detection,35.06,detection,18.753909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4274,NGC4274,(R)SB(r)ab,LINER,L,0,0,9.7,U,,96.6,detection,6.86,detection,38.49,detection,-2.92,detection,34.62,upper,,,18.443909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4278,NGC4278,E1+,LINER,LRL,1,0,9.7,I,A,261.0,detection,7.96,detection,38.88,detection,-3.63,detection,37.61,detection,37.63,detection,21.433909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4291,NGC4291,E,ALG,ALG,0,0,29.4,U,,285.3,detection,8.99,detection,,,,,35.5,upper,,,19.323909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4314,NGC4314,SB(rs)a,LINER,L,0,0,9.7,U,,117.0,detection,6.91,detection,37.75,detection,-3.71,detection,34.65,upper,,,18.473909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4346,NGC4346,SA0 spin,LINER,L,0,0,17.0,U,,146.5,detection,7.59,detection,37.88,detection,-4.26,detection,35.28,upper,,,19.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4369,NGC4369,(R)SA(rs)a,HII,H,0,0,21.6,I,A,71.6,detection,6.34,detection,38.83,detection,-2.06,detection,35.18,detection,35.4,detection,19.003909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4395,NGC4395,SA(s)m:,Seyfert,S,0,0,3.6,I,A,26.0,detection,4.57,detection,38.35,detection,-0.77,detection,34.17,detection,34.39,detection,17.993909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4414,NGC4414,SA(rs)c?,LINER,L,0,0,9.7,U,,117.0,detection,7.19,detection,36.46,detection,-5.28,detection,34.68,upper,,,18.503909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4449,NGC4449,IBm,HII,H,0,0,3.0,U,,17.8,detection,3.91,detection,38.28,detection,-0.18,detection,33.58,upper,,,17.403909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4448,NGC4448,SB(r)ab,HII,H,0,0,9.7,U,,119.8,detection,7.24,detection,37.34,detection,-4.45,detection,34.47,upper,,,18.293909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4460,NGC4460,SB(s)0+? spin,HII,H,0,0,8.1,U,,39.8,detection,5.31,detection,38.09,detection,-1.77,detection,34.36,upper,,,18.183909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4485,NGC4485,IB(s)m pec,HII,H,0,0,9.3,U,,52.2,detection,5.78,detection,36.95,detection,-3.38,detection,34.32,upper,,,18.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4490,NGC4490,SB(s)d pec,HII,H,0,0,7.8,U,,45.1,detection,5.53,detection,37.12,detection,-2.96,detection,34.33,upper,,,18.153909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4494,NGC4494,E1+,LINER,L,0,0,9.7,I,A,145.0,detection,7.57,detection,37.35,detection,-4.77,detection,34.69,detection,34.92,detection,18.513909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4559,NGC4559,SAB(rs)cd,HII,H,0,0,9.7,U,,49.2,detection,5.68,detection,37.01,detection,-3.22,detection,34.49,upper,,,18.313909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4565,NGC4565,SA(s)b? spin,Seyfert,S,0,0,9.7,I,A,136.0,detection,7.46,detection,38.22,detection,-3.79,detection,35.2,detection,35.31,detection,19.023909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4589,NGC4589,E2,LINER,LRL,1,0,30.0,I,C,224.3,detection,8.33,detection,38.78,detection,-4.1,detection,37.45,detection,37.6,detection,21.273909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4605,NGC4605,SB(s)c pec,HII,H,0,0,4.0,U,,26.1,detection,4.57,detection,36.63,detection,-2.49,detection,33.77,upper,,,17.593909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4618,NGC4618,SB(rs)m,HII,H,0,0,7.3,U,,54.6,upper,5.86,upper,37.97,detection,-2.44,lower,34.28,upper,,,18.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4648,NGC4648,E3,ALG,ALG,0,0,27.5,U,,224.5,detection,8.33,detection,,,,,35.45,upper,,,19.273909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4631,NGC4631,SB(s)d spin,HII,H,0,0,6.9,unI,,71.9,upper,6.34,upper,37.12,detection,-3.77,lower,34.3,upper,,,18.123909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4656,NGC4656,SB(s)m pec,HII,H,0,0,7.2,U,,70.4,detection,6.31,detection,37.93,detection,-2.93,detection,34.32,upper,,,18.143909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4750,NGC4750,(R)SA(rs)ab,LINER,L,0,0,26.1,I,A,136.0,detection,7.46,detection,38.76,detection,-3.25,detection,35.84,detection,36.17,detection,19.663909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4725,NGC4725,SAB(r)ab pec,Seyfert,S,0,0,12.4,U,,140.0,detection,7.51,detection,38.51,detection,-3.55,detection,34.78,upper,,,18.603909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4736,NGC4736,(R)SA(r)ab,LINER,L,0,0,4.3,I,A,112.0,detection,7.12,detection,37.33,detection,-4.08,detection,34.82,detection,35.29,detection,18.643909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4800,NGC4800,SA(rs)b,HII,H,0,0,15.2,U,,111.0,detection,7.02,detection,37.62,detection,-3.95,detection,34.91,upper,,,18.733909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4793,NGC4793,SAB(rs)c,HII,H,0,0,38.9,U,,26.6,detection,4.61,detection,38.84,upper,-0.32,upper,35.78,upper,,,19.603909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4826,NGC4826,(R)SA(rs)ab,LINER,L,0,0,4.1,I,A,96.0,detection,6.85,detection,37.92,detection,-3.48,detection,33.88,detection,34.93,detection,17.703909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 4914,NGC4914,E,ALG,ALG,0,0,62.4,U,,224.7,detection,8.33,detection,,,,,36.17,upper,,,19.993909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5005,NGC5005,SABbc,LINER,L,0,0,21.3,I,D,172.0,detection,8.27,detection,39.41,detection,-3.05,detection,36.29,detection,37.54,detection,20.113909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5012,NGC5012,SAB(rs)c,LINER,L,0,0,40.4,unI,,141.4,detection,7.52,detection,38.58,detection,-3.49,detection,35.84,upper,,,19.663909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5033,NGC5033,SA(s)c,LINER,L,0,0,18.7,I,A,151.0,detection,7.64,detection,39.34,detection,-2.85,detection,36.04,detection,36.42,detection,19.863909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5055,NGC5055,SAbc,LINER,L,0,0,7.2,U,,117.0,detection,8.92,detection,37.44,detection,-6.07,detection,34.37,upper,,,18.193909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5112,NGC5112,SBcd,HII,H,0,0,20.5,U,,60.8,upper,6.05,upper,37.42,detection,-3.22,detection,35.4,upper,,,19.223909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5204,NGC5204,SA(s)m,HII,H,0,0,4.8,U,,39.9,detection,5.32,detection,36.58,detection,-3.29,detection,34.14,upper,,,17.963909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5194,NGC5194,SAbc pec,Seyfert,S,0,0,7.7,I,D,96.0,detection,6.85,detection,38.91,detection,-2.53,detection,35.06,detection,36.14,detection,18.883909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5195,NGC5195,IA0 pec,LINER,L,0,0,9.3,I,C,124.8,detection,7.31,detection,37.84,detection,-4.06,detection,34.9,detection,35.59,detection,18.723909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5273,NGC5273,SA0,Seyfert,S,0,0,21.3,unI,,71.0,detection,6.61,detection,39.82,detection,-1.38,detection,35.31,upper,,,19.133909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5297,NGC5297,SABc,LINER,L,0,0,37.8,U,,61.3,detection,6.07,detection,38.22,detection,-2.44,detection,35.89,upper,,,19.713909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5308,NGC5308,SA0- spin,ALG,ALG,0,0,32.4,U,,249.0,detection,8.51,detection,,,,,35.82,upper,,,19.643909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5322,NGC5322,E3+,LINER,LRL,1,0,31.6,I,B,232.2,detection,8.39,detection,38.2,detection,-4.74,detection,36.96,detection,37.51,detection,20.783909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5353,NGC5353,SA0,LINER,LRL,1,0,37.8,I,A,286.4,detection,8.76,detection,38.73,detection,-4.62,detection,37.63,detection,37.66,detection,21.453909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5354,NGC5354,SA0 spin,LINER,LRL,1,0,32.8,I,A,217.4,detection,8.28,detection,38.61,detection,-4.22,detection,36.94,detection,36.97,detection,20.763909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5371,NGC5371,SABbc,LINER,L,0,0,37.8,U,,179.8,detection,7.94,detection,39.03,detection,-3.5,detection,35.79,upper,,,19.613909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5377,NGC5377,SBa,LINER,L,0,0,31.0,I,C,169.7,detection,7.84,detection,38.81,detection,-3.62,detection,35.71,detection,36.35,detection,19.533909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5383,NGC5383,SBb pec,HII,H,0,0,37.8,U,,96.5,detection,6.86,detection,38.07,detection,-3.38,detection,35.82,upper,,,19.643909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5395,NGC5395,SAb pec,LINER,L,0,0,46.7,U,,145.5,detection,7.57,detection,38.66,detection,-3.5,detection,35.96,upper,,,19.783909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5448,NGC5448,SABa,LINER,L,0,0,32.6,I,C,124.5,detection,7.3,detection,38.55,detection,-3.34,detection,35.73,detection,36.46,detection,19.553909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5457,NGC5457,SAB(rs)cd,HII,H,0,0,5.4,U,,23.6,detection,6.41,detection,36.99,detection,-3.97,detection,34.28,upper,,,18.103909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5473,NGC5473,SAB(s)0-:,ALG,ALG,0,0,33.0,U,,220.5,detection,8.3,detection,,,,,35.82,upper,,,19.643909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5474,NGC5474,SA(s)cd pec,HII,H,0,0,6.0,U,,29.0,detection,4.76,detection,37.35,detection,-1.96,detection,34.38,upper,,,18.203909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5485,NGC5485,SA0 pec,LINER,LRL,1,0,32.8,I,A,207.5,detection,8.19,detection,38.31,detection,-4.43,detection,36.44,detection,36.44,detection,20.263909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5523,NGC5523,SAcd,HII,H,0,0,21.5,U,,30.1,detection,4.82,detection,37.25,detection,-2.16,detection,35.29,upper,,,19.113909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5548,NGC5548,(R’)SA(s)0/a,Seyfert,S,0,0,67.0,I,B,291.0,detection,7.7,detection,41.6,detection,-0.65,detection,36.96,detection,37.61,detection,20.783909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5557,NGC5557,E1,ALG,ALG,0,0,42.6,U,,295.3,detection,8.81,detection,,,,,35.94,upper,,,19.763909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5585,NGC5585,SAB(s)d,HII,H,0,0,7.0,U,,42.0,detection,5.41,detection,37.68,detection,-2.28,detection,34.53,upper,,,18.353909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5631,NGC5631,SA(s)0,LINER,L,0,0,32.7,U,,168.1,detection,7.83,detection,38.76,detection,-3.62,detection,35.89,upper,,,19.713909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5660,NGC5660,SABc,HII,H,0,0,37.2,U,,60.7,detection,6.05,detection,38.1,detection,-2.54,detection,35.76,upper,,,19.583909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5656,NGC5656,SAab,LINER,L,0,0,42.6,U,,116.7,detection,7.19,detection,37.99,detection,-3.79,detection,35.92,upper,,,19.743909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5678,NGC5678,SAB(rs)b,HII,H,0,0,35.6,U,,132.8,detection,7.42,detection,38.27,detection,-3.7,detection,35.93,upper,,,19.753909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5676,NGC5676,SAbc,HII,H,0,0,34.5,unI,,116.7,detection,7.19,detection,37.96,detection,-3.82,detection,35.74,upper,,,19.563909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5866,NGC5866,SA0,LINER,LRL,1,0,15.3,I,D,169.1,detection,7.84,detection,37.5,detection,-4.93,detection,36.5,detection,36.76,detection,20.323909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5879,NGC5879,SAbc,LINER,L,0,0,16.8,I,A,73.9,detection,6.62,detection,37.89,detection,-3.09,detection,35.27,detection,35.39,detection,19.093909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5905,NGC5905,SBb,HII,H,0,0,44.4,U,,174.6,detection,7.89,detection,39.03,detection,-3.45,detection,35.9,upper,,,19.723909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5907,NGC5907,SAc,HII,H,0,0,14.9,unI,,120.2,detection,7.24,detection,36.88,detection,-4.94,detection,35.03,upper,,,18.853909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5982,NGC5982,E3,ALG,ALG,0,0,38.7,U,,239.4,detection,8.44,detection,38.55,upper,-4.48,upper,35.8,upper,,,19.623909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 5985,NGC5985,SABb,LINER,L,0,0,39.2,I,D,157.6,detection,7.71,detection,38.76,detection,-3.54,detection,35.76,detection,36.3,detection,19.583909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6015,NGC6015,SAcd,HII,H,0,0,17.5,unI,,43.5,detection,5.47,detection,37.18,detection,-2.88,detection,35.04,upper,,,18.863909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6140,NGC6140,SBcd pec,HII,H,0,0,18.6,U,,49.4,detection,5.69,detection,37.52,detection,-2.76,detection,35.15,upper,,,18.973909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6217,NGC6217,(R)SB(rs)bc,HII,H,0,0,23.9,I,A,70.3,detection,6.3,detection,39.25,detection,-1.6,detection,35.66,detection,36.59,detection,19.483909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6207,NGC6207,SA(s)c,HII,H,0,0,17.4,U,,92.1,detection,6.78,detection,38.3,detection,-3.03,detection,35.19,upper,,,19.013909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6236,NGC6236,SAB(s)cd,HII,H,0,0,23.3,U,,46.1,detection,5.57,detection,37.93,detection,-2.19,detection,35.4,upper,,,19.223909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6340,NGC6340,SA(s)0/a,LINER,L,0,0,22.0,I,A,143.9,detection,7.56,detection,38.31,detection,-3.8,detection,35.53,detection,36.03,detection,19.353909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6412,NGC6412,SA(s)c,HII,H,0,0,23.5,U,,49.9,detection,5.71,detection,37.59,detection,-2.67,detection,35.4,upper,,,19.223909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6503,NGC6503,SA(s)cd,LINER,L,0,0,6.1,U,,46.0,detection,6.3,detection,,,,,34.3,upper,,,18.123909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6482,NGC6482,E:,LINER,L,0,0,52.3,I,A,310.4,detection,8.9,detection,,,,,36.37,detection,36.74,detection,20.193909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6643,NGC6643,SA(rs)c,HII,H,0,0,25.5,U,,95.4,detection,6.84,detection,37.52,detection,-3.87,detection,35.47,upper,,,19.293909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6654,NGC6654,(R’)SB(s)0/a,ALG,ALG,0,0,29.5,U,,172.2,detection,7.87,detection,,,,,35.61,upper,,,19.433909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6689,NGC6689,SAd? spin,LINER,L,0,0,12.2,U,,26.0,detection,4.57,detection,37.17,detection,-1.95,detection,34.85,upper,,,18.673909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6702,NGC6702,E,ALG,ALG,0,0,62.8,I,C,173.6,detection,7.88,detection,,,,,36.19,detection,36.85,detection,20.013909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6703,NGC6703,SA0,LINER,L,0,0,35.9,I,A,179.9,detection,7.95,detection,38.46,detection,-4.08,detection,35.78,detection,35.91,detection,19.603909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6946,NGC6946,SABcd,HII,H,0,0,5.5,I,E,55.8,detection,5.9,detection,37.03,detection,-3.46,detection,34.43,detection,35.73,detection,18.253909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 6951,NGC6951,SABbc,LINER,L,0,0,24.1,I,C,127.8,detection,6.93,detection,38.69,detection,-3.25,detection,35.42,detection,36.02,detection,19.243909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7080,NGC7080,SB(r)b,HII,H,0,0,64.1,I,A,95.3,detection,6.84,detection,,,,,36.5,detection,36.91,detection,20.323909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7217,NGC7217,SAab,LINER,L,0,0,16.0,I,C,141.4,detection,7.52,detection,38.31,detection,-3.8,detection,35.09,detection,35.87,detection,18.913909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7331,NGC7331,SAb,LINER,L,0,0,14.3,U,,137.2,detection,8.02,detection,38.3,detection,-3.76,detection,34.95,upper,,,18.773909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7332,NGC7332,SA0 pec,ALG,ALG,0,0,18.2,U,,124.1,detection,7.08,detection,,,,,35.18,upper,,,19.003909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7457,NGC7457,SA0?,ALG,ALG,0,0,12.3,U,,69.4,detection,6.95,detection,,,,,34.88,upper,,,18.703909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7640,NGC7640,H,HII,H,0,0,8.6,U,,48.1,detection,5.64,detection,36.84,detection,-3.39,detection,34.51,upper,,,18.333909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7741,NGC7741,SBcd,HII,H,0,0,12.3,U,,29.4,detection,4.78,detection,37.91,detection,-1.46,detection,34.7,upper,,,18.523909,1.5,Baldi2021_LeMMINGsIII_Table1
+NGC 7798,NGC7798,S,HII,j H,0,1,32.6,I,C,75.1,detection,6.42,detection,38.64,detection,-2.37,detection,35.64,detection,36.54,detection,19.463909,1.5,Baldi2021_LeMMINGsIII_Table1

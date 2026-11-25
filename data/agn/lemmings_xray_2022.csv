@@ -1,0 +1,281 @@
+canonical_name,distance_mpc,chandra_obsid,exposure_seconds,optical_class_in_xray_paper,detection_status,source,log_flux_03_10_erg_s_cm2,log_flux_03_10_erg_s_cm2_limit,log_flux_03_10_erg_s_cm2_error_dex,log_flux_03_2_erg_s_cm2,log_flux_03_2_erg_s_cm2_limit,log_flux_03_2_erg_s_cm2_error_dex,log_flux_2_10_erg_s_cm2,log_flux_2_10_erg_s_cm2_limit,log_flux_2_10_erg_s_cm2_error_dex,log_L_03_10_erg_s,log_L_03_10_erg_s_limit,log_L_03_10_erg_s_error_dex,log_L_03_2_erg_s,log_L_03_2_erg_s_limit,log_L_03_2_erg_s_error_dex,log_L_2_10_erg_s,log_L_2_10_erg_s_limit,log_L_2_10_erg_s_error_dex
+NGC7817,31.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+IC10,1.3,8458,43571.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.92,upper,,,,,,,,36.38,upper,,,,,,,
+NGC147,0.7,,,ALG,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC185,0.7,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC205,0.7,4691,9870.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-14.0,upper,,,,,,,,35.77,upper,,,,,,,
+NGC221,0.7,5690,113027.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-14.24,upper,,,,,,,,35.53,upper,,,,,,,
+NGC224,0.7,14196,42848.0,ALG,146.78,Williams2022_LeMMINGsIV_Table2,-12.59,detection,0.05,-12.77,detection,0.1,-13.04,detection,0.1,37.18,detection,0.05,37.0,detection,0.1,36.73,detection,0.1
+NGC266,62.4,16013,84950.0,LINER,204.06,Williams2022_LeMMINGsIV_Table2,-12.81,detection,0.06,-13.28,detection,0.1,-12.99,detection,0.1,40.86,detection,0.06,40.39,detection,0.1,40.68,detection,0.1
+NGC278,11.8,2055,38259.0,HII,11.87,Williams2022_LeMMINGsIV_Table2,-14.18,detection,0.1,-14.29,detection,0.11,-14.8,detection,0.2,38.05,detection,0.1,37.93,detection,0.11,37.42,detection,0.2
+NGC315,65.8,4156,55016.0,LINER,33.96,Williams2022_LeMMINGsIV_Table2,-11.86,detection,0.03,-12.58,detection,0.04,-11.95,detection,0.04,41.86,detection,0.03,41.13,detection,0.04,41.77,detection,0.04
+NGC404,2.4,12239,98257.0,LINER,89.63,Williams2022_LeMMINGsIV_Table2,-13.53,detection,0.07,-13.71,detection,0.16,-14.0,detection,0.16,37.31,detection,0.07,37.13,detection,0.16,36.84,detection,0.16
+NGC410,70.6,5897,2557.0,LINER,26.74,Williams2022_LeMMINGsIV_Table2,-12.21,detection,0.06,-12.35,detection,0.03,-12.77,detection,0.28,41.57,detection,0.06,41.43,detection,0.03,41.0,detection,0.28
+NGC507,65.7,16354,49426.0,ALG,58.35,Williams2022_LeMMINGsIV_Table2,-12.95,detection,0.02,-12.98,detection,0.02,-14.08,detection,0.02,40.76,detection,0.02,40.73,detection,0.02,39.63,detection,0.02
+NGC598,0.7,7728,44380.0,HII,280.24,Williams2022_LeMMINGsIV_Table2,-13.51,detection,0.12,-13.58,detection,0.33,-14.32,detection,0.33,36.26,detection,0.12,36.18,detection,0.33,35.44,detection,0.33
+IC1727,8.2,1634,1725.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-14.02,upper,,,,,,,,37.88,upper,,,,,,,
+NGC672,7.5,10118,9859.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.39,upper,,,,,,,,38.43,upper,,,,,,,
+NGC697,41.6,7090,2157.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.37,upper,,,,,,,,40.95,upper,,,,,,,
+NGC777,66.5,7101,1930.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-12.95,upper,,,,,,,,40.77,upper,,,,,,,
+NGC783,68.1,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC784,4.7,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC812,108.8,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC818,59.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC841,59.5,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC890,53.4,7124,3542.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-13.34,upper,,,,,,,,40.19,upper,,,,,,,
+NGC891,9.6,5001,10038.0,HII,14.23,Williams2022_LeMMINGsIV_Table2,-13.13,detection,0.04,-14.0,detection,0.03,-13.19,detection,0.04,38.91,detection,0.04,38.04,detection,0.03,38.85,detection,0.04
+NGC925,9.4,19325,34602.0,HII,6.76,Williams2022_LeMMINGsIV_Table2,-13.84,detection,0.27,-14.29,detection,0.41,-14.04,detection,0.41,38.18,detection,0.27,37.74,detection,0.41,37.98,detection,0.41
+NGC959,10.1,4613,118879.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.04,upper,,,,,,,,38.04,upper,,,,,,,
+NGC972,21.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+IC239,16.8,7131,4538.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.37,upper,,,,,,,,38.15,upper,,,,,,,
+NGC1003,10.7,7116,2672.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.06,upper,,,,,,,,38.08,upper,,,,,,,
+NGC1023,10.5,8198,49730.0,ALG,97.11,Williams2022_LeMMINGsIV_Table2,-13.07,detection,0.08,-13.42,detection,0.14,-13.33,detection,0.14,39.05,detection,0.08,38.7,detection,0.14,38.79,detection,0.14
+NGC1058,9.1,9579,19452.0,LINER,15.16,Williams2022_LeMMINGsIV_Table2,-13.65,detection,0.2,-13.71,detection,0.19,-14.53,detection,0.19,38.35,detection,0.2,38.29,detection,0.19,37.47,detection,0.19
+NGC1156,6.4,7088,1930.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.0,upper,,,,,,,,37.69,upper,,,,,,,
+NGC1161,25.9,12958,7446.0,LINER,14.7,Williams2022_LeMMINGsIV_Table2,-12.88,detection,0.06,-13.25,detection,0.07,-13.11,detection,0.08,40.02,detection,0.06,39.66,detection,0.07,39.79,detection,0.08
+NGC1167,65.3,19313,12880.0,LINER,25.17,Williams2022_LeMMINGsIV_Table2,-13.25,detection,0.21,-13.53,detection,0.45,-13.59,detection,0.45,40.45,detection,0.21,40.18,detection,0.45,40.12,detection,0.45
+NGC1169,33.7,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC1186,35.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC1275,70.1,4952,164246.0,LINER,205.26,Williams2022_LeMMINGsIV_Table2,-11.4,detection,0.02,-12.51,detection,0.02,-11.43,detection,0.02,42.37,detection,0.02,41.26,detection,0.02,42.34,detection,0.02
+IC342,3.0,7069,57808.0,HII,132.95,Williams2022_LeMMINGsIV_Table2,-12.61,detection,0.05,-12.9,detection,0.09,-12.91,detection,0.09,38.43,detection,0.05,38.13,detection,0.09,38.12,detection,0.09
+IC356,18.1,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC1569,1.6,782,96795.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.87,upper,,,,,,,,35.62,upper,,,,,,,
+NGC1560,3.0,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC1961,53.1,10531,32835.0,LINER,32.74,Williams2022_LeMMINGsIV_Table2,-13.1,detection,0.15,-13.63,detection,0.22,-13.25,detection,0.22,40.43,detection,0.15,39.9,detection,0.22,40.27,detection,0.22
+NGC2146,17.2,3135,10019.0,HII,8.84,Williams2022_LeMMINGsIV_Table2,-12.17,detection,0.29,-13.81,detection,0.3,-12.18,detection,0.3,40.38,detection,0.29,38.74,detection,0.3,40.37,detection,0.3
+NGC2273,28.4,19377,9942.0,Seyfert,84.06,Williams2022_LeMMINGsIV_Table2,-12.08,detection,0.16,-13.56,detection,0.17,-12.1,detection,0.17,40.9,detection,0.16,39.43,detection,0.17,40.89,detection,0.17
+NGC2342,69.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+UGC3714,40.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2268,34.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+UGC3828,46.8,7104,2246.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.13,upper,,,,,,,,41.29,upper,,,,,,,
+NGC2336,33.9,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2276,36.8,4968,45573.0,HII,3.67,Williams2022_LeMMINGsIV_Table2,-13.77,detection,0.14,-13.88,detection,0.34,-14.43,detection,0.34,39.44,detection,0.14,39.33,detection,0.34,38.78,detection,0.34
+NGC2366,2.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+IC467,27.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2300,31.0,4968,45573.0,ALG,39.02,Williams2022_LeMMINGsIV_Table2,-12.93,detection,0.1,-12.94,detection,0.1,-14.41,detection,0.19,40.14,detection,0.1,40.12,detection,0.1,38.65,detection,0.19
+NGC2403,4.2,4630,49936.0,HII,151.93,Williams2022_LeMMINGsIV_Table2,-12.75,detection,0.05,-13.11,detection,0.03,-12.99,detection,0.08,38.58,detection,0.05,38.21,detection,0.03,38.34,detection,0.08
+UGC4028,52.7,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2500,10.1,7112,2573.0,HII,3.15,Williams2022_LeMMINGsIV_Table2,-13.66,detection,0.22,-13.91,detection,0.22,-13.99,detection,0.22,38.43,detection,0.22,38.18,detection,0.22,38.1,detection,0.22
+NGC2543,32.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2537,9.0,19359,9945.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.4,upper,,,,,,,,39.58,upper,,,,,,,
+NGC2541,10.6,19354,7964.0,HII,3.21,Williams2022_LeMMINGsIV_Table2,-14.03,detection,0.67,-14.43,detection,0.67,-14.25,detection,0.67,38.1,detection,0.67,37.7,detection,0.67,37.87,detection,0.67
+NGC2549,18.8,19339,9942.0,ALG,15.18,Williams2022_LeMMINGsIV_Table2,-13.11,detection,0.29,-13.84,detection,0.35,-13.19,detection,0.35,39.52,detection,0.29,38.78,detection,0.35,39.43,detection,0.35
+NGC2639,42.6,5682,5021.0,LINER,40.84,Williams2022_LeMMINGsIV_Table2,-12.28,detection,0.22,-12.3,detection,0.32,-13.61,detection,0.32,41.05,detection,0.22,41.03,detection,0.32,39.72,detection,0.32
+NGC2634,30.2,13005,4909.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-13.43,upper,,,,,,,,39.61,upper,,,,,,,
+NGC2683,5.7,11311,38530.0,LINER,58.89,Williams2022_LeMMINGsIV_Table2,-12.2,detection,0.04,-13.96,detection,0.18,-12.21,detection,0.04,39.39,detection,0.04,37.63,detection,0.18,39.38,detection,0.04
+NGC2681,13.3,2060,80898.0,LINER,160.3,Williams2022_LeMMINGsIV_Table2,-13.11,detection,0.06,-13.34,detection,0.12,-13.49,detection,0.12,39.22,detection,0.06,38.98,detection,0.12,38.84,detection,0.12
+IC520,47.0,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2685,16.2,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2655,24.4,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2750,38.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2742,22.2,19353,9780.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.52,upper,,,,,,,,38.25,upper,,,,,,,
+NGC2715,20.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2770,29.6,9104,17901.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.68,upper,,,,,,,,38.34,upper,,,,,,,
+NGC2768,23.7,9528,64607.0,LINER,85.01,Williams2022_LeMMINGsIV_Table2,-13.0,detection,0.12,-13.67,detection,0.15,-13.1,detection,0.15,39.83,detection,0.12,39.16,detection,0.15,39.73,detection,0.15
+NGC2776,38.7,19384,9939.0,HII,7.42,Williams2022_LeMMINGsIV_Table2,-14.14,detection,0.2,-14.2,detection,0.2,-15.02,detection,0.2,39.11,detection,0.2,39.05,detection,0.2,38.23,detection,0.2
+NGC2748,23.8,11776,29670.0,HII,8.58,Williams2022_LeMMINGsIV_Table2,-14.42,detection,0.2,-14.8,detection,0.18,-14.66,detection,0.25,38.41,detection,0.2,38.03,detection,0.18,38.18,detection,0.25
+NGC2782,37.3,3014,29584.0,HII,112.45,Williams2022_LeMMINGsIV_Table2,-12.43,detection,0.02,-13.14,detection,0.02,-12.53,detection,0.02,40.79,detection,0.02,40.08,detection,0.02,40.69,detection,0.02
+NGC2787,13.0,4689,30848.0,LINER,147.73,Williams2022_LeMMINGsIV_Table2,-12.87,detection,0.11,-13.23,detection,0.17,-13.11,detection,0.17,39.44,detection,0.11,39.08,detection,0.17,39.2,detection,0.17
+NGC2832,91.6,5904,3011.0,LINER,3.21,Williams2022_LeMMINGsIV_Table2,-12.22,detection,0.08,-12.31,detection,0.09,-12.95,detection,0.18,41.78,detection,0.08,41.69,detection,0.09,41.06,detection,0.18
+NGC2841,12.0,6096,28217.0,LINER,54.21,Williams2022_LeMMINGsIV_Table2,-13.04,detection,0.05,-13.38,detection,0.03,-13.3,detection,0.1,39.2,detection,0.05,38.86,detection,0.03,38.94,detection,0.1
+NGC2859,25.4,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2903,6.3,11260,93551.0,HII,76.23,Williams2022_LeMMINGsIV_Table2,-12.99,detection,0.02,-13.32,detection,0.02,-13.27,detection,0.04,38.68,detection,0.02,38.36,detection,0.02,38.4,detection,0.04
+NGC2950,23.3,19338,9939.0,ALG,6.71,Williams2022_LeMMINGsIV_Table2,-13.55,detection,0.3,-13.62,detection,0.28,-14.38,detection,0.28,39.26,detection,0.3,39.19,detection,0.28,38.44,detection,0.28
+NGC2964,21.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2977,40.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2976,2.1,9542,9824.0,HII,3.05,Williams2022_LeMMINGsIV_Table2,-14.23,detection,0.4,-14.29,detection,0.38,-15.11,detection,0.38,36.49,detection,0.4,36.43,detection,0.38,35.61,detection,0.38
+NGC3003,24.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC2985,22.4,11669,13776.0,LINER,90.18,Williams2022_LeMMINGsIV_Table2,-12.97,detection,0.14,-13.24,detection,0.28,-13.3,detection,0.28,39.81,detection,0.14,39.54,detection,0.28,39.48,detection,0.28
+NGC3031,1.4,12301,78050.0,LINER,622.22,Williams2022_LeMMINGsIV_Table2,-11.16,detection,0.01,-12.01,detection,0.01,-11.22,detection,0.01,39.21,detection,0.01,38.36,detection,0.01,39.15,detection,0.01
+NGC3027,19.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3034,5.2,10542,118614.0,HII,110.07,Williams2022_LeMMINGsIV_Table2,-12.26,detection,0.01,-12.8,detection,0.01,-12.41,detection,0.02,39.25,detection,0.01,38.71,detection,0.01,39.1,detection,0.02
+NGC3043,39.1,19365,9939.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.53,upper,,,,,,,,38.74,upper,,,,,,,
+NGC3073,19.3,2038,26579.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.23,upper,,,,,,,,38.42,upper,,,,,,,
+NGC3079,20.4,2038,26579.0,LINER,28.31,Williams2022_LeMMINGsIV_Table2,-12.6,detection,0.14,-13.53,detection,0.16,-12.65,detection,0.16,40.1,detection,0.14,39.17,detection,0.16,40.05,detection,0.16
+NGC3077,2.1,2076,53437.0,HII,68.78,Williams2022_LeMMINGsIV_Table2,-13.09,detection,0.03,-14.03,detection,0.05,-13.15,detection,0.04,37.63,detection,0.03,36.69,detection,0.05,37.58,detection,0.04
+NGC3162,22.2,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3147,40.9,1615,2203.0,LINER,338.43,Williams2022_LeMMINGsIV_Table2,-11.24,detection,0.07,-11.81,detection,0.09,-11.38,detection,0.09,42.06,detection,0.07,41.49,detection,0.09,41.92,detection,0.09
+NGC3185,21.3,2760,19814.0,Seyfert,11.51,Williams2022_LeMMINGsIV_Table2,-12.8,detection,0.24,-13.7,detection,0.08,-12.85,detection,0.33,39.93,detection,0.24,39.03,detection,0.08,39.89,detection,0.33
+NGC3190,22.4,2760,19814.0,LINER,68.72,Williams2022_LeMMINGsIV_Table2,-12.52,detection,0.06,-12.96,detection,0.07,-12.71,detection,0.1,40.26,detection,0.06,39.81,detection,0.07,40.07,detection,0.1
+NGC3184,8.7,804,42124.0,HII,34.93,Williams2022_LeMMINGsIV_Table2,-13.49,detection,0.21,-13.93,detection,0.29,-13.69,detection,0.29,38.47,detection,0.21,38.03,detection,0.29,38.27,detection,0.29
+NGC3193,23.2,11360,7149.0,LINER,8.66,Williams2022_LeMMINGsIV_Table2,-13.23,detection,0.23,-13.3,detection,0.21,-14.04,detection,0.21,39.58,detection,0.23,39.51,detection,0.21,38.76,detection,0.21
+NGC3198,10.8,9551,61625.0,HII,30.81,Williams2022_LeMMINGsIV_Table2,-13.48,detection,0.24,-14.24,detection,0.28,-13.57,detection,0.28,38.66,detection,0.24,37.91,detection,0.28,38.58,detection,0.28
+NGC3245,22.2,2926,9635.0,HII,31.02,Williams2022_LeMMINGsIV_Table2,-13.05,detection,0.17,-13.38,detection,0.27,-13.32,detection,0.27,39.72,detection,0.17,39.39,detection,0.27,39.45,detection,0.27
+IC2574,3.4,792,10038.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.59,upper,,,,,,,,36.55,upper,,,,,,,
+NGC3254,23.6,,,Seyfert,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3294,26.7,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3301,23.3,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3310,18.7,2939,47158.0,HII,159.06,Williams2022_LeMMINGsIV_Table2,-12.47,detection,0.09,-13.21,detection,0.11,-12.56,detection,0.11,40.15,detection,0.09,39.41,detection,0.11,40.06,detection,0.11
+NGC3319,11.5,19350,9939.0,HII,30.77,Williams2022_LeMMINGsIV_Table2,-12.88,detection,0.31,-13.39,detection,0.47,-13.04,detection,0.47,39.32,detection,0.31,38.81,detection,0.47,39.16,detection,0.47
+NGC3344,6.1,15387,47442.0,HII,42.61,Williams2022_LeMMINGsIV_Table2,-13.18,detection,0.05,-13.5,detection,0.07,-13.46,detection,0.11,38.47,detection,0.05,38.15,detection,0.07,38.19,detection,0.11
+NGC3359,19.2,16347,49302.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.76,upper,,,,,,,,37.88,upper,,,,,,,
+NGC3348,37.8,,,ALG,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3395,27.4,2042,13478.0,HII,13.8,Williams2022_LeMMINGsIV_Table2,-13.24,detection,0.13,-13.39,detection,0.05,-13.74,detection,0.5,39.72,detection,0.13,39.56,detection,0.05,39.21,detection,0.5
+NGC3414,24.9,6779,13706.0,LINER,195.7,Williams2022_LeMMINGsIV_Table2,-12.25,detection,0.09,-12.79,detection,0.13,-12.39,detection,0.13,40.62,detection,0.09,40.08,detection,0.13,40.48,detection,0.13
+NGC3430,26.7,16821,9926.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.24,upper,,,,,,,,38.69,upper,,,,,,,
+NGC3432,7.8,7091,1930.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.96,upper,,,,,,,,37.9,upper,,,,,,,
+NGC3448,24.5,19360,9973.0,HII,28.32,Williams2022_LeMMINGsIV_Table2,-12.93,detection,0.09,-13.81,detection,0.08,-12.99,detection,0.1,39.93,detection,0.09,39.05,detection,0.08,39.87,detection,0.1
+NGC3486,7.4,393,1757.0,Seyfert,Undet,Williams2022_LeMMINGsIV_Table2,-14.31,upper,,,,,,,,37.5,upper,,,,,,,
+NGC3504,26.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3516,38.9,2080,73062.0,Seyfert,1353.47,Williams2022_LeMMINGsIV_Table2,-10.72,detection,0.02,-11.71,detection,0.02,-10.77,detection,0.02,42.53,detection,0.02,41.55,detection,0.02,42.49,detection,0.02
+NGC3556,14.1,2025,59366.0,HII,83.27,Williams2022_LeMMINGsIV_Table2,-13.09,detection,0.12,-13.74,detection,0.15,-13.19,detection,0.15,39.29,detection,0.12,38.63,detection,0.15,39.18,detection,0.15
+NGC3583,34.0,19381,9939.0,HII,6.34,Williams2022_LeMMINGsIV_Table2,-13.4,detection,0.24,-13.65,detection,0.46,-13.76,detection,0.46,39.74,detection,0.24,39.5,detection,0.46,39.38,detection,0.46
+NGC3600,10.5,19356,6978.0,HII,36.78,Williams2022_LeMMINGsIV_Table2,-12.8,detection,0.21,-13.27,detection,0.33,-12.98,detection,0.33,39.32,detection,0.21,38.85,detection,0.33,39.14,detection,0.33
+NGC3610,29.2,7141,4926.0,ALG,4.07,Williams2022_LeMMINGsIV_Table2,-13.44,detection,0.22,-13.5,detection,0.21,-14.32,detection,0.21,39.57,detection,0.22,39.51,detection,0.21,38.69,detection,0.21
+NGC3613,32.9,19320,9970.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-14.5,upper,,,,,,,,38.61,upper,,,,,,,
+NGC3631,21.6,3951,89068.0,HII,75.83,Williams2022_LeMMINGsIV_Table2,-13.29,detection,0.11,-13.65,detection,0.19,-13.54,detection,0.19,39.46,detection,0.11,39.09,detection,0.19,39.21,detection,0.19
+NGC3646,56.8,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3642,27.5,19379,9780.0,LINER,38.06,Williams2022_LeMMINGsIV_Table2,-12.77,detection,0.28,-12.83,detection,0.37,-13.64,detection,0.37,40.19,detection,0.28,40.12,detection,0.37,39.32,detection,0.37
+NGC3652,33.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3665,32.4,3222,17958.0,HII,20.66,Williams2022_LeMMINGsIV_Table2,-13.12,detection,0.32,-13.84,detection,0.39,-13.21,detection,0.39,39.98,detection,0.32,39.26,detection,0.39,39.89,detection,0.39
+NGC3675,12.8,19368,7967.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-13.9,upper,,,,,,,,38.39,upper,,,,,,,
+NGC3690,40.4,15077,51888.0,HII,97.24,Williams2022_LeMMINGsIV_Table2,-12.29,detection,0.06,-13.03,detection,0.08,-12.38,detection,0.08,41.0,detection,0.06,40.26,detection,0.08,40.91,detection,0.08
+UGC6484,32.4,7111,2179.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.77,upper,,,,,,,,38.33,upper,,,,,,,
+NGC3718,17.0,3993,4912.0,LINER,405.72,Williams2022_LeMMINGsIV_Table2,-11.28,detection,0.09,-12.32,detection,0.1,-11.32,detection,0.1,41.26,detection,0.09,40.22,detection,0.1,41.22,detection,0.1
+NGC3726,17.0,19346,9781.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.33,upper,,,,,,,,38.21,upper,,,,,,,
+NGC3729,17.0,10356,7853.0,HII,8.88,Williams2022_LeMMINGsIV_Table2,-12.73,detection,0.09,-13.34,detection,0.09,-12.85,detection,0.09,39.81,detection,0.09,39.2,detection,0.09,39.69,detection,0.09
+NGC3738,4.3,19357,9343.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.49,upper,,,,,,,,36.85,upper,,,,,,,
+NGC3735,41.0,,,Seyfert,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3756,23.5,19355,9936.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.35,upper,,,,,,,,38.47,upper,,,,,,,
+NGC3780,37.2,19373,9936.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-14.35,upper,,,,,,,,38.87,upper,,,,,,,
+NGC3813,26.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3838,24.6,19342,9936.0,ALG,7.83,Williams2022_LeMMINGsIV_Table2,-13.57,detection,0.29,-13.63,detection,0.28,-14.45,detection,0.28,39.29,detection,0.29,39.23,detection,0.28,38.41,detection,0.28
+NGC3877,17.0,1972,28723.0,HII,11.58,Williams2022_LeMMINGsIV_Table2,-13.38,detection,0.47,-13.38,detection,0.6,-15.42,detection,0.59,39.16,detection,0.47,39.16,detection,0.6,37.12,detection,0.59
+NGC3884,91.6,12999,4899.0,LINER,186.12,Williams2022_LeMMINGsIV_Table2,-11.91,detection,0.09,-12.4,detection,0.14,-12.08,detection,0.14,42.09,detection,0.09,41.6,detection,0.14,41.92,detection,0.14
+NGC3893,17.0,21091,9945.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.35,upper,,,,,,,,38.19,upper,,,,,,,
+NGC3900,29.4,,,ALG,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3898,21.9,4740,57443.0,LINER,52.8,Williams2022_LeMMINGsIV_Table2,-13.37,detection,0.08,-13.55,detection,0.17,-13.83,detection,0.17,39.39,detection,0.08,39.21,detection,0.17,38.93,detection,0.17
+NGC3917,17.0,19380,9780.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-14.19,upper,,,,,,,,38.35,upper,,,,,,,
+NGC3938,17.0,18456,45529.0,HII,11.6,Williams2022_LeMMINGsIV_Table2,-14.36,detection,0.5,-14.42,detection,0.48,-15.24,detection,0.48,38.18,detection,0.5,38.12,detection,0.48,37.3,detection,0.48
+NGC3941,18.9,,,Seyfert,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC3945,22.5,6780,13760.0,LINER,162.23,Williams2022_LeMMINGsIV_Table2,-12.61,detection,0.08,-12.84,detection,0.16,-12.99,detection,0.16,40.18,detection,0.08,39.94,detection,0.16,39.8,detection,0.16
+NGC3949,17.0,16990,3391.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.48,upper,,,,,,,,39.05,upper,,,,,,,
+NGC3953,17.0,19367,10735.0,LINER,7.27,Williams2022_LeMMINGsIV_Table2,-13.62,detection,0.31,-13.68,detection,0.3,-14.5,detection,0.3,38.92,detection,0.31,38.85,detection,0.3,38.04,detection,0.3
+NGC3963,42.7,19362,8869.0,HII,19.01,Williams2022_LeMMINGsIV_Table2,-13.05,detection,0.14,-13.65,detection,0.13,-13.18,detection,0.21,40.29,detection,0.14,39.69,detection,0.13,40.16,detection,0.21
+NGC3982,17.0,4845,9204.0,Seyfert,27.6,Williams2022_LeMMINGsIV_Table2,-13.31,detection,0.08,-13.34,detection,0.1,-14.47,detection,0.22,39.23,detection,0.08,39.19,detection,0.1,38.07,detection,0.22
+NGC3992,17.0,19366,9939.0,LINER,3.41,Williams2022_LeMMINGsIV_Table2,-13.56,detection,0.27,-14.14,detection,0.36,-13.7,detection,0.35,38.98,detection,0.27,38.4,detection,0.36,38.84,detection,0.35
+NGC3998,21.6,6781,13607.0,LINER,1817.56,Williams2022_LeMMINGsIV_Table2,-10.79,detection,0.02,-11.34,detection,0.02,-10.93,detection,0.02,41.96,detection,0.02,41.41,detection,0.02,41.82,detection,0.02
+NGC4013,17.0,4739,79100.0,LINER,84.77,Williams2022_LeMMINGsIV_Table2,-13.71,detection,0.46,-14.78,detection,0.49,-13.74,detection,0.49,38.83,detection,0.46,37.76,detection,0.49,38.8,detection,0.49
+NGC4026,17.0,6782,13772.0,LINER,10.82,Williams2022_LeMMINGsIV_Table2,-13.63,detection,0.23,-13.87,detection,0.39,-14.0,detection,0.39,38.91,detection,0.23,38.67,detection,0.39,38.54,detection,0.39
+NGC4036,24.6,6783,13723.0,LINER,54.81,Williams2022_LeMMINGsIV_Table2,-12.48,detection,0.06,-12.95,detection,0.14,-12.65,detection,0.08,40.38,detection,0.06,39.91,detection,0.14,40.21,detection,0.08
+NGC4041,22.7,19383,9939.0,HII,5.86,Williams2022_LeMMINGsIV_Table2,-13.38,detection,0.24,-13.61,detection,0.44,-13.76,detection,0.44,39.41,detection,0.24,39.18,detection,0.44,39.03,detection,0.44
+NGC4051,17.0,859,79769.0,Seyfert,1158.28,Williams2022_LeMMINGsIV_Table2,-10.72,detection,0.01,-11.29,detection,0.01,-10.86,detection,0.01,41.81,detection,0.01,41.25,detection,0.01,41.68,detection,0.01
+NGC4062,9.7,7106,2186.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.05,upper,,,,,,,,38.0,upper,,,,,,,
+NGC4088,17.0,14442,19806.0,HII,12.55,Williams2022_LeMMINGsIV_Table2,-13.2,detection,0.41,-14.13,detection,0.46,-13.25,detection,0.46,39.34,detection,0.41,38.41,detection,0.46,39.29,detection,0.46
+NGC4096,8.8,19345,7964.0,HII,3.55,Williams2022_LeMMINGsIV_Table2,-13.85,detection,0.29,-14.32,detection,0.29,-14.03,detection,0.29,38.12,detection,0.29,37.65,detection,0.29,37.93,detection,0.29
+NGC4100,17.0,19347,9936.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.53,upper,,,,,,,,38.01,upper,,,,,,,
+NGC4102,17.0,17117,28995.0,HII,264.99,Williams2022_LeMMINGsIV_Table2,-11.71,detection,0.03,-12.7,detection,0.02,-11.76,detection,0.03,40.83,detection,0.03,39.84,detection,0.02,40.78,detection,0.03
+NGC4111,17.0,1578,9340.0,LINER,62.38,Williams2022_LeMMINGsIV_Table2,-12.52,detection,0.02,-12.78,detection,0.02,-12.86,detection,0.02,40.02,detection,0.02,39.76,detection,0.02,39.68,detection,0.02
+NGC4125,24.2,2071,64234.0,LINER,39.39,Williams2022_LeMMINGsIV_Table2,-13.33,detection,0.02,-13.51,detection,0.02,-13.79,detection,0.02,39.52,detection,0.02,39.33,detection,0.02,39.06,detection,0.02
+NGC4136,9.7,2921,19709.0,HII,5.9,Williams2022_LeMMINGsIV_Table2,-14.29,detection,0.23,-14.82,detection,0.23,-14.45,detection,0.24,37.76,detection,0.23,37.24,detection,0.23,37.6,detection,0.24
+NGC4138,17.0,17118,27779.0,LINER,416.37,Williams2022_LeMMINGsIV_Table2,-11.33,detection,0.07,-13.36,detection,0.07,-11.33,detection,0.07,41.21,detection,0.07,39.18,detection,0.07,41.2,detection,0.07
+NGC4143,17.0,1617,2515.0,LINER,71.08,Williams2022_LeMMINGsIV_Table2,-12.29,detection,0.18,-12.65,detection,0.27,-12.55,detection,0.27,40.25,detection,0.18,39.89,detection,0.27,39.99,detection,0.27
+NGC4144,4.1,16991,1051.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.66,upper,,,,,,,,37.65,upper,,,,,,,
+NGC4145,20.7,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC4151,20.3,9217,117122.0,Seyfert,2440.54,Williams2022_LeMMINGsIV_Table2,-10.3,detection,0.01,-12.0,detection,0.01,-10.31,detection,0.01,42.39,detection,0.01,40.7,detection,0.01,42.39,detection,0.01
+NGC4150,9.7,1638,1738.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-14.27,upper,,,,,,,,37.78,upper,,,,,,,
+NGC4157,17.0,11310,59256.0,HII,22.85,Williams2022_LeMMINGsIV_Table2,-13.12,detection,0.28,-14.54,detection,0.29,-13.14,detection,0.29,39.42,detection,0.28,38.0,detection,0.29,39.4,detection,0.29
+NGC4162,38.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC4169,50.4,,,Seyfert,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC4183,17.0,16992,4111.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.02,upper,,,,,,,,38.52,upper,,,,,,,
+NGC4203,9.7,10535,41633.0,LINER,985.94,Williams2022_LeMMINGsIV_Table2,-11.59,detection,0.03,-12.18,detection,0.03,-11.72,detection,0.03,40.46,detection,0.03,39.87,detection,0.03,40.33,detection,0.03
+NGC4214,3.5,4743,27209.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-15.87,upper,,,,,,,,35.3,upper,,,,,,,
+NGC4217,17.0,4738,72729.0,HII,23.74,Williams2022_LeMMINGsIV_Table2,-13.74,detection,0.09,-14.35,detection,0.07,-13.97,detection,0.32,38.8,detection,0.09,38.44,detection,0.32,38.57,detection,0.32
+NGC4220,17.0,19378,9663.0,LINER,7.48,Williams2022_LeMMINGsIV_Table2,-13.34,detection,0.17,-14.39,detection,0.17,-13.38,detection,0.2,39.2,detection,0.17,38.15,detection,0.17,39.16,detection,0.2
+NGC4236,2.2,9543,11014.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.79,upper,,,,,,,,37.97,upper,,,,,,,
+NGC4244,3.1,942,49215.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-15.15,upper,,,,,,,,35.91,upper,,,,,,,
+NGC4242,7.5,19351,9939.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.52,upper,,,,,,,,37.31,upper,,,,,,,
+NGC4245,9.7,7107,2186.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.05,upper,,,,,,,,38.0,upper,,,,,,,
+NGC4251,9.7,4695,10047.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-12.81,upper,,,,,,,,39.24,upper,,,,,,,
+NGC4258,6.8,1618,20944.0,Seyfert,405.77,Williams2022_LeMMINGsIV_Table2,-11.06,detection,0.01,-13.78,detection,0.01,-11.06,detection,0.01,40.68,detection,0.01,37.96,detection,0.01,40.68,detection,0.01
+NGC4274,9.7,7108,1907.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-11.91,upper,,,,,,,,40.14,upper,,,,,,,
+NGC4278,9.7,7081,110726.0,LINER,575.27,Williams2022_LeMMINGsIV_Table2,-12.31,detection,0.02,-12.55,detection,0.04,-12.69,detection,0.04,39.74,detection,0.02,39.5,detection,0.04,39.37,detection,0.04
+NGC4291,29.4,11778,29782.0,ALG,16.24,Williams2022_LeMMINGsIV_Table2,-13.36,detection,0.05,-13.73,detection,0.04,-13.6,detection,0.07,39.66,detection,0.05,39.28,detection,0.04,39.42,detection,0.07
+NGC4314,9.7,2062,16073.0,LINER,6.5,Williams2022_LeMMINGsIV_Table2,-13.69,detection,0.22,-13.83,detection,0.46,-14.23,detection,0.46,38.37,detection,0.22,38.22,detection,0.46,37.82,detection,0.46
+NGC4346,17.0,19374,9942.0,LINER,5.47,Williams2022_LeMMINGsIV_Table2,-13.39,detection,0.23,-13.47,detection,0.22,-14.14,detection,0.22,39.15,detection,0.23,39.06,detection,0.22,38.4,detection,0.22
+NGC4369,21.6,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC4395,3.6,5302,28226.0,Seyfert,653.73,Williams2022_LeMMINGsIV_Table2,-11.28,detection,0.05,-13.1,detection,0.05,-11.29,detection,0.05,39.91,detection,0.05,38.09,detection,0.05,39.9,detection,0.05
+NGC4414,9.7,14796,9938.0,LINER,10.63,Williams2022_LeMMINGsIV_Table2,-13.39,detection,0.31,-13.75,detection,0.53,-13.64,detection,0.53,38.66,detection,0.31,38.3,detection,0.53,38.41,detection,0.53
+NGC4449,3.0,10875,59389.0,HII,22.96,Williams2022_LeMMINGsIV_Table2,-14.19,detection,0.3,-14.27,detection,0.63,-14.96,detection,0.63,36.85,detection,0.3,36.77,detection,0.63,36.07,detection,0.63
+NGC4448,9.7,7110,1990.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.57,upper,,,,,,,,38.48,upper,,,,,,,
+NGC4460,8.1,19363,10084.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.77,upper,,,,,,,,38.13,upper,,,,,,,
+NGC4485,9.3,4726,39632.0,HII,377.8,Williams2022_LeMMINGsIV_Table2,-15.27,detection,0.49,-15.46,detection,0.51,-15.74,detection,0.51,36.74,detection,0.49,36.56,detection,0.51,36.28,detection,0.51
+NGC4490,7.8,4726,39632.0,HII,319.79,Williams2022_LeMMINGsIV_Table2,-12.14,detection,0.08,-13.02,detection,0.09,-12.21,detection,0.09,39.72,detection,0.08,38.85,detection,0.09,39.66,detection,0.09
+NGC4494,9.7,2079,24841.0,LINER,123.47,Williams2022_LeMMINGsIV_Table2,-12.77,detection,0.09,-13.17,detection,0.14,-13.0,detection,0.14,39.28,detection,0.09,38.89,detection,0.14,39.05,detection,0.14
+NGC4559,9.7,2026,9376.0,HII,21.08,Williams2022_LeMMINGsIV_Table2,-13.03,detection,0.29,-13.97,detection,0.32,-13.08,detection,0.32,39.03,detection,0.29,38.08,detection,0.32,38.97,detection,0.32
+NGC4565,9.7,3950,59203.0,Seyfert,402.44,Williams2022_LeMMINGsIV_Table2,-12.33,detection,0.05,-12.97,detection,0.07,-12.44,detection,0.07,39.72,detection,0.05,39.08,detection,0.07,39.61,detection,0.07
+NGC4589,30.0,6785,13773.0,LINER,21.29,Williams2022_LeMMINGsIV_Table2,-13.32,detection,0.16,-13.51,detection,0.37,-13.78,detection,0.38,39.71,detection,0.16,39.52,detection,0.37,39.25,detection,0.38
+NGC4605,4.0,19344,9675.0,HII,3.05,Williams2022_LeMMINGsIV_Table2,-13.64,detection,0.23,-14.0,detection,0.23,-13.89,detection,0.23,37.64,detection,0.23,37.28,detection,0.23,37.4,detection,0.23
+NGC4618,7.3,7147,9312.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.68,upper,,,,,,,,39.12,upper,,,,,,,
+NGC4648,27.5,11362,10906.0,ALG,7.65,Williams2022_LeMMINGsIV_Table2,-13.99,detection,0.31,-14.09,detection,0.3,-14.68,detection,0.3,38.97,detection,0.31,38.86,detection,0.3,38.28,detection,0.3
+NGC4631,6.9,797,59215.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.91,upper,,,,,,,,38.85,upper,,,,,,,
+NGC4656,7.2,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC4750,26.1,4020,4934.0,LINER,59.93,Williams2022_LeMMINGsIV_Table2,-12.5,detection,0.17,-12.94,detection,0.26,-12.7,detection,0.26,40.41,detection,0.17,39.98,detection,0.26,40.21,detection,0.26
+NGC4725,12.4,2976,24646.0,Seyfert,62.2,Williams2022_LeMMINGsIV_Table2,-13.13,detection,0.09,-13.17,detection,0.25,-14.19,detection,0.25,39.14,detection,0.09,39.1,detection,0.25,38.07,detection,0.25
+NGC4736,4.3,808,47369.0,LINER,241.51,Williams2022_LeMMINGsIV_Table2,-11.85,detection,0.03,-12.33,detection,0.04,-12.02,detection,0.04,39.5,detection,0.03,39.01,detection,0.04,39.32,detection,0.04
+NGC4800,15.2,19385,9939.0,HII,8.3,Williams2022_LeMMINGsIV_Table2,-13.62,detection,0.31,-13.9,detection,0.31,-13.95,detection,0.31,38.82,detection,0.31,38.55,detection,0.31,38.49,detection,0.31
+NGC4793,38.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC4826,4.1,9545,25958.0,LINER,34.25,Williams2022_LeMMINGsIV_Table2,-13.22,detection,0.02,-13.27,detection,0.03,-14.22,detection,0.07,38.08,detection,0.02,38.04,detection,0.04,37.08,detection,0.07
+NGC4914,62.4,18037,6268.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-14.08,upper,,,,,,,,39.58,upper,,,,,,,
+NGC5005,21.3,19364,9942.0,LINER,74.58,Williams2022_LeMMINGsIV_Table2,-13.59,detection,0.27,-13.73,detection,0.27,-14.16,detection,0.27,39.15,detection,0.27,39.01,detection,0.27,38.58,detection,0.27
+NGC5012,40.4,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC5033,18.7,19343,10140.0,LINER,1143.3,Williams2022_LeMMINGsIV_Table2,-13.98,detection,0.42,-14.12,detection,0.41,-14.55,detection,0.41,38.64,detection,0.42,38.5,detection,0.41,38.08,detection,0.41
+NGC5055,7.2,4021,4902.0,LINER,58,Williams2022_LeMMINGsIV_Table2,-12.34,detection,0.11,-12.45,detection,0.23,-13.02,detection,0.23,39.45,detection,0.11,39.35,detection,0.23,38.77,detection,0.23
+NGC5112,20.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC5204,4.8,13814,189851.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-15.26,upper,,,,,,,,36.18,upper,,,,,,,
+NGC5194,7.7,2197,27996.0,Seyfert,165.74,Williams2022_LeMMINGsIV_Table2,-12.46,detection,0.01,-12.64,detection,0.01,-12.93,detection,0.02,39.39,detection,0.01,39.21,detection,0.01,38.92,detection,0.02
+NGC5195,9.3,2882,43632.0,LINER,45.28,Williams2022_LeMMINGsIV_Table2,-12.35,detection,0.14,-12.36,detection,0.18,-13.95,detection,0.18,39.67,detection,0.14,39.66,detection,0.18,38.07,detection,0.18
+NGC5273,21.3,13814,189851.0,Seyfert,46.83,Williams2022_LeMMINGsIV_Table2,-11.78,detection,0.04,-13.0,detection,0.04,-11.81,detection,0.04,40.96,detection,0.04,39.74,detection,0.04,40.93,detection,0.04
+NGC5297,37.8,3933,46230.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-14.01,upper,,,,,,,,39.23,upper,,,,,,,
+NGC5308,32.4,415,1734.0,ALG,4.97,Williams2022_LeMMINGsIV_Table2,-11.67,detection,0.23,-13.15,detection,0.24,-11.68,detection,0.24,41.43,detection,0.23,39.95,detection,0.24,41.42,detection,0.24
+NGC5322,31.6,19370,9945.0,LINER,21.35,Williams2022_LeMMINGsIV_Table2,-13.11,detection,0.06,-13.19,detection,0.04,-13.9,detection,0.26,39.97,detection,0.06,39.89,detection,0.04,39.18,detection,0.26
+NGC5354,32.8,6787,13767.0,LINER,20.07,Williams2022_LeMMINGsIV_Table2,-13.01,detection,0.21,-13.03,detection,0.36,-14.3,detection,0.36,40.1,detection,0.21,40.08,detection,0.36,38.81,detection,0.36
+NGC5353,37.8,19341,9939.0,LINER,20.07,Williams2022_LeMMINGsIV_Table2,-13.79,detection,0.38,-13.85,detection,0.37,-14.67,detection,0.37,39.44,detection,0.38,39.38,detection,0.37,38.56,detection,0.37
+NGC5371,37.8,14903,40269.0,LINER,3.95,Williams2022_LeMMINGsIV_Table2,-13.12,detection,0.11,-13.22,detection,0.23,-13.78,detection,0.23,40.12,detection,0.11,40.01,detection,0.23,39.45,detection,0.23
+NGC5377,31.0,14903,40269.0,LINER,6.22,Williams2022_LeMMINGsIV_Table2,-13.47,detection,0.23,-14.27,detection,0.27,-13.55,detection,0.27,39.59,detection,0.23,38.79,detection,0.27,39.51,detection,0.27
+NGC5383,37.8,13006,5392.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.03,upper,,,,,,,,40.2,upper,,,,,,,
+NGC5395,46.7,19372,9939.0,LINER,29.73,Williams2022_LeMMINGsIV_Table2,-13.25,detection,0.21,-13.36,detection,0.39,-13.91,detection,0.39,40.17,detection,0.21,40.06,detection,0.39,39.5,detection,0.39
+NGC5448,32.6,13007,4902.0,LINER,13.2,Williams2022_LeMMINGsIV_Table2,-13.74,detection,0.36,-13.81,detection,0.35,-14.62,detection,0.35,39.36,detection,0.36,39.3,detection,0.35,38.48,detection,0.35
+NGC5457,5.4,10395,15654.0,HII,97.3,Williams2022_LeMMINGsIV_Table2,-11.82,detection,1.12,-11.84,detection,0.39,-13.26,detection,0.39,39.72,detection,1.12,39.71,detection,0.39,38.28,detection,0.39
+NGC5473,33.0,19322,9821.0,ALG,3.37,Williams2022_LeMMINGsIV_Table2,-13.48,detection,0.27,-14.51,detection,0.32,-13.53,detection,0.32,39.63,detection,0.27,38.61,detection,0.32,39.59,detection,0.32
+NGC5474,6.0,19371,9936.0,HII,88.09,Williams2022_LeMMINGsIV_Table2,-13.05,detection,0.23,-13.12,detection,0.36,-13.94,detection,0.36,38.58,detection,0.23,38.52,detection,0.36,37.7,detection,0.36
+NGC5485,32.8,4736,77353.0,LINER,7.28,Williams2022_LeMMINGsIV_Table2,-13.24,detection,0.08,-13.62,detection,0.13,-13.48,detection,0.13,39.87,detection,0.08,39.49,detection,0.13,39.63,detection,0.13
+NGC5523,21.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC5548,67.0,9546,29788.0,Seyfert,1886,Williams2022_LeMMINGsIV_Table2,-10.52,detection,0.01,-11.33,detection,0.01,-10.59,detection,0.01,43.21,detection,0.01,42.4,detection,0.01,43.14,detection,0.01
+NGC5557,42.6,19375,9939.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-12.29,upper,,,,,,,,41.05,upper,,,,,,,
+NGC5585,7.0,3046,151411.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.01,upper,,,,,,,,39.76,upper,,,,,,,
+NGC5631,32.7,19324,8838.0,LINER,8.37,Williams2022_LeMMINGsIV_Table2,-13.43,detection,0.26,-13.49,detection,0.25,-14.31,detection,0.25,39.68,detection,0.26,39.61,detection,0.25,38.8,detection,0.25
+NGC5660,37.2,7150,5318.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-14.01,upper,,,,,,,,39.21,upper,,,,,,,
+NGC5656,42.6,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC5678,35.6,19361,9942.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.01,upper,,,,,,,,41.17,upper,,,,,,,
+NGC5676,34.5,19376,9939.0,HII,7.55,Williams2022_LeMMINGsIV_Table2,-13.44,detection,0.27,-13.5,detection,0.26,-14.3,detection,0.26,39.72,detection,0.27,39.65,detection,0.26,38.85,detection,0.26
+NGC5866,15.3,19352,9939.0,LINER,9.67,Williams2022_LeMMINGsIV_Table2,-12.87,detection,0.02,-13.16,detection,0.02,-13.19,detection,0.02,39.57,detection,0.02,39.28,detection,0.02,39.26,detection,0.02
+NGC5879,16.8,4022,4733.0,LINER,28.58,Williams2022_LeMMINGsIV_Table2,-14.01,detection,0.4,-14.07,detection,0.38,-14.89,detection,0.39,38.52,detection,0.4,38.45,detection,0.38,37.64,detection,0.39
+NGC5905,44.4,2879,33737.0,HII,20.45,Williams2022_LeMMINGsIV_Table2,-13.46,detection,0.21,-14.05,detection,0.27,-13.6,detection,0.27,39.91,detection,0.21,39.32,detection,0.27,39.78,detection,0.27
+NGC5907,14.9,2241,88988.0,HII,9.74,Williams2022_LeMMINGsIV_Table2,-12.83,detection,0.12,-14.18,detection,0.13,-12.85,detection,0.13,39.59,detection,0.12,38.24,detection,0.13,39.57,detection,0.13
+NGC5982,38.7,20830,51271.0,ALG,18.77,Williams2022_LeMMINGsIV_Table2,-13.71,detection,0.35,-14.77,detection,0.39,-13.75,detection,0.39,39.55,detection,0.35,38.48,detection,0.39,39.51,detection,0.39
+NGC5985,39.2,786,46262.0,LINER,50.78,Williams2022_LeMMINGsIV_Table2,-11.74,detection,0.03,-12.57,detection,0.04,-11.81,detection,0.04,41.52,detection,0.03,40.7,detection,0.04,41.45,detection,0.04
+NGC6015,17.5,20069,22751.0,HII,5.01,Williams2022_LeMMINGsIV_Table2,-13.07,detection,0.2,-13.16,detection,0.3,-13.8,detection,0.3,39.5,detection,0.2,39.41,detection,0.3,38.77,detection,0.3
+NGC6140,18.6,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6217,23.9,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6207,17.4,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6236,23.3,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6340,22.0,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6412,23.5,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6503,6.1,19349,9942.0,LINER,6.45,Williams2022_LeMMINGsIV_Table2,-13.53,detection,0.25,-13.97,detection,0.3,-13.93,detection,0.29,38.12,detection,0.25,37.68,detection,0.3,37.72,detection,0.29
+NGC6482,52.3,19369,9935.0,LINER,72.15,Williams2022_LeMMINGsIV_Table2,-12.66,detection,0.18,-13.22,detection,0.27,-12.81,detection,0.27,40.85,detection,0.18,40.3,detection,0.27,40.71,detection,0.27
+NGC6643,25.5,3218,19350.0,HII,3.28,Williams2022_LeMMINGsIV_Table2,-12.63,detection,0.08,-12.83,detection,0.18,-13.05,detection,0.18,40.27,detection,0.08,40.06,detection,0.18,39.84,detection,0.18
+NGC6654,29.5,,,ALG,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6689,12.2,872,13190.0,LINER,Undet,Williams2022_LeMMINGsIV_Table2,-13.96,upper,,,,,,,,38.29,upper,,,,,,,
+NGC6702,62.8,,,ALG,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6703,35.9,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC6946,5.5,7123,3478.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-12.38,upper,,,,,,,,39.18,upper,,,,,,,
+NGC6951,24.1,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC7080,64.1,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC7217,16.0,,,LINER,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC7331,14.3,1043,58290.0,LINER,26.87,Williams2022_LeMMINGsIV_Table2,-12.6,detection,0.08,-13.25,detection,0.01,-12.72,detection,0.1,39.78,detection,0.08,39.14,detection,0.1,39.67,detection,0.1
+NGC7332,18.2,,,ALG,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,
+NGC7457,12.3,15046,14778.0,ALG,Undet,Williams2022_LeMMINGsIV_Table2,-13.91,upper,,,,,,,,38.34,upper,,,,,,,
+NGC7640,8.6,2198,29462.0,HII,8.38,Williams2022_LeMMINGsIV_Table2,-12.36,detection,0.26,-15.26,upper,,-12.36,detection,0.2,39.59,detection,0.26,36.68,upper,,39.59,detection,0.26
+NGC7741,12.3,11786,28672.0,HII,Undet,Williams2022_LeMMINGsIV_Table2,-13.86,upper,,,,,,,,38.39,upper,,,,,,,
+NGC7798,32.6,,,HII,Not obs.,Williams2022_LeMMINGsIV_Table2,,,,,,,,,,,,,,,,,,

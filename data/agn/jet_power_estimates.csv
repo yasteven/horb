@@ -1,0 +1,5 @@
+sparc_name,galaxy,log10_jet_power_erg_s,method,value_type,source_url
+UGC02487,NGC1167,43.91,radio_scaling_Willott_f10,estimate,https://www.astronomie.nl/upload/files/2022/Murthy_et_al_2022.pdf
+UGC02487,NGC1167,44.13,radio_scaling_Cavagnolo,estimate,https://www.astronomie.nl/upload/files/2022/Murthy_et_al_2022.pdf
+,J2345-0449,44.230448921378276,low_frequency_lobe_scaling,likely_lower_limit,https://doi.org/10.1088/0004-637X/788/2/174
+,J2345-0449,44.30102999566398,radio_scaling_Cavagnolo,estimate,https://doi.org/10.1051/0004-6361/202140544
