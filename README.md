@@ -159,7 +159,7 @@ M31 is a separate dataset from SPARC's 175 galaxies.
 
 - **Step 0:** Modern philosiphy takes Physics models and derives ontology, a system built by complete morons. We need the correct ontology first.
   
-- **Step 1:** The final fundamental laws of physics must be self-contained in the universe they describe and cannot rely on external “flying spaghetti monster” concepts. This recursion forces dynamic fractals to be the only viable geometric ontology.
+- **Step 1:** The final fundamental laws of physics must be self-contained in the universe they describe and cannot rely on external “flying spaghetti monster” concepts. "The perfect description of the law of the universe is the universe following its own law". This tautological recursion forces dynamic fractals to be the only viable geometric ontology.
 
 - **Step 2:** Classical continuum physics is built from averages and should fail at fractal scale boundaries.
 
@@ -184,46 +184,9 @@ M31 is a separate dataset from SPARC's 175 galaxies.
 
 - **Step 8:** HORB tests the claim by fitting galactic rotation curves with hydrogenic orbital structure. And they beat every PhD-developed model.
 
-
-## Earlier single-orbital benchmark
-
-The earlier single-orbital Milky Way candidate is a morphology-constrained hydrogenic `3d_z2` halo tested against the Sofue 2020 unified Milky Way rotation curve using a literature bulge+disk baryonic model and a CUDA direct-summation disk-plane force calculation.
-
-| Parameter | Value |
-|---|---:|
-| Orbital state | `3d_z2` |
-| Orbital scale `a0_star` | `1.0 kpc` |
-| HORB dark halo mass | `2.5e11 M_sun` |
-| HORB force model | CUDA disk-plane direct summation |
-| Grid size | `96^3` mass cells |
-| Grid extent | `±80 kpc` |
-| Softening length | `0.25 kpc` |
-| Baryon model | Sofue literature bulge+disk |
-| Stellar disk mass | `3.41e10 M_sun` |
-| Stellar disk scale | `3.19 kpc` |
-| Bulge mass | `1.652e10 M_sun` |
-| Bulge scale | `0.522 kpc` |
-
-Using the same literature baryonic model for every halo, the CUDA HORB candidate is compared directly against the previous spherical HORB approximation and against NFW, pseudo-isothermal, and Burkert halo baselines, with all curves plotted against the Sofue 2020 unified Milky Way rotation curve.
-
-The embedded image below records that earlier three-baseline comparison.
-Regenerating it with `do cuda-candidate` now also includes Einasto and writes
-all-model score tables; the archived image itself has not been replaced.
-
-![CUDA HORB disk-plane force candidate versus classical halo models and the Milky Way rotation curve](images/mw_cuda_horb_diskplane_total_vs_sofue2020.png)
-
-This benchmark replaces the earlier spherical-enclosed-mass approximation. The CUDA calculation evaluates the actual disk-plane gravitational response of the non-spherical `3d_z2` orbital density field. The result lowers the mid-radius HORB peak relative to the spherical approximation, which is exactly the region where the spherical model overshot the observed Milky Way rotation curve.
-
-The plot is generated reproducibly by:
-
-```bash
-./run.sh do cuda-candidate 1.0 2.5e11 96 80 0.25
-```
-
-
 ## Motivation
 
-Standard computational astrophysics models spiral-galaxy dark-matter halos using smooth, parametric density curves (e.g., NFW, Burkert, Einasto). While these phenomenological profiles function as flexible data-fitting forms, they are rarely constrained by independent, non-spherical geometric observables. 
+Standard computational astrophysics models spiral-galaxy dark-matter halos using smooth, parametric density curves (e.g., NFW, Burkert, Einasto). While these phenomenological profiles function as flexible data-fitting forms, they are rarely constrained by independent, non-spherical geometric observables. And most are subejct to the core-cusp problem, unable to account for nonphysical singularities in their distribution predictions.
 
 The **HORB** (`Hydrogenic Orbitals Radial Basis`) engine is built to test a radically different, morphology-first alternative: evaluating whether a scaled hydrogenic orbital density field centered on the Galactic core can simultaneously resolve macroscopic geometry (Fermi Bubbles) and dynamics (Flat Rotation Curves). Preliminary morphology indicates that the real angular probability density of the hydrogen $3d_{z^2}$ orbital:
 
