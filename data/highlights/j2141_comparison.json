@@ -1,0 +1,235 @@
+{
+  "galaxy": "SDSS J2141-0001",
+  "fit_inputs_sha256": {
+    "j2141_photometry.json": "b207a41c318287a11ab76c66a301407a223a440ff8f7ea88b0cdb6b3c051138b",
+    "j2141_rotation.csv": "0022b831dcaa11e14820704988948f71f63debb9ee7bb86ec0fe5c86ac059456"
+  },
+  "fit_n": 6,
+  "observations": [
+    {
+      "r_arcsec": 0.0,
+      "r_kpc_published": 0.0,
+      "v_los_kms": 3.5,
+      "error_kms": 5.3,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 0.593,
+      "r_kpc_published": 1.45,
+      "v_los_kms": 114.1,
+      "error_kms": 5.8,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 1.185,
+      "r_kpc_published": 2.89,
+      "v_los_kms": 153.8,
+      "error_kms": 2.9,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 1.778,
+      "r_kpc_published": 4.33,
+      "v_los_kms": 212.7,
+      "error_kms": 2.6,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 2.37,
+      "r_kpc_published": 5.78,
+      "v_los_kms": 243.8,
+      "error_kms": 2.6,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 2.963,
+      "r_kpc_published": 7.22,
+      "v_los_kms": 259.8,
+      "error_kms": 2.3,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 3.555,
+      "r_kpc_published": 8.67,
+      "v_los_kms": 256.8,
+      "error_kms": 2.0,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 4.148,
+      "r_kpc_published": 10.11,
+      "v_los_kms": 254.9,
+      "error_kms": 7.5,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 4.74,
+      "r_kpc_published": 11.56,
+      "v_los_kms": 263.4,
+      "error_kms": 2.3,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 5.333,
+      "r_kpc_published": 13.0,
+      "v_los_kms": 265.9,
+      "error_kms": 3.5,
+      "use_for_fit": 1.0
+    }
+  ],
+  "observed_velocity_convention": "LOS; compare after inclination, PSF, slit and bin integration",
+  "photometry": {
+    "schema_version": 1,
+    "galaxy": "SDSS J2141-0001",
+    "source": "Dutton et al. 2011, SWELLS II, https://arxiv.org/abs/1101.1622",
+    "rotation_source": "Table 4; observed H-alpha + [N II] velocities, not deprojected circular velocities",
+    "photometry_source": "Table 2 SPS masses (Chabrier IMF); Table 3 chameleon shape parameters; Sections 2, 3, 6",
+    "lens_redshift": 0.138,
+    "source_redshift": 0.7127,
+    "H0_kms_Mpc": 70.0,
+    "Omega_m": 0.3,
+    "cos_inclination": 0.2,
+    "cos_inclination_error": 0.02,
+    "seeing_fwhm_arcsec": 0.6,
+    "slit_width_arcsec": 1.0,
+    "spatial_bin_arcsec": 0.593,
+    "emission_scale_arcsec": 1.51,
+    "fit_min_arcsec": 2.0,
+    "gas_mass_msun": 0.0,
+    "gas_note": "No resolved gas mass map supplied by this paper. The default pilot omits cold gas, as in its initial mass model. This is an assumption, not a measured zero.",
+    "components": [
+      {
+        "name": "bulge",
+        "log10_mass_msun": 10.26,
+        "log10_mass_error": 0.08,
+        "q_projected": 0.53,
+        "core_arcsec": 0.094,
+        "core_ratio": 0.4892
+      },
+      {
+        "name": "disk",
+        "log10_mass_msun": 10.88,
+        "log10_mass_error": 0.07,
+        "q_projected": 0.31,
+        "core_arcsec": 1.1,
+        "core_ratio": 0.63
+      }
+    ],
+    "distance_note": "Recompute all angular-diameter distances from the stated cosmology. This gives 2.437736 kpc/arcsec, consistent with Section 2 and Table 4. The three distances printed in Section 4.4 are internally inconsistent with that scale and are not mixed into the calculation."
+  },
+  "baryons": [
+    {
+      "name": "bulge",
+      "mass": 18197008586.099827,
+      "q": 0.53,
+      "q3": 0.500936622737847,
+      "a": 0.2291471957913357,
+      "b": 0.4684120927868677
+    },
+    {
+      "name": "disk",
+      "mass": 75857757502.91852,
+      "q": 0.31,
+      "q3": 0.24173849507267145,
+      "a": 2.6815097379837156,
+      "b": 4.256364663466215
+    }
+  ],
+  "scores": {
+    "superposition": {
+      "rms_kms": 2.2290745338440736,
+      "chi2": 3.4436199421550775,
+      "n": 6
+    },
+    "qi": {
+      "source": "https://doi.org/10.1007/s10509-017-3128-6",
+      "equation": 8,
+      "redshift_scaling_equation": 9,
+      "redshift": 0.138,
+      "c_m_s": 299792458.0,
+      "theta_now_m": 8.8e+26,
+      "theta_m": 7.73286467486819e+26,
+      "a_qi_m_s2": 2.324507712278405e-10,
+      "parameter_count": 0,
+      "fitted": false,
+      "baryons": "Same fixed baryonic force; QI is the total speed, with no additional halo.",
+      "domain": "Positive radius and nonnegative total inward baryonic v^2.",
+      "rms_kms": 38.615715442315505,
+      "chi2": 1345.3819789850736,
+      "n": 6
+    },
+    "nfw": {
+      "rms_kms": 3.9677634396183166,
+      "chi2": 8.740080948793345,
+      "n": 6
+    },
+    "burkert": {
+      "rms_kms": 4.270988636705433,
+      "chi2": 9.654211313153032,
+      "n": 6
+    },
+    "einasto": {
+      "rms_kms": 3.874690156379102,
+      "chi2": 8.63006259095082,
+      "n": 6
+    },
+    "baryons": {
+      "rms_kms": 93.88100457795237,
+      "chi2": 7438.539802856112,
+      "n": 6
+    }
+  },
+  "numerical_audit": {
+    "superposition": {
+      "max_fitted_velocity_change_kms": 0.0070956357832301364,
+      "refined_scores": {
+        "rms_kms": 2.2290745338440736,
+        "chi2": 3.4436199421550775,
+        "n": 6
+      }
+    },
+    "qi": {
+      "max_fitted_velocity_change_kms": 0.0003703043810219242,
+      "refined_scores": {
+        "rms_kms": 38.615715442315505,
+        "chi2": 1345.3819789850736,
+        "n": 6
+      }
+    },
+    "nfw": {
+      "max_fitted_velocity_change_kms": 0.0007008919672841785,
+      "refined_scores": {
+        "rms_kms": 3.9677634396183166,
+        "chi2": 8.740080948793345,
+        "n": 6
+      }
+    },
+    "burkert": {
+      "max_fitted_velocity_change_kms": 0.001296265556106846,
+      "refined_scores": {
+        "rms_kms": 4.270988636705433,
+        "chi2": 9.654211313153032,
+        "n": 6
+      }
+    },
+    "einasto": {
+      "max_fitted_velocity_change_kms": 0.0005258895974407096,
+      "refined_scores": {
+        "rms_kms": 3.874690156379102,
+        "chi2": 8.63006259095082,
+        "n": 6
+      }
+    },
+    "baryons": {
+      "max_fitted_velocity_change_kms": 0.0011394512585241046,
+      "refined_scores": {
+        "rms_kms": 93.88100457795237,
+        "chi2": 7438.539802856112,
+        "n": 6
+      }
+    }
+  },
+  "qi_lensing": "Not evaluated: the rotation prescription does not supply a lensing law.",
+  "rotation_fit_source": "data/swells/reference/j2141/rotation_fit.json",
+  "lensing_selection_source": "data/swells/reference/j2141_comparison/selection.json"
+}

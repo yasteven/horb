@@ -4,12 +4,12 @@ Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Gala
 
 ## Milky Way: rotation curve and fitted dark density
 
-**Six curves, one dataset:** the best found HORB superposition, a single
-`3d_z2` HORB orbital, NFW, Burkert, Einasto, and baryons alone. Every halo
-uses the same fixed baryons and observed error bars. The single orbital and
-all three classical halos have their parameters fitted to the same data.
+**Six curves, one dataset:** the best found HORB superposition, quantised
+inertia (QI), NFW, Burkert, Einasto, and baryons alone. All use the same fixed
+baryons and observed error bars. HORB and the three classical halos are fitted;
+[QI is a fixed prediction](docs/quantised_inertia.md) with no fitted parameters.
 
-![Milky Way: HORB superposition and single orbital, NFW, Burkert, Einasto, and baryons compared with Sofue observations](images/mw_rotation_highlight.png)
+![Milky Way: HORB superposition, QI, NFW, Burkert, Einasto, and baryons compared with Sofue observations](images/mw_rotation_highlight.png)
 
 ![Milky Way: signed dark-density slice of the exact superposition above, with central detail and orbital weights](images/mw_density_highlight.png)
 
@@ -19,7 +19,7 @@ The same comparison using Corbelli et al. (2010) observations and fixed
 Geehan et al. (2006) baryons. Each density map uses its rotation fit's exact
 weights; amber is positive density and cyan is negative density.
 
-![Andromeda: HORB superposition and single orbital, NFW, Burkert, Einasto, and baryons compared with Corbelli observations](images/m31_rotation_highlight.png)
+![Andromeda: HORB superposition, QI, NFW, Burkert, Einasto, and baryons compared with Corbelli observations](images/m31_rotation_highlight.png)
 
 ![Andromeda: signed dark-density slice of the exact superposition above, with central detail and orbital weights](images/m31_density_highlight.png)
 
@@ -28,7 +28,7 @@ weights; amber is positive density and cyan is negative density.
 | In-sample RMS (km/s) | Milky Way · 5–80 kpc | Andromeda · 8.5–36.5 kpc |
 |---|---:|---:|
 | HORB superposition · 4 terms | **2.05** | **3.32** |
-| HORB single `3d_z2` · fitted mass + scale | 25.90 | 20.35 |
+| QI · fixed prediction | 37.13 | 14.00 |
 | NFW · fitted mass + scale | 9.29 | 10.54 |
 | Burkert · fitted mass + scale | 6.97 | 11.60 |
 | Einasto · fitted mass + scale + shape | 6.70 | 9.51 |
@@ -45,7 +45,7 @@ The M31 baryonic baseline has no separately resolved gas component. The
 density maps depict fitted models, not unique reconstructions from observations.
 
 ```sh
-./run.sh --release do readme-highlights          # rebuild all four figures from recorded fits
+./run.sh --release do readme-highlights          # rebuild MW, M31 and J2141 README figures
 ./run.sh --release do readme-highlights --refit  # repeat both complete subset searches too
 ```
 
@@ -212,7 +212,12 @@ lensing with the mass parameters fixed. The lensing figure shows separate
 rotation-selected and lensing-selected HORB candidates from both positive-only
 and signed searches. [Methods and results](docs/swells.md).
 
-![J2141 observed rotation comparison](images/swells/j2141_rotation.png)
+The rotation panel includes QI at the lens redshift, z=0.138, through the same
+inclination, seeing and slit model. Its RMS uses the same six outer points.
+QI is a rotation prediction here; no QI lensing law is assumed. Single-orbital
+curves and points are omitted from the README comparisons.
+
+![J2141 observed rotation: HORB superposition, QI, NFW, Burkert, Einasto, and baryons](images/swells/j2141_rotation.png)
 
 ![J2141 positive and signed HORB rotation and lensing selections](images/swells/j2141_lensing.png)
 

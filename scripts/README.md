@@ -61,10 +61,12 @@ Legacy shell workflows are available as `./run.sh do legacy-*` commands; the
 original shell files remain recoverable through Git history.
 ## README figure generation
 
-Use `./run.sh --release do readme-highlights` for the four featured figures.
+Use `./run.sh --release do readme-highlights` for all six featured figures.
 `make_readme_highlights.py` validates and renders each matched pair;
-`horb_highlights.py` supplies refitted single-orbital/classical forces and an
-independent signed-density audit. Source weights, plotted curves and score
+`horb_highlights.py` supplies refitted classical forces and an independent
+signed-density audit. `horb_qi.py` supplies the fixed QI prediction, while
+`make_swells_highlight.py` rebuilds J2141 with its observing projection and
+recorded lensing selections. Single-orbital curves/points are omitted. Source weights, plotted curves and score
 tables are tracked in `data/highlights/`. See [methods and reproduction](../docs/readme_highlights.md).
 ## SPARC batch additions
 

@@ -360,6 +360,7 @@ fn highlights_use_recorded_weights_and_refit_only_when_requested() {
         );
         let plan = String::from_utf8(out.stderr).unwrap();
         assert_eq!(plan.matches("make_readme_highlights.py").count(), 2);
+        assert_eq!(plan.matches("make_swells_highlight.py").count(), 1);
         assert_eq!(plan.contains("fit_signed_density.py"), refit);
         assert!(!plan.contains("nvcc"));
         for galaxy in ["mw", "m31"] {

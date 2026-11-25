@@ -2,7 +2,11 @@
 
 This CPU workflow fits SDSS J2141−0001's gas rotation measurements with HORB,
 NFW, Burkert and Einasto, freezes the mass parameters, and computes lensing
-from those densities. Baryons alone and a single `3d_z2` orbital are included.
+from those densities. Baryons alone and a single `3d_z2` orbital remain in the
+numerical lensing reports. The displayed figures omit the single orbital;
+the rotation plot includes [QI](quantised_inertia.md) at z=0.138 with the same
+fixed baryons and observing integration. QI has no fitted parameters, and
+this workflow does not assume a QI lensing law.
 It compares with a published lensing summary; it does not yet reconstruct
 the observed arc pixel by pixel.
 
@@ -20,6 +24,9 @@ the observed arc pixel by pixel.
 
 # Reuse saved rotation parameters without another fit.
 ./run.sh do swells-fit --predict-only
+
+# Rebuild all README figures, including J2141, from the recorded reference fits.
+./run.sh --release do readme-highlights
 
 # Nonnegative coefficient control, with the same data and baryons.
 ./run.sh do swells-fit --nonnegative --out-dir reports/swells/j2141_nonnegative

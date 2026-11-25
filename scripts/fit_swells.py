@@ -12,6 +12,7 @@ from pathlib import Path
 import sys
 import numpy as np
 from horb_highlights import metrics, signed_density_xz
+from horb_qi import velocity as qi_velocity, metadata as qi_metadata
 from horb_swells.models import (distances, baryon_components, baryon_v2, dictionary,
                                basis_matrix, baseline_v2, observing_matrix)
 from horb_swells.fitting import fit_classical, ProjectedSearch
@@ -21,9 +22,13 @@ from horb_swells.lensing import (orbital_surface_modes, spherical_surface,
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/swells"
 MODELS = ("superposition", "single", "nfw", "burkert", "einasto", "baryons")
+ROTATION_MODELS = ("superposition", "qi", "nfw", "burkert", "einasto", "baryons")
+LENS_DISPLAY_MODELS = tuple(name for name in MODELS if name != "single")
 LABELS = {"superposition": "HORB superposition", "single": "HORB single orbital",
+          "qi": "Quantised inertia (QI)",
           "nfw": "NFW", "burkert": "Burkert", "einasto": "Einasto", "baryons": "Baryons alone"}
 COLORS = {"superposition": "#50e0cf", "single": "#bf9bff", "nfw": "#ffb451",
+          "qi": "#bf9bff",
           "burkert": "#70a8ff", "einasto": "#ee82af", "baryons": "#9cabbc"}
 
 
@@ -52,6 +57,16 @@ def force_grid(count=800):
 
 def total_force(model, r, report):
     baryons = baryon_v2(r, report["baryons"])
+    if model == "qi":
+        r = np.asarray(r, dtype=float)
+        # These cored baryons have v(0)=0. Evaluate Eq. 8 only at r>0;
+        # the zero-radius grid node is its continuous central limit.
+        if np.any(r < 0) or not np.isfinite(r).all() or np.any(baryons[r == 0] != 0):
+            raise ValueError("invalid radius or central baryonic limit for QI")
+        result = np.zeros_like(r)
+        mask = r > 0
+        result[mask] = qi_velocity(r[mask], baryons[mask], report["photometry"]["lens_redshift"])**2
+        return result
     result = report["models"][model]
     if model == "superposition":
         if result["components"]:
@@ -116,13 +131,16 @@ def rotation_outputs(report, meta, obs, out):
     P = observing_matrix(obs["r_arcsec"], grid, meta, step_arcsec=.02)
     mask = obs["use_for_fit"].astype(bool)
     table = np.column_stack([obs[k] for k in obs.dtype.names]+[
-        P@np.sqrt(total_force(name, grid, report)) for name in MODELS])
-    header = ",".join(list(obs.dtype.names)+[f"v_{name}_los_kms" for name in MODELS])
+        P@np.sqrt(total_force(name, grid, report)) for name in ROTATION_MODELS])
+    header = ",".join(list(obs.dtype.names)+[f"v_{name}_los_kms" for name in ROTATION_MODELS])
     np.savetxt(out/"rotation_predictions.csv", table, delimiter=",", header=header, comments="", fmt="%.12g")
     report["numerical_audit"] = {}
     coarse_grid = force_grid()
     coarse_P = observing_matrix(obs["r_arcsec"], coarse_grid, meta)
-    for i, name in enumerate(MODELS):
+    qi = coarse_P@np.sqrt(total_force("qi", coarse_grid, report))
+    report["models"]["qi"] = {**qi_metadata(meta["lens_redshift"]),
+                               **metrics(qi[mask], obs["v_los_kms"][mask], obs["error_kms"][mask])}
+    for i, name in enumerate(ROTATION_MODELS):
         fine = table[:, len(obs.dtype.names)+i]
         coarse = coarse_P@np.sqrt(total_force(name, coarse_grid, report))
         difference = float(np.max(np.abs(fine[mask]-coarse[mask])))
@@ -214,11 +232,10 @@ def lens_predictions(report, meta, out):
     return result, curves
 
 
-def plot_results(report, lensing, curves, meta, obs, out):
+def plot_rotation(report, meta, obs, out):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.colors import SymLogNorm
     bg, panel, fg, muted = "#0b1320", "#101e30", "#edf3fc", "#9dadc3"
     plt.rcParams.update({"figure.facecolor": bg, "axes.facecolor": panel, "axes.labelcolor": muted,
                          "text.color": fg, "xtick.color": muted, "ytick.color": muted,
@@ -229,18 +246,21 @@ def plot_results(report, lensing, curves, meta, obs, out):
     fig.subplots_adjust(left=.08, right=.72, top=.81, bottom=.16)
     fig.text(.08, .93, "HORB  /  SWELLS", color=COLORS["superposition"], size=13, weight="bold")
     fig.text(.08, .87, "SDSS J2141−0001", size=25, weight="bold")
-    fig.text(.08, .82, "Rotation fit · six outer measurements · lensing held out", color=muted)
-    xx = np.linspace(0, obs["r_arcsec"].max(), 180)
+    fig.text(.08, .82, "Rotation comparison · six outer measurements · lensing held out", color=muted)
+    xx = np.unique(np.r_[np.linspace(0, obs["r_arcsec"].max(), 180), obs["r_arcsec"]])
     grid = force_grid(1600)
-    P = observing_matrix(xx, grid, meta)
+    P = observing_matrix(xx, grid, meta, step_arcsec=.02)
     ax.axvspan(0, meta["fit_min_arcsec"]*scale, color="#94a4b7", alpha=.07)
-    for j, name in enumerate(MODELS):
+    for name in reversed(ROTATION_MODELS):
+        j = ROTATION_MODELS.index(name)
         v = P@np.sqrt(total_force(name, grid, report))
         ax.plot(xx*scale, v, color=COLORS[name], lw=2.8 if name == "superposition" else 1.9,
-                ls="--" if name in ("baryons", "nfw") else "-")
+                ls="-." if name == "qi" else "--" if name in ("baryons", "nfw") else "-",
+                zorder=3 if name == "superposition" else 2)
         y = .74-j*.08
         fig.text(.76, y, LABELS[name], color=COLORS[name], size=12)
-        fig.text(.94, y-.027, f"{report['models'][name]['rms_kms']:.2f} km/s", ha="right", size=12, weight="bold")
+        score = report["numerical_audit"][name]["refined_scores"]
+        fig.text(.94, y-.027, f"{score['rms_kms']:.2f} km/s", ha="right", size=12, weight="bold")
     for used, color, marker in ((True, fg, "o"), (False, muted, "s")):
         select = mask == used
         ax.errorbar(obs["r_arcsec"][select]*scale, obs["v_los_kms"][select], yerr=obs["error_kms"][select],
@@ -249,12 +269,20 @@ def plot_results(report, lensing, curves, meta, obs, out):
            xlim=(0, 13.2), ylim=(0, 320))
     ax.grid(alpha=.12)
     fig.text(.76, .23, "RMS on the same six points", color=muted, size=10)
+    fig.text(.76, .17, "QI: fixed prediction\nz = 0.138 · no fitted parameters", color=muted, size=9, linespacing=1.5)
     fig.text(.08, .08, "Dutton et al. (2011), Table 4. Shaded inner region excluded, following the paper.", color=muted, size=10)
     fig.text(.08, .045, f"Fixed SPS baryons (mass offset {report['stellar_mass_offset_dex']:+.2f} dex); PSF + slit model. Signed terms: {report['models']['superposition']['parameter_count']}.", color=muted, size=10)
     fig.savefig(out/"j2141_rotation.png", dpi=180)
     fig.savefig(out/"j2141_rotation.pdf")
     plt.close(fig)
 
+
+def plot_results(report, lensing, curves, meta, obs, out):
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import SymLogNorm
+    plot_rotation(report, meta, obs, out)
+    bg, panel, fg, muted = "#0b1320", "#101e30", "#edf3fc", "#9dadc3"
+    scale = report["distances"]["kpc_per_arcsec"]
     fig, (left, right) = plt.subplots(1, 2, figsize=(13.5, 7.5), gridspec_kw={"width_ratios": [1.05, 1]})
     fig.subplots_adjust(left=.07, right=.96, top=.75, bottom=.23, wspace=.45)
     fig.text(.07, .93, "HORB  /  LENSING PREDICTION", color=COLORS["superposition"], size=13, weight="bold")
@@ -288,7 +316,7 @@ def plot_results(report, lensing, curves, meta, obs, out):
     if alternative_values:
         right.scatter(alternative_values, np.zeros(len(alternative_values)), color=COLORS["superposition"],
                       s=18, alpha=.25, zorder=3)
-    for j, name in enumerate(MODELS):
+    for j, name in enumerate(LENS_DISPLAY_MODELS):
         value = lensing["models"][name]["effective_einstein_radius_arcsec"]
         if value is not None:
             right.scatter(value, j, color=COLORS[name], s=60, zorder=5)
@@ -297,8 +325,8 @@ def plot_results(report, lensing, curves, meta, obs, out):
             values.append(value)
         else:
             right.text(.05,j,"multiple / missing critical branches",color=COLORS[name],size=9)
-    right.set_yticks(range(len(MODELS)), [LABELS[n] for n in MODELS])
-    right.set(xlabel="Area-equivalent Einstein radius [arcsec]", ylim=(5.6, -.7),
+    right.set_yticks(range(len(LENS_DISPLAY_MODELS)), [LABELS[n] for n in LENS_DISPLAY_MODELS])
+    right.set(xlabel="Area-equivalent Einstein radius [arcsec]", ylim=(len(LENS_DISPLAY_MODELS)-.4, -.7),
               xlim=(0, max(1.15, max(values)*1.12)), title="Frozen rotation-fit predictions")
     right.grid(axis="x", alpha=.12)
     fig.text(.07, .13, "White band: published SIE summary, 0.89 (+0.05 / −0.08) arcsec. Faint points: other near-best rotation fits; not a confidence interval.", color=muted, size=9.6)

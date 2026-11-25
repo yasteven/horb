@@ -188,7 +188,7 @@ def plot_comparison(result, lens_map, out):
     right.axvspan(observed-source["radius_error_minus_arcsec"], observed+source["radius_error_plus_arcsec"], color=fg, alpha=.12)
     right.axvline(observed, color=fg, ls="--", lw=1.2)
     labels, values = [], []
-    rows = result["rows"]
+    rows = [row for row in result["rows"] if row["family"] != "single"]
     for j, row in enumerate(rows):
         family = row["family"]
         color = family_colors[family]

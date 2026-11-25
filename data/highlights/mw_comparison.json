@@ -15,38 +15,22 @@
       "chi2": 0.7164677414617553,
       "n": 29
     },
-    "single": {
-      "rms_kms": 25.896500692146212,
-      "chi2": 257.5047073665536,
+    "qi": {
+      "rms_kms": 37.12919832155737,
+      "chi2": 639.9479910260129,
       "n": 29,
-      "log10_parameters": [
-        11.487515531615877,
-        0.03963980225364455
-      ],
-      "parameter_names": [
-        "total_mass_msun",
-        "scale_kpc"
-      ],
-      "parameters": [
-        307266725069.3326,
-        1.0955691695395056
-      ],
-      "log10_bounds": [
-        [
-          8.0,
-          13.0
-        ],
-        [
-          -1.3010299956639813,
-          1.6989700043360187
-        ]
-      ],
-      "reference_radius_kpc": 80.0,
-      "parameter_count": 2,
-      "bound_reached": false,
-      "optimizer": "differential_evolution(seed=42) + least_squares",
-      "global_converged": true,
-      "local_converged": true
+      "source": "https://doi.org/10.1007/s10509-017-3128-6",
+      "equation": 8,
+      "redshift_scaling_equation": 9,
+      "redshift": 0.0,
+      "c_m_s": 299792458.0,
+      "theta_now_m": 8.8e+26,
+      "theta_m": 8.8e+26,
+      "a_qi_m_s2": 2.0426254062200399e-10,
+      "parameter_count": 0,
+      "fitted": false,
+      "baryons": "Same fixed baryonic force; QI is the total speed, with no additional halo.",
+      "domain": "Positive radius and nonnegative total inward baryonic v^2."
     },
     "nfw": {
       "rms_kms": 9.28998493789282,
@@ -115,13 +99,13 @@
       "local_converged": true
     },
     "einasto": {
-      "rms_kms": 6.701932084721179,
-      "chi2": 9.289577789539129,
+      "rms_kms": 6.701932084586802,
+      "chi2": 9.289577789539232,
       "n": 29,
       "log10_parameters": [
-        11.70845949979907,
-        0.9948663927788625,
-        -0.4881766727705055
+        11.708459499798456,
+        0.9948663927819306,
+        -0.4881766727609724
       ],
       "parameter_names": [
         "mass_within_reference_msun",
@@ -129,9 +113,9 @@
         "alpha"
       ],
       "parameters": [
-        511045419193.37665,
-        9.882490209853493,
-        0.324955077439628
+        511045419192.6555,
+        9.88249020992331,
+        0.324955077446761
       ],
       "log10_bounds": [
         [

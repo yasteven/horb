@@ -14,6 +14,7 @@ ROOT = SCRIPTS.parent
 sys.path.insert(0, str(SCRIPTS))
 from horb_highlights import G, MODELS, LABELS, dz2_v2, model_v2, fit_baseline, metrics, signed_density_xz, load_density
 from make_readme_highlights import validate_weights
+from horb_qi import velocity as qi_velocity
 
 
 class HighlightPhysics(unittest.TestCase):
@@ -93,10 +94,14 @@ class HighlightPhysics(unittest.TestCase):
             self.assertEqual(report["config"]["ridge"], 0)
             self.assertEqual(report["evaluated_subsets"], 31931)
             self.assertEqual(set(comparison["scores"]), set(MODELS))
-            for model in ("single", "nfw", "burkert", "einasto"):
+            for model in ("nfw", "burkert", "einasto"):
                 result = comparison["scores"][model]
                 expected = np.sqrt(obs[:, 3]+model_v2(model, obs[:, 0], result["log10_parameters"], result["reference_radius_kpc"]))
                 np.testing.assert_allclose(expected, curves[f"v_{model}_kms"][indices], rtol=1e-12)
+            np.testing.assert_allclose(qi_velocity(obs[:, 0], obs[:, 3]), curves["v_qi_kms"][indices], rtol=1e-12)
+            self.assertNotIn("v_single_kms", curves.dtype.names)
+            self.assertEqual(comparison["scores"]["qi"]["parameter_count"], 0)
+            self.assertFalse(comparison["scores"]["qi"]["fitted"])
 
 
 if __name__ == "__main__":

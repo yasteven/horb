@@ -15,6 +15,7 @@ import numpy as np
 from fit_signed_density import atomic_write, fingerprint, write_csv
 from horb_signed import load_basis, load_observations, baryons_function
 from horb_highlights import MODELS, LABELS, fit_baseline, metrics, model_v2, load_density
+from horb_qi import velocity as qi_velocity, metadata as qi_metadata
 
 ROOT = Path(__file__).resolve().parents[1]
 GALAXIES = {
@@ -30,7 +31,7 @@ GALAXIES = {
 }
 BG, PANEL, INK, MUTED, GRID = "#0b1220", "#101b2d", "#f0f5fc", "#9cacc2", "#263448"
 COLORS = dict(zip(MODELS, ["#5de4d0", "#c3a2ff", "#ffb65e", "#75a8ff", "#f487b4", "#a4b0c1"]))
-STYLES = dict(zip(MODELS, ["-", "-", (0, (5, 2)), (0, (6, 2, 1, 2)), (0, (1, 1.5)), (0, (4, 3))]))
+STYLES = dict(zip(MODELS, ["-", (0, (7, 2, 1, 2)), (0, (5, 2)), (0, (6, 2, 1, 2)), (0, (1, 1.5)), (0, (4, 3))]))
 
 
 def style():
@@ -88,7 +89,7 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
                                  color=COLORS[name], ls=STYLES[name], lw=2.5))
         fig.text(.79, y, LABELS[name], color=COLORS[name], size=10, va="center")
         fig.text(.951, y-.025, f"{scores[name]['rms_kms']:.2f}", ha="right", size=12, weight="bold")
-        description = {"superposition": f"{report['k']} signed-weight terms", "single": r"$3d_{z^2}$ · fitted mass + scale",
+        description = {"superposition": f"{report['k']} signed-weight terms", "qi": "fixed prediction · 0 fitted",
                        "nfw": "fitted mass + scale", "burkert": "fitted mass + scale",
                        "einasto": "fitted mass + scale + shape", "baryons": "fixed literature model"}[name]
         if name == "einasto" and scores[name]["bound_reached"]:
@@ -96,7 +97,7 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
         fig.text(.79, y-.026, description, color=MUTED, size=8)
     fig.text(.755, .255, "●  Observations with published errors", size=9, color=MUTED)
     fig.text(.07, .080, g["note"], color=MUTED, size=9)
-    fig.text(.07, .049, "In-sample fits. Superposition selected by weighted χ² over the documented ≤4-term dictionary; model flexibility differs.", color=MUTED, size=8.7)
+    fig.text(.07, .049, "HORB/halos fitted to these data; QI predicted from fixed baryons. Superposition: weighted χ², documented ≤4-term dictionary.", color=MUTED, size=8.7)
     save(fig, output)
 
 
@@ -160,11 +161,14 @@ def update_readme_scores():
     if text.count(start) != 1 or text.count(end) != 1:
         raise ValueError("README score markers missing or duplicated; cannot update its score table")
     records = [json.loads((ROOT/f"data/highlights/{n}_comparison.json").read_text()) for n in ("mw", "m31")]
+    if any(set(d["scores"]) != set(MODELS) for d in records):
+        print("README score table deferred until both galaxy comparisons have been regenerated.")
+        return
     fits = [json.loads((ROOT/f"data/highlights/{n}_fit.json").read_text()) for n in ("mw", "m31")]
     columns = [f"{d['galaxy']} · {d['fit_range_kpc'][0]:g}–{d['fit_range_kpc'][1]:g} kpc" for d in records]
     lines = ["| In-sample RMS (km/s) | " + " | ".join(columns) + " |", "|---|---:|---:|"]
     labels = [f"HORB superposition · {fits[0]['k']}/{fits[1]['k']} terms (MW/M31)",
-              "HORB single `3d_z2` · fitted mass + scale", "NFW · fitted mass + scale", "Burkert · fitted mass + scale",
+              "QI · fixed prediction", "NFW · fitted mass + scale", "Burkert · fitted mass + scale",
               "Einasto · fitted mass + scale + shape", "Baryons alone · fixed"]
     if fits[0]["k"] == fits[1]["k"]:
         labels[0] = f"HORB superposition · {fits[0]['k']} terms"
@@ -209,13 +213,15 @@ def prepare(galaxy, report, basis_path):
     if np.any(baryons(guard)+basis.at(guard)[:, indices] @ weights < 0):
         raise ValueError("selected superposition has negative total circular force")
     r = np.unique(np.concatenate([np.linspace(*report["r_fit_requested_kpc"], 1000), r_obs]))
-    predictions = {"baryons": np.sqrt(b_obs), "superposition": np.sqrt(b_obs+dark)}
-    curves = {"baryons": np.sqrt(baryons(r)), "superposition": np.sqrt(baryons(r)+basis.at(r)[:, indices] @ weights)}
+    predictions = {"baryons": np.sqrt(b_obs), "superposition": np.sqrt(b_obs+dark), "qi": qi_velocity(r_obs, b_obs)}
+    curves = {"baryons": np.sqrt(baryons(r)), "superposition": np.sqrt(baryons(r)+basis.at(r)[:, indices] @ weights),
+              "qi": qi_velocity(r, baryons(r))}
     scores = {key: metrics(value, obs["Vobs_kms"], obs["eV_kms"]) for key, value in predictions.items()}
+    scores["qi"].update(qi_metadata())
     for key in ("rms_kms", "chi2"):
         if not np.isclose(scores["superposition"][key], report[key], rtol=1e-7, atol=1e-9):
             raise ValueError(f"recomputed {key} does not match selected fit")
-    for name in ("single", "nfw", "burkert", "einasto"):
+    for name in ("nfw", "burkert", "einasto"):
         result = fit_baseline(name, r_obs, obs["Vobs_kms"], obs["eV_kms"], b_obs, report["r_fit_requested_kpc"][1])
         scores[name] = result
         for radii, b, dest in [(r_obs, b_obs, predictions), (r, baryons(r), curves)]:

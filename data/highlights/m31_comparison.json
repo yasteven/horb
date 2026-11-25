@@ -15,38 +15,22 @@
       "chi2": 4.48305308834146,
       "n": 29
     },
-    "single": {
-      "rms_kms": 20.34677635540775,
-      "chi2": 76.57541578528004,
+    "qi": {
+      "rms_kms": 14.004607642410129,
+      "chi2": 105.57204473802246,
       "n": 29,
-      "log10_parameters": [
-        11.274921817686932,
-        0.10611192130219833
-      ],
-      "parameter_names": [
-        "total_mass_msun",
-        "scale_kpc"
-      ],
-      "parameters": [
-        188331002281.02692,
-        1.2767678001050133
-      ],
-      "log10_bounds": [
-        [
-          8.0,
-          13.0
-        ],
-        [
-          -1.3010299956639813,
-          1.6989700043360187
-        ]
-      ],
-      "reference_radius_kpc": 36.5,
-      "parameter_count": 2,
-      "bound_reached": false,
-      "optimizer": "differential_evolution(seed=42) + least_squares",
-      "global_converged": true,
-      "local_converged": true
+      "source": "https://doi.org/10.1007/s10509-017-3128-6",
+      "equation": 8,
+      "redshift_scaling_equation": 9,
+      "redshift": 0.0,
+      "c_m_s": 299792458.0,
+      "theta_now_m": 8.8e+26,
+      "theta_m": 8.8e+26,
+      "a_qi_m_s2": 2.0426254062200399e-10,
+      "parameter_count": 0,
+      "fitted": false,
+      "baryons": "Same fixed baryonic force; QI is the total speed, with no additional halo.",
+      "domain": "Positive radius and nonnegative total inward baryonic v^2."
     },
     "nfw": {
       "rms_kms": 10.540857094648823,

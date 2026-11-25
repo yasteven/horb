@@ -9,9 +9,10 @@ from scipy.optimize import differential_evolution, least_squares
 from scipy.special import gammainc, gammaincc, gamma, eval_genlaguerre, eval_legendre
 
 G = 4.3009e-6
-MODELS = ("superposition", "single", "nfw", "burkert", "einasto", "baryons")
+MODELS = ("superposition", "qi", "nfw", "burkert", "einasto", "baryons")
 LABELS = {"superposition": "HORB superposition", "single": "HORB single orbital",
-          "nfw": "NFW", "burkert": "Burkert", "einasto": "Einasto", "baryons": "Baryons alone"}
+          "qi": "Quantised inertia (QI)", "nfw": "NFW", "burkert": "Burkert",
+          "einasto": "Einasto", "baryons": "Baryons alone"}
 
 
 def dz2_v2(r, scale, mass):

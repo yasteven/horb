@@ -286,10 +286,12 @@ candidate stem printed in the command trace.
 ## README figures
 
 `./run.sh --release do readme-highlights` regenerates the Milky Way and
-Andromeda six-model rotation comparisons and matching signed-density maps.
+Andromeda six-model rotation comparisons and matching signed-density maps,
+plus J2141's rotation and lensing figures from its recorded SWELLS fits.
 It uses the committed selected orbital weights, validates their inputs and
-scores, and refits the single orbital plus NFW, Burkert and Einasto. Add
-`--refit` to repeat the complete ≤4-term superposition searches as well.
+scores, and refits NFW, Burkert and Einasto for MW/M31. QI is a fixed prediction
+on all three rotation plots; the single orbital is omitted from the figures.
+Add `--refit` to repeat the complete MW/M31 ≤4-term superposition searches.
 PNGs go to `images/`, PDFs to `plots/`, and numerical records to
 `data/highlights/`. See [the methods](../docs/readme_highlights.md).
 

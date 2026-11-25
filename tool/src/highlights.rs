@@ -1,4 +1,4 @@
-//! Rebuild the four README figures from recorded fits, or repeat the full search.
+//! Rebuild the README figures from recorded fits, optionally repeating MW/M31 searches.
 use crate::runner::{python, strings, Runner};
 use anyhow::{bail, Result};
 
@@ -6,11 +6,13 @@ pub fn run(r: &mut Runner, args: &[&str]) -> Result<()> {
     if args == ["--help"] {
         println!(
             "./run.sh [--release] do readme-highlights [--refit]\n\
-Default: rebuild both galaxies' six-model comparisons and matching densities\n\
-from the recorded selected weights, checking their inputs and scores.\n\
---refit: repeat all 31,931 subsets per galaxy (up to four signed terms).\n\
-NFW, Burkert, Einasto and single 3d_z2 mass/scale are refitted each time.\n\
-Outputs: images/*_highlight.png, plots/*_highlight.pdf, data/highlights/*.\n\
+Default: rebuild MW/M31 six-model comparisons and matching densities,\n\
+plus J2141 rotation and lensing comparisons, from recorded fits.\n\
+Inputs and scores are checked against the recorded selected weights.\n\
+--refit: repeat all 31,931 subsets per MW/M31 galaxy (up to four signed terms).\n\
+NFW, Burkert and Einasto are refitted for MW/M31; QI has no fitted parameters.\n\
+J2141 keeps its recorded fits. The single orbital is omitted from these plots.\n\
+Outputs: images/*_highlight.png, images/swells/*.png, plots/*.pdf, data/highlights/*.\n\
 CPU only; --refit can take several minutes. No Git operations are performed."
         );
         return Ok(());
@@ -143,5 +145,6 @@ CPU only; --refit can take several minutes. No Git operations are performed."
             None,
         )?;
     }
+    r.python("make_swells_highlight", &[], None)?;
     Ok(())
 }

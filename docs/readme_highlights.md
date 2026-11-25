@@ -1,20 +1,18 @@
 # README comparison figures
 
-The four figures at the top of the README are generated together. Each rotation
+The MW/M31 figure pairs and J2141 rotation/lensing figures are generated together. Each rotation
 plot shows the observations, their published errors, and six models:
 
 1. A fitted signed superposition of orbital **densities**.
-2. A single positive `3d_z2` density with fitted mass and scale.
+2. Quantised inertia (QI), predicted from the fixed baryons without fitting.
 3. Fitted NFW plus baryons.
 4. Fitted Burkert plus baryons.
 5. Fitted Einasto plus baryons.
 6. Fixed baryons alone.
 
-The single-orbital state matches the earlier morphology candidate. Its mass
-and scale are now optimized independently for each galaxy. The archived CUDA
-candidate and fixed-parameter comparison commands remain available separately.
-Pseudo-isothermal is still available there; the new highlights show the three
-classical models above.
+The single-orbital comparison remains available in the archived calculations,
+but is omitted from the README figures. The three classical halos above share
+the baryonic inputs with QI; see [the QI prescription](quantised_inertia.md).
 
 ## Reproduce
 
@@ -27,13 +25,18 @@ then run from the repository root:
 ./run.sh check plots
 ```
 
-This regenerates the CPU force libraries, density slices, and all four figures
-from the committed selected weights. It refits the single orbital and three
-classical halos. It checks the numeric observation/baryon/force snapshot,
+This regenerates the CPU force libraries, density slices, and MW/M31 figures
+from the committed selected weights. It refits the three classical halos and
+evaluates QI without fitting. It checks the numeric observation/baryon/force snapshot,
 recomputes the fit scores, verifies that the weights match the report, and
 independently checks the Rust density CSV against those weights before plotting.
 Numeric comparisons tolerate roundoff between platforms; a changed dataset or
 force calculation is rejected. No network access or CUDA is needed.
+
+It also rebuilds J2141 from its recorded SWELLS fits: QI is projected through
+the same observing model and scored on the six outer measurements. Lensing
+selections are audited and redrawn without the single-orbital row. Neither
+the SWELLS weights nor the candidate selections are refitted by this command.
 
 ```sh
 ./run.sh --release do readme-highlights --refit
@@ -45,10 +48,12 @@ figures and records before publishing. `--dry-run` prints either command plan.
 
 | Output | Location |
 |---|---|
-| Four README PNGs | `images/{mw,m31}_{rotation,density}_highlight.png` |
-| Four vector PDFs | `plots/{mw,m31}_{rotation,density}_highlight.pdf` |
+| MW/M31 README PNGs | `images/{mw,m31}_{rotation,density}_highlight.png` |
+| J2141 README PNGs | `images/swells/j2141_{rotation,lensing}.png` |
+| Vector PDFs | `plots/*_highlight.pdf` |
 | Selected fit reports and exact weights | `data/highlights/{mw,m31}_{fit.json,weights.csv}` |
-| All six fitted curves and scores | `data/highlights/{mw,m31}_{curves.csv,scores.csv,comparison.json}` |
+| Six MW/M31 curves and scores | `data/highlights/{mw,m31}_{curves.csv,scores.csv,comparison.json}` |
+| J2141 observed predictions and scores | `data/highlights/j2141_{predictions.csv,comparison.json}` |
 | Full search rankings on refit | `reports/{mw,m31}_showcase_candidates.csv` |
 | Force libraries and density grids | `reports/*_showcase_basis.csv`, `curves/*_showcase_density_xz.csv` |
 
@@ -79,6 +84,8 @@ statistic and not reduced χ². The score tables also record χ² and χ²/N. Th
 plots show only the fitted radial interval. Each README rotation figure uses
 one full-height panel for all six curves, with per-model RMS values alongside
 it. The separate signed-density figure follows below it in the README.
+QI is a total-speed prediction from baryons, not an extra halo contribution;
+its curve is scored on exactly the same observations without fitting.
 
 ## What “best superposition” means
 
@@ -113,8 +120,7 @@ superiority or a unique physical dark-matter distribution.
 NFW and Burkert fit mass and scale. Einasto fits mass, scale and α. Halo mass
 means **enclosed mass at 80 kpc (MW) or 36.5 kpc (M31)**; it is not the total
 mass of an infinite NFW or Burkert profile. Bounds are `1e8…1e13 M_sun`,
-`0.05…500 kpc`, and `alpha=0.03…2`. The positive single `3d_z2` model fits
-total mass `1e8…1e13 M_sun` and `a0=0.05…50 kpc`.
+`0.05…500 kpc`, and `alpha=0.03…2`.
 
 Fitting uses deterministic differential evolution (seed 42), followed by
 bounded velocity-space least squares. Fit parameters, bounds and convergence
@@ -136,7 +142,7 @@ at the stated reference radius. Primary references:
 [Burkert](https://arxiv.org/abs/astro-ph/9504041),
 [Einasto mass integral](https://doi.org/10.1051/0004-6361/201118543).
 
-The single orbital uses the exact `L=0,2,4` multipoles of `|R_32 Y_20|²`,
+The retained single-orbital implementation uses the exact `L=0,2,4` multipoles of `|R_32 Y_20|²`,
 including exterior mass. Its radial density is proportional to
 `x^4 exp(-2x/3)`; analytic incomplete-gamma integrals allow continuous scale
 fitting without changing the nonspherical geometry. Tests compare it with
