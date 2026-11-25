@@ -3,6 +3,7 @@ mod highlights;
 mod runner;
 mod signed;
 mod sparc;
+mod swells;
 mod workflows;
 
 use anyhow::{bail, Context, Result};
@@ -31,6 +32,9 @@ Usage: ./run.sh [--dry-run] [--release] COMMAND [ARGS...]
   data mw                   Regenerate Sofue MW data and standard RC CSV
   data m31                  Prepare Corbelli M31 data and fixed Geehan baryons
   data sparc [OPTIONS]      Prepare all 175 published SPARC curves and baryons
+  data swells               Validate bundled J2141 rotation/photometry inputs
+  do swells-fit [OPTIONS]   Fit J2141 rotation, then predict held-out lensing
+  do swells-compare [OPTS]  Plot positive/signed rotation and lensing selections
   do sparc-fit [OPTIONS]    Fit SPARC galaxies, resume, and create a plot gallery
   python list               List Python plotting / analysis programs
   python NAME [ARGS...]      Run an existing Python program by stem
@@ -110,7 +114,8 @@ fn dispatch(r: &mut Runner, args: &[String]) -> Result<()> {
             ["mw"] => workflows::mw_data(r)?,
             ["m31"] | ["andromeda"] => signed::m31_data(r)?,
             ["sparc", args @ ..] => sparc::data(r, args)?,
-            _ => bail!("usage: ./run.sh data mw|m31|sparc"),
+            ["swells", args @ ..] => swells::data(r, args)?,
+            _ => bail!("usage: ./run.sh data mw|m31|sparc|swells"),
         },
         "run" | "r" => run(r, &rest)?,
         "basis" => signed::basis(r, &rest)?,

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "source": {
+    "schema_version": 1,
+    "galaxy": "SDSS J2141-0001",
+    "source": "Dutton et al. 2011, SWELLS II, Section 5.2, https://arxiv.org/abs/1101.1622",
+    "type": "published_SIE_lensing_summary",
+    "circularized_einstein_radius_arcsec": 0.89,
+    "radius_error_minus_arcsec": 0.08,
+    "radius_error_plus_arcsec": 0.05,
+    "projected_axis_ratio": 0.42,
+    "axis_ratio_error_minus": 0.12,
+    "axis_ratio_error_plus": 0.17,
+    "use_in_rotation_fit": false,
+    "interpretation": "Model-dependent summary of the observed arc under an SIE lens fit. Compare with area-equivalent tangential critical radius as a preliminary diagnostic, not an image-plane likelihood or an independent raw measurement of enclosed mass."
+  },
+  "models": {
+    "superposition": {
+      "effective_einstein_radius_arcsec": null,
+      "closed_star_shaped_outer_curve": false,
+      "maximum_outward_crossings_per_ray": 2,
+      "outer_radial_envelope_arcsec": 1.6542835935461544,
+      "topology_note": "multiple or missing critical branches; no single-radius comparison",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "single": {
+      "effective_einstein_radius_arcsec": 1.1587514797442682,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 1.1587514797442682,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "nfw": {
+      "effective_einstein_radius_arcsec": 1.1441659736193104,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 1.1441659736193104,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "burkert": {
+      "effective_einstein_radius_arcsec": 1.0619939963861527,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 1.0619939963861527,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "einasto": {
+      "effective_einstein_radius_arcsec": 1.032340748418273,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 1.032340748418273,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "baryons": {
+      "effective_einstein_radius_arcsec": 0.9565509314662058,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.9565509314662058,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    }
+  },
+  "fit_inputs_sha256": {
+    "j2141_photometry.json": "b207a41c318287a11ab76c66a301407a223a440ff8f7ea88b0cdb6b3c051138b",
+    "j2141_rotation.csv": "0022b831dcaa11e14820704988948f71f63debb9ee7bb86ec0fe5c86ac059456"
+  },
+  "lensing_used_in_fit": false,
+  "gravity_assumption": "GR weak-field thin lens; fitted signed density sources both metric potentials equally",
+  "comparison_scope": "Published SIE summary only. No observed-image pixel likelihood, PSF/dust/source reconstruction, or model evidence computed.",
+  "external_shear": 0.0,
+  "external_convergence": 0.0,
+  "distances": {
+    "Dd_kpc": 502819.16959537566,
+    "Ds_kpc": 1484472.9262930376,
+    "Dds_kpc": 1150375.7609987436,
+    "kpc_per_arcsec": 2.4377361254397414,
+    "sigma_critical_msun_kpc2": 4267690631.2150607
+  },
+  "conditional_on_fixed_baryons_and_geometry": true,
+  "alternative_rotation_fits": [],
+  "alternatives_note": "Up to 20 next-best searched subsets with delta chi2 <= 1; illustrates degeneracy, not a confidence interval."
+}

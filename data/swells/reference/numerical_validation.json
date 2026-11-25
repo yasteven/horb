@@ -1,0 +1,46 @@
+{
+  "rust_force_audit": {
+    "points": 4320,
+    "max_abs_v2_error_kms2": 3.077730070799589e-09
+  },
+  "lensing_resolution": {
+    "j2141": {
+      "superposition": {
+        "refined_radius_arcsec": 0.4279124154541593,
+        "absolute_change_arcsec": 3.494943223714131e-11
+      },
+      "single": {
+        "refined_radius_arcsec": 0.7348789095246911,
+        "absolute_change_arcsec": 9.078918727922769e-10
+      },
+      "nfw": {
+        "refined_radius_arcsec": 0.9023725262010097,
+        "absolute_change_arcsec": 1.2353340572701654e-11
+      },
+      "burkert": {
+        "refined_radius_arcsec": 0.8375091725083961,
+        "absolute_change_arcsec": 1.013855666087693e-11
+      },
+      "einasto": {
+        "refined_radius_arcsec": 0.9297513129386308,
+        "absolute_change_arcsec": 2.3663626613767974e-11
+      },
+      "baryons": {
+        "refined_radius_arcsec": 0.6296953609585768,
+        "absolute_change_arcsec": 1.4799272918253337e-13
+      }
+    },
+    "j2141_nonnegative": {
+      "superposition": {
+        "refined_radius_arcsec": 0.8411486462322343,
+        "absolute_change_arcsec": 2.971567436560463e-11
+      }
+    },
+    "j2141_salpeter": {
+      "superposition": {
+        "effective_einstein_radius_arcsec": null,
+        "topology_note": "multiple or missing critical branches; no single-radius comparison"
+      }
+    }
+  }
+}

@@ -1,0 +1,1770 @@
+{
+  "schema_version": 1,
+  "galaxy": "SDSS J2141-0001",
+  "fit_inputs_sha256": {
+    "j2141_photometry.json": "b207a41c318287a11ab76c66a301407a223a440ff8f7ea88b0cdb6b3c051138b",
+    "j2141_rotation.csv": "0022b831dcaa11e14820704988948f71f63debb9ee7bb86ec0fe5c86ac059456"
+  },
+  "lensing_used_in_fit": false,
+  "selection_statistic": "velocity-space weighted chi2",
+  "observed_velocity_convention": "LOS; compare after inclination, PSF, slit and bin integration",
+  "assumptions": [
+    "fixed Chabrier SPS stellar masses plus requested common mass offset",
+    "fixed photometric geometry; aligned axisymmetric orbital density",
+    "Gaussian 0.60 arcsec seeing; exponential emitting thin disk",
+    "cold gas omitted: no measured gas mass map available",
+    "signed density allowed; inward total equatorial force guarded to 10000 kpc"
+  ],
+  "stellar_mass_offset_dex": 0.0,
+  "photometry": {
+    "schema_version": 1,
+    "galaxy": "SDSS J2141-0001",
+    "source": "Dutton et al. 2011, SWELLS II, https://arxiv.org/abs/1101.1622",
+    "rotation_source": "Table 4; observed H-alpha + [N II] velocities, not deprojected circular velocities",
+    "photometry_source": "Table 2 SPS masses (Chabrier IMF); Table 3 chameleon shape parameters; Sections 2, 3, 6",
+    "lens_redshift": 0.138,
+    "source_redshift": 0.7127,
+    "H0_kms_Mpc": 70.0,
+    "Omega_m": 0.3,
+    "cos_inclination": 0.2,
+    "cos_inclination_error": 0.02,
+    "seeing_fwhm_arcsec": 0.6,
+    "slit_width_arcsec": 1.0,
+    "spatial_bin_arcsec": 0.593,
+    "emission_scale_arcsec": 1.51,
+    "fit_min_arcsec": 2.0,
+    "gas_mass_msun": 0.0,
+    "gas_note": "No resolved gas mass map supplied by this paper. The default pilot omits cold gas, as in its initial mass model. This is an assumption, not a measured zero.",
+    "components": [
+      {
+        "name": "bulge",
+        "log10_mass_msun": 10.26,
+        "log10_mass_error": 0.08,
+        "q_projected": 0.53,
+        "core_arcsec": 0.094,
+        "core_ratio": 0.4892
+      },
+      {
+        "name": "disk",
+        "log10_mass_msun": 10.88,
+        "log10_mass_error": 0.07,
+        "q_projected": 0.31,
+        "core_arcsec": 1.1,
+        "core_ratio": 0.63
+      }
+    ],
+    "distance_note": "Recompute all angular-diameter distances from the stated cosmology. This gives 2.437736 kpc/arcsec, consistent with Section 2 and Table 4. The three distances printed in Section 4.4 are internally inconsistent with that scale and are not mixed into the calculation."
+  },
+  "distances": {
+    "Dd_kpc": 502819.16959537566,
+    "Ds_kpc": 1484472.9262930376,
+    "Dds_kpc": 1150375.7609987436,
+    "kpc_per_arcsec": 2.4377361254397414,
+    "sigma_critical_msun_kpc2": 4267690631.2150607
+  },
+  "baryons": [
+    {
+      "name": "bulge",
+      "mass": 18197008586.099827,
+      "q": 0.53,
+      "q3": 0.500936622737847,
+      "a": 0.2291471957913357,
+      "b": 0.4684120927868677
+    },
+    {
+      "name": "disk",
+      "mass": 75857757502.91852,
+      "q": 0.31,
+      "q3": 0.24173849507267145,
+      "a": 2.6815097379837156,
+      "b": 4.256364663466215
+    }
+  ],
+  "observations": [
+    {
+      "r_arcsec": 0.0,
+      "r_kpc_published": 0.0,
+      "v_los_kms": 3.5,
+      "error_kms": 5.3,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 0.593,
+      "r_kpc_published": 1.45,
+      "v_los_kms": 114.1,
+      "error_kms": 5.8,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 1.185,
+      "r_kpc_published": 2.89,
+      "v_los_kms": 153.8,
+      "error_kms": 2.9,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 1.778,
+      "r_kpc_published": 4.33,
+      "v_los_kms": 212.7,
+      "error_kms": 2.6,
+      "use_for_fit": 0.0
+    },
+    {
+      "r_arcsec": 2.37,
+      "r_kpc_published": 5.78,
+      "v_los_kms": 243.8,
+      "error_kms": 2.6,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 2.963,
+      "r_kpc_published": 7.22,
+      "v_los_kms": 259.8,
+      "error_kms": 2.3,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 3.555,
+      "r_kpc_published": 8.67,
+      "v_los_kms": 256.8,
+      "error_kms": 2.0,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 4.148,
+      "r_kpc_published": 10.11,
+      "v_los_kms": 254.9,
+      "error_kms": 7.5,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 4.74,
+      "r_kpc_published": 11.56,
+      "v_los_kms": 263.4,
+      "error_kms": 2.3,
+      "use_for_fit": 1.0
+    },
+    {
+      "r_arcsec": 5.333,
+      "r_kpc_published": 13.0,
+      "v_los_kms": 265.9,
+      "error_kms": 3.5,
+      "use_for_fit": 1.0
+    }
+  ],
+  "fit_n": 6,
+  "excluded_n": 4,
+  "search": {
+    "method": "beam",
+    "beam_width": 8,
+    "budget": 1200,
+    "max_components": 4,
+    "max_abs_weight": 20.0,
+    "nonnegative": true,
+    "dictionary": [
+      {
+        "state": "1s",
+        "n": 1,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 0.5,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "1s",
+        "n": 1,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 1.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "1s",
+        "n": 1,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 2.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "1s",
+        "n": 1,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 4.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "1s",
+        "n": 1,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 8.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2s",
+        "n": 2,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 0.5,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2s",
+        "n": 2,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 1.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2s",
+        "n": 2,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 2.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2s",
+        "n": 2,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 4.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2s",
+        "n": 2,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 8.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2p_z",
+        "n": 2,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 0.5,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2p_z",
+        "n": 2,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 1.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2p_z",
+        "n": 2,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 2.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2p_z",
+        "n": 2,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 4.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "2p_z",
+        "n": 2,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 8.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3s",
+        "n": 3,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 0.5,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3s",
+        "n": 3,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 1.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3s",
+        "n": 3,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 2.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3s",
+        "n": 3,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 4.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3s",
+        "n": 3,
+        "l": 0,
+        "m": 0,
+        "a0_star_kpc": 8.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3p_z",
+        "n": 3,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 0.5,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3p_z",
+        "n": 3,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 1.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3p_z",
+        "n": 3,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 2.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3p_z",
+        "n": 3,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 4.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3p_z",
+        "n": 3,
+        "l": 1,
+        "m": 0,
+        "a0_star_kpc": 8.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3d_z2",
+        "n": 3,
+        "l": 2,
+        "m": 0,
+        "a0_star_kpc": 0.5,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3d_z2",
+        "n": 3,
+        "l": 2,
+        "m": 0,
+        "a0_star_kpc": 1.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3d_z2",
+        "n": 3,
+        "l": 2,
+        "m": 0,
+        "a0_star_kpc": 2.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3d_z2",
+        "n": 3,
+        "l": 2,
+        "m": 0,
+        "a0_star_kpc": 4.0,
+        "ref_mass_msun": 100000000000.0
+      },
+      {
+        "state": "3d_z2",
+        "n": 3,
+        "l": 2,
+        "m": 0,
+        "a0_star_kpc": 8.0,
+        "ref_mass_msun": 100000000000.0
+      }
+    ],
+    "subsets_evaluated": 649,
+    "failed_subsets": 0
+  },
+  "models": {
+    "superposition": {
+      "rms_kms": 3.008705497746509,
+      "chi2": 5.216044336526089,
+      "n": 6,
+      "subset": [
+        6,
+        15,
+        16,
+        22
+      ],
+      "weights": [
+        0.4410003556903529,
+        0.4107708187400746,
+        1.7519008170402128,
+        2.7755575615628815e-17
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.4410003556903529
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.4107708187400746
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.7519008170402128
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.7755575615628815e-17
+        }
+      ],
+      "parameter_count": 4,
+      "discrete_selection": "orbital identities and scales searched"
+    },
+    "single": {
+      "rms_kms": 7.412199336886971,
+      "chi2": 33.00664278132941,
+      "n": 6,
+      "parameters": [
+        168792227326.22876,
+        0.7554104525568798
+      ],
+      "log10_parameters": [
+        11.227352444025128,
+        -0.12181701016725967
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          1.6989700043360187
+        ]
+      ],
+      "mass_convention": "total_mass",
+      "reference_radius_kpc": 13.0,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "global_converged": true,
+      "local_converged": true
+    },
+    "nfw": {
+      "rms_kms": 3.967723695863501,
+      "chi2": 8.740137597306925,
+      "n": 6,
+      "parameters": [
+        158712764584.32953,
+        10.393326937475116
+      ],
+      "log10_parameters": [
+        11.200611856594852,
+        1.0167545888765743
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ]
+      ],
+      "mass_convention": "mass_within_13_kpc",
+      "reference_radius_kpc": 13.0,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "global_converged": true,
+      "local_converged": true
+    },
+    "burkert": {
+      "rms_kms": 4.270855997130761,
+      "chi2": 9.654243466599063,
+      "n": 6,
+      "parameters": [
+        156994710478.92215,
+        4.541090652477881
+      ],
+      "log10_parameters": [
+        11.195885020253089,
+        0.657160171682501
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ]
+      ],
+      "mass_convention": "mass_within_13_kpc",
+      "reference_radius_kpc": 13.0,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "global_converged": true,
+      "local_converged": true
+    },
+    "einasto": {
+      "rms_kms": 3.8747013197813254,
+      "chi2": 8.630091698964657,
+      "n": 6,
+      "parameters": [
+        159297408033.8887,
+        19.63191388325361,
+        0.13047274458628963
+      ],
+      "log10_parameters": [
+        11.202208709349547,
+        1.2929626403243621,
+        -0.8844802018278953
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ],
+        [
+          -1.5228787452803376,
+          0.3010299956639812
+        ]
+      ],
+      "mass_convention": "mass_within_13_kpc",
+      "reference_radius_kpc": 13.0,
+      "parameter_count": 3,
+      "bound_reached": false,
+      "global_converged": true,
+      "local_converged": true
+    },
+    "baryons": {
+      "rms_kms": 93.88035536041433,
+      "chi2": 7438.448224243648,
+      "n": 6,
+      "parameter_count": 0
+    }
+  },
+  "alternative_rotation_fits": [
+    {
+      "rms_kms": 3.0063196292708936,
+      "chi2": 5.303212342924876,
+      "n": 6,
+      "subset": [
+        6,
+        16,
+        22,
+        27
+      ],
+      "weights": [
+        0.8277220380746594,
+        0.8235629301568727,
+        0.0,
+        2.767150068332875
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.8277220380746594
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.8235629301568727
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.767150068332875
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.006319492651526,
+      "chi2": 5.303212342935835,
+      "n": 6,
+      "subset": [
+        6,
+        16,
+        20,
+        27
+      ],
+      "weights": [
+        0.8277218321885832,
+        0.823565040042265,
+        5.544466059552566e-17,
+        2.7671463446089284
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.8277218321885832
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.823565040042265
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.544466059552566e-17
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.7671463446089284
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.04950146769203,
+      "chi2": 5.394771585564706,
+      "n": 6,
+      "subset": [
+        15,
+        16,
+        22,
+        25
+      ],
+      "weights": [
+        0.6036231355514445,
+        1.749784753971445,
+        0.0,
+        0.26032553835091476
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6036231355514445
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.749784753971445
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.26032553835091476
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.062124418785408,
+      "chi2": 5.45496282532054,
+      "n": 6,
+      "subset": [
+        6,
+        14,
+        16,
+        22
+      ],
+      "weights": [
+        0.7677711250830409,
+        7.715557179159771,
+        1.0117936536280105,
+        0.0
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7677711250830409
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 8.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 7.715557179159771
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.0117936536280105
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ]
+    },
+    {
+      "rms_kms": 2.9887748835159615,
+      "chi2": 5.49935498881485,
+      "n": 6,
+      "subset": [
+        6,
+        16,
+        22,
+        28
+      ],
+      "weights": [
+        0.723089028759212,
+        1.006872802821393,
+        0.764727882300942,
+        20.0
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.723089028759212
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.006872802821393
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.764727882300942
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 20.0
+        }
+      ]
+    },
+    {
+      "rms_kms": 2.9898150736636557,
+      "chi2": 5.502027052351849,
+      "n": 6,
+      "subset": [
+        8,
+        15,
+        16,
+        22
+      ],
+      "weights": [
+        3.1801962384975138,
+        0.7603227859046118,
+        1.29478456187466,
+        0.0
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 3.1801962384975138
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7603227859046118
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.29478456187466
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.031263884607703,
+      "chi2": 5.587615724346205,
+      "n": 6,
+      "subset": [
+        6,
+        18,
+        20,
+        27
+      ],
+      "weights": [
+        0.7812660157549195,
+        6.538711440186725,
+        0.0,
+        4.156951895847185
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7812660157549195
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 6.538711440186725
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.156951895847185
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.023532943910763,
+      "chi2": 5.589030092775126,
+      "n": 6,
+      "subset": [
+        6,
+        8,
+        20,
+        27
+      ],
+      "weights": [
+        0.7654838989698657,
+        1.9313311581340646,
+        0.0,
+        4.333209488582773
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7654838989698657
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.9313311581340646
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.333209488582773
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.0235342784570394,
+      "chi2": 5.589030092904841,
+      "n": 6,
+      "subset": [
+        6,
+        8,
+        22,
+        27
+      ],
+      "weights": [
+        0.7654839488424016,
+        1.9313255786855703,
+        1.6619002547229317e-15,
+        4.333214203745295
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7654839488424016
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.9313255786855703
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.6619002547229317e-15
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.333214203745295
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.125955054849353,
+      "chi2": 5.6613748590988955,
+      "n": 6,
+      "subset": [
+        6,
+        13,
+        16,
+        22
+      ],
+      "weights": [
+        0.7023031530142935,
+        1.6839611890510109,
+        1.1543707265854597,
+        0.0
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7023031530142935
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.6839611890510109
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.1543707265854597
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.0597344499753305,
+      "chi2": 5.670769275167754,
+      "n": 6,
+      "subset": [
+        6,
+        16,
+        22,
+        24
+      ],
+      "weights": [
+        0.68600452669209,
+        1.111560100294049,
+        0.9913635403796924,
+        20.0
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.68600452669209
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.111560100294049
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.9913635403796924
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 8.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 20.0
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.106125978925431,
+      "chi2": 5.721842151780076,
+      "n": 6,
+      "subset": [
+        6,
+        20,
+        25,
+        27
+      ],
+      "weights": [
+        0.4040536328993408,
+        0.0,
+        0.43321734873585466,
+        5.125270879669033
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.4040536328993408
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.43321734873585466
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.125270879669033
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.145036351110814,
+      "chi2": 5.735354828035542,
+      "n": 6,
+      "subset": [
+        6,
+        16,
+        22,
+        23
+      ],
+      "weights": [
+        0.6744327031832773,
+        1.1983842397197302,
+        0.0,
+        6.924434010085449
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6744327031832773
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.1983842397197302
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 6.924434010085449
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.179478794003385,
+      "chi2": 5.824851559751088,
+      "n": 6,
+      "subset": [
+        6,
+        16,
+        22,
+        26
+      ],
+      "weights": [
+        0.6950411160283719,
+        1.404807788279452,
+        0.0,
+        0.42635385248317487
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6950411160283719
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.404807788279452
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.42635385248317487
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.1196268967436924,
+      "chi2": 5.884560110283539,
+      "n": 6,
+      "subset": [
+        15,
+        20,
+        25,
+        27
+      ],
+      "weights": [
+        0.1545859672281739,
+        4.092753911653945e-16,
+        0.686989284017221,
+        5.176694985408598
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.1545859672281739
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.092753911653945e-16
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.686989284017221
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.176694985408598
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.020215630154709,
+      "chi2": 6.064698820776241,
+      "n": 6,
+      "subset": [
+        8,
+        15,
+        22,
+        27
+      ],
+      "weights": [
+        5.897985159107328,
+        0.6612245830565935,
+        0.0,
+        2.665863456244983
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.897985159107328
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6612245830565935
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.665863456244983
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.2263972720233625,
+      "chi2": 6.123025787032136,
+      "n": 6,
+      "subset": [
+        6,
+        7,
+        16,
+        22
+      ],
+      "weights": [
+        0.7534641188753369,
+        0.489161942629057,
+        1.274730289794359,
+        0.0
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7534641188753369
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.489161942629057
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.274730289794359
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.246173433354875,
+      "chi2": 6.131122018322498,
+      "n": 6,
+      "subset": [
+        2,
+        6,
+        20,
+        27
+      ],
+      "weights": [
+        0.1034564749523135,
+        0.7387995773251431,
+        1.0327804398053438e-16,
+        4.938936717104941
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "1s",
+          "n": 1,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.1034564749523135
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7387995773251431
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.0327804398053438e-16
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.938936717104941
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.2519871848836983,
+      "chi2": 6.146274751379516,
+      "n": 6,
+      "subset": [
+        5,
+        6,
+        20,
+        27
+      ],
+      "weights": [
+        0.09120688342126644,
+        0.7525606981181401,
+        1.0695576326786704e-16,
+        4.928651493439361
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.09120688342126644
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7525606981181401
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.0695576326786704e-16
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.928651493439361
+        }
+      ]
+    },
+    {
+      "rms_kms": 3.2617160573534987,
+      "chi2": 6.175873085132999,
+      "n": 6,
+      "subset": [
+        6,
+        10,
+        20,
+        27
+      ],
+      "weights": [
+        0.7408172541020631,
+        0.10922767385689597,
+        0.0,
+        4.904381388356237
+      ],
+      "bound_reached": true,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7408172541020631
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.10922767385689597
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.904381388356237
+        }
+      ]
+    }
+  ],
+  "uncertainty_note": "Point fits conditional on baryons and geometry. Alternative subsets are not posterior samples or confidence intervals.",
+  "numerical_audit": {
+    "superposition": {
+      "max_fitted_velocity_change_kms": 0.0028945115984413405,
+      "refined_scores": {
+        "rms_kms": 3.007933454398531,
+        "chi2": 5.214196720763306,
+        "n": 6
+      }
+    },
+    "single": {
+      "max_fitted_velocity_change_kms": 0.004357709833186618,
+      "refined_scores": {
+        "rms_kms": 7.413109229889866,
+        "chi2": 33.01447940048243,
+        "n": 6
+      }
+    },
+    "nfw": {
+      "max_fitted_velocity_change_kms": 0.0007008919672841785,
+      "refined_scores": {
+        "rms_kms": 3.9677634396183166,
+        "chi2": 8.740080948793345,
+        "n": 6
+      }
+    },
+    "burkert": {
+      "max_fitted_velocity_change_kms": 0.001296265556106846,
+      "refined_scores": {
+        "rms_kms": 4.270988636705433,
+        "chi2": 9.654211313153032,
+        "n": 6
+      }
+    },
+    "einasto": {
+      "max_fitted_velocity_change_kms": 0.0005258895974407096,
+      "refined_scores": {
+        "rms_kms": 3.874690156379102,
+        "chi2": 8.63006259095082,
+        "n": 6
+      }
+    },
+    "baryons": {
+      "max_fitted_velocity_change_kms": 0.0011394512585241046,
+      "refined_scores": {
+        "rms_kms": 93.88100457795237,
+        "chi2": 7438.539802856112,
+        "n": 6
+      }
+    }
+  }
+}

@@ -13,6 +13,12 @@ const STATES: &str = "1s,2p_z,2p_x,2p_y,3d_z2,3d_x2_y2,3d_xy,3d_xz,3d_yz";
 
 // (command, former script stem, positional arguments). Old names are aliases.
 pub const COMMANDS: &[(&str, &str, &str)] = &[
+    (
+        "swells-compare",
+        "swells-comparison",
+        "[OPTIONS; use --help]",
+    ),
+    ("swells-fit", "swells", "[OPTIONS; use --help]"),
     ("sparc-fit", "sparc", "[OPTIONS; use --help]"),
     ("readme-highlights", "highlights", "[--refit]"),
     (
@@ -139,6 +145,7 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
         .with_context(|| format!("unknown workflow '{name}'; use './run.sh do list'"))?;
     // Validate argument counts before creating outputs or launching commands.
     let maximum = match name {
+        "swells-fit" | "swells-compare" => usize::MAX,
         "signed-fit" | "m31-signed-fit" | "sparc-fit" => usize::MAX,
         "readme-highlights" => 1,
         "make-curve" | "orbital-views" => 2,
@@ -164,6 +171,8 @@ pub fn run(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
 fn run_inner(r: &mut Runner, name: &str, args: &[&str]) -> Result<()> {
     r.dirs()?;
     match name {
+        "swells-fit" => crate::swells::run(r, args)?,
+        "swells-compare" => crate::swells::compare(r, args)?,
         "sparc-fit" => crate::sparc::run(r, args)?,
         "readme-highlights" => crate::highlights::run(r, args)?,
         "signed-fit" => crate::signed::workflow(r, args)?,

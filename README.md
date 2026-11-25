@@ -242,6 +242,42 @@ The CUDA shared library `libhorb_cuda.so` is intentionally ignored by git becaus
 ./run.sh check all
 ```
 
+## Spiral-lens test: SDSS J2141−0001
+
+The SWELLS pilot fits published gas rotation measurements first and predicts
+lensing with the mass parameters fixed. The lensing figure shows separate
+rotation-selected and lensing-selected HORB candidates from both positive-only
+and signed searches. [Methods and results](docs/swells.md).
+
+![J2141 observed rotation comparison](images/swells/j2141_rotation.png)
+
+![J2141 positive and signed HORB rotation and lensing selections](images/swells/j2141_lensing.png)
+
+With fixed Chabrier baryons, the four HORB selections are:
+
+| Coefficients | Selection | Rotation RMS (km/s) | Einstein radius (arcsec) |
+|---|---|---:|---:|
+| Positive only | Best rotation χ² | 3.009 | 0.841 |
+| Positive only | Closest lensing radius | 2.990 | 0.898 |
+| Signed (+/−) | Best rotation χ² | 2.230 | 0.428 |
+| Signed (+/−) | Closest lensing radius | 2.283 | 0.843 |
+
+The published SIE summary is 0.89 (+0.05/−0.08) arcsec. NFW, Burkert and
+Einasto predict 0.902, 0.838 and 0.930 arcsec. The density map uses the
+signed candidate closest to the lensing radius. Each HORB selection is among
+21 saved rotation-fitted candidates in its family; weights are unchanged.
+The lensing-selected diamonds use the observed radius for selection and
+are not held-out lensing tests. Six rotation measurements and this radius
+summary do not identify a unique density; no image-pixel likelihood has
+yet been evaluated.
+
+```bash
+./run.sh data swells
+./run.sh do swells-fit
+./run.sh do swells-compare
+./run.sh view reports/swells/j2141_comparison/j2141_lensing.png
+```
+
 ## License
 
 This project is dual-licensed under either:

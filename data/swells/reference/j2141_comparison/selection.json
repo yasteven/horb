@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "galaxy": "SDSS J2141-0001",
+  "source": {
+    "schema_version": 1,
+    "galaxy": "SDSS J2141-0001",
+    "source": "Dutton et al. 2011, SWELLS II, Section 5.2, https://arxiv.org/abs/1101.1622",
+    "type": "published_SIE_lensing_summary",
+    "circularized_einstein_radius_arcsec": 0.89,
+    "radius_error_minus_arcsec": 0.08,
+    "radius_error_plus_arcsec": 0.05,
+    "projected_axis_ratio": 0.42,
+    "axis_ratio_error_minus": 0.12,
+    "axis_ratio_error_plus": 0.17,
+    "use_in_rotation_fit": false,
+    "interpretation": "Model-dependent summary of the observed arc under an SIE lens fit. Compare with area-equivalent tangential critical radius as a preliminary diagnostic, not an image-plane likelihood or an independent raw measurement of enclosed mass."
+  },
+  "fit_inputs_sha256": {
+    "j2141_photometry.json": "b207a41c318287a11ab76c66a301407a223a440ff8f7ea88b0cdb6b3c051138b",
+    "j2141_rotation.csv": "0022b831dcaa11e14820704988948f71f63debb9ee7bb86ec0fe5c86ac059456"
+  },
+  "pools": {
+    "positive_only": {
+      "saved_candidates": 21,
+      "subsets_evaluated_in_rotation_search": 649,
+      "candidate_scope": "Up to 20 next-best searched subsets with delta chi2 <= 1; illustrates degeneracy, not a confidence interval."
+    },
+    "signed": {
+      "saved_candidates": 21,
+      "subsets_evaluated_in_rotation_search": 636,
+      "candidate_scope": "Up to 20 next-best searched subsets with delta chi2 <= 1; illustrates degeneracy, not a confidence interval."
+    }
+  },
+  "rotation_selection_statistic": "minimum weighted rotation chi2",
+  "lensing_selection_statistic": "minimum absolute Einstein-radius error among saved rotation-fitted candidates",
+  "selection_scope": "Best within each recorded pool, not a global lensing optimization. Weights remain rotation-fitted; lens-selected rows use the observed radius for candidate selection.",
+  "density_map_selection": {
+    "family": "signed",
+    "selection": "closest_lensing"
+  },
+  "rows": [
+    {
+      "rotation_chi2": 5.216044336526089,
+      "rotation_rms_kms": 3.008705497746509,
+      "n_rotation": 6,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.4410003556903529
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.4107708187400746
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.7519008170402128
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.7755575615628815e-17
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8411486462025186,
+      "maximum_outward_crossings_per_ray": 1,
+      "family": "positive_only",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "predicted_los_kms": [
+        4.76257056468311e-15,
+        139.00170404569204,
+        192.26684180650403,
+        224.65679129128486,
+        246.11540761111053,
+        255.7983694472813,
+        258.61632492882313,
+        260.31586314288165,
+        262.9224008607414,
+        265.61542596803076
+      ],
+      "refined_einstein_radius_arcsec": 0.8411486462025186
+    },
+    {
+      "rotation_chi2": 5.502027052351849,
+      "rotation_rms_kms": 2.9898150736636557,
+      "n_rotation": 6,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 3.1801962384975138
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7603227859046118
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.29478456187466
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8979233215621477,
+      "maximum_outward_crossings_per_ray": 1,
+      "family": "positive_only",
+      "selection": "closest_lensing",
+      "selection_uses_lensing": true,
+      "predicted_los_kms": [
+        4.840993729346362e-15,
+        142.40478621523968,
+        199.60665891898736,
+        227.80415247132453,
+        245.92009024702338,
+        255.72035421888407,
+        258.85253069548025,
+        260.1363082124965,
+        262.53851818917224,
+        266.24887795975667
+      ],
+      "refined_einstein_radius_arcsec": 0.897923321564266
+    },
+    {
+      "rotation_chi2": 3.4428458254892775,
+      "rotation_rms_kms": 2.2303027663044315,
+      "n_rotation": 6,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 8.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 20.0
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": -0.5145734052382381
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": -12.472187926512472
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 16.502513937649482
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.42791241548910874,
+      "maximum_outward_crossings_per_ray": 1,
+      "family": "signed",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "predicted_los_kms": [
+        3.657681168306906e-15,
+        80.53641375314044,
+        140.2266698600111,
+        206.67788181556512,
+        244.58501593605655,
+        257.6176930270244,
+        258.5849038794247,
+        257.9921923374703,
+        261.1821977712003,
+        268.5077973071898
+      ],
+      "refined_einstein_radius_arcsec": 0.42791241548910874
+    },
+    {
+      "rotation_chi2": 3.6591616079558387,
+      "rotation_rms_kms": 2.282970335339428,
+      "n_rotation": 6,
+      "components": [
+        {
+          "state": "1s",
+          "n": 1,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.7891499787804865
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": -2.8131209146603227
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": -8.912857221722119
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 17.450925011343134
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8428780920795602,
+      "maximum_outward_crossings_per_ray": 1,
+      "family": "signed",
+      "selection": "closest_lensing",
+      "selection_uses_lensing": true,
+      "predicted_los_kms": [
+        5.072080374310168e-15,
+        164.53689773365386,
+        201.85219922976503,
+        217.0450035424533,
+        244.62225371955708,
+        257.53633567151917,
+        258.6514392993512,
+        258.0235784058317,
+        261.1225578918938,
+        268.56460725971795
+      ],
+      "refined_einstein_radius_arcsec": 0.8428780921923062
+    },
+    {
+      "family": "single",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "rotation_rms_kms": 7.412199336886971,
+      "rotation_chi2": 33.00664278132941,
+      "n_rotation": 6,
+      "effective_einstein_radius_arcsec": 0.7348789086167993
+    },
+    {
+      "family": "nfw",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "rotation_rms_kms": 3.967723695863501,
+      "rotation_chi2": 8.740137597306925,
+      "n_rotation": 6,
+      "effective_einstein_radius_arcsec": 0.9023725261886564
+    },
+    {
+      "family": "burkert",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "rotation_rms_kms": 4.270855997130761,
+      "rotation_chi2": 9.654243466599063,
+      "n_rotation": 6,
+      "effective_einstein_radius_arcsec": 0.8375091724982575
+    },
+    {
+      "family": "einasto",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "rotation_rms_kms": 3.8747013197813254,
+      "rotation_chi2": 8.630091698964657,
+      "n_rotation": 6,
+      "effective_einstein_radius_arcsec": 0.9297513129149672
+    },
+    {
+      "family": "baryons",
+      "selection": "best_rotation",
+      "selection_uses_lensing": false,
+      "rotation_rms_kms": 93.88035536041433,
+      "rotation_chi2": 7438.448224243648,
+      "n_rotation": 6,
+      "effective_einstein_radius_arcsec": 0.6296953609587248
+    }
+  ]
+}

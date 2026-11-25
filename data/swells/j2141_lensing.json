@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "galaxy": "SDSS J2141-0001",
+  "source": "Dutton et al. 2011, SWELLS II, Section 5.2, https://arxiv.org/abs/1101.1622",
+  "type": "published_SIE_lensing_summary",
+  "circularized_einstein_radius_arcsec": 0.89,
+  "radius_error_minus_arcsec": 0.08,
+  "radius_error_plus_arcsec": 0.05,
+  "projected_axis_ratio": 0.42,
+  "axis_ratio_error_minus": 0.12,
+  "axis_ratio_error_plus": 0.17,
+  "use_in_rotation_fit": false,
+  "interpretation": "Model-dependent summary of the observed arc under an SIE lens fit. Compare with area-equivalent tangential critical radius as a preliminary diagnostic, not an image-plane likelihood or an independent raw measurement of enclosed mass."
+}

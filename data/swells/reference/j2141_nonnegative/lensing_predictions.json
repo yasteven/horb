@@ -1,0 +1,967 @@
+{
+  "schema_version": 1,
+  "source": {
+    "schema_version": 1,
+    "galaxy": "SDSS J2141-0001",
+    "source": "Dutton et al. 2011, SWELLS II, Section 5.2, https://arxiv.org/abs/1101.1622",
+    "type": "published_SIE_lensing_summary",
+    "circularized_einstein_radius_arcsec": 0.89,
+    "radius_error_minus_arcsec": 0.08,
+    "radius_error_plus_arcsec": 0.05,
+    "projected_axis_ratio": 0.42,
+    "axis_ratio_error_minus": 0.12,
+    "axis_ratio_error_plus": 0.17,
+    "use_in_rotation_fit": false,
+    "interpretation": "Model-dependent summary of the observed arc under an SIE lens fit. Compare with area-equivalent tangential critical radius as a preliminary diagnostic, not an image-plane likelihood or an independent raw measurement of enclosed mass."
+  },
+  "models": {
+    "superposition": {
+      "effective_einstein_radius_arcsec": 0.8411486462025186,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.8411486462025186,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "single": {
+      "effective_einstein_radius_arcsec": 0.7348789086167993,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.7348789086167993,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "nfw": {
+      "effective_einstein_radius_arcsec": 0.9023725261886564,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.9023725261886564,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "burkert": {
+      "effective_einstein_radius_arcsec": 0.8375091724982575,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.8375091724982575,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "einasto": {
+      "effective_einstein_radius_arcsec": 0.9297513129149672,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.9297513129149672,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    },
+    "baryons": {
+      "effective_einstein_radius_arcsec": 0.6296953609587248,
+      "closed_star_shaped_outer_curve": true,
+      "maximum_outward_crossings_per_ray": 1,
+      "outer_radial_envelope_arcsec": 0.6296953609587248,
+      "topology_note": "single tangential branch",
+      "area_definition": "sqrt(mean(r_critical(phi)^2)); outer tangential root on every ray"
+    }
+  },
+  "fit_inputs_sha256": {
+    "j2141_photometry.json": "b207a41c318287a11ab76c66a301407a223a440ff8f7ea88b0cdb6b3c051138b",
+    "j2141_rotation.csv": "0022b831dcaa11e14820704988948f71f63debb9ee7bb86ec0fe5c86ac059456"
+  },
+  "lensing_used_in_fit": false,
+  "gravity_assumption": "GR weak-field thin lens; fitted signed density sources both metric potentials equally",
+  "comparison_scope": "Published SIE summary only. No observed-image pixel likelihood, PSF/dust/source reconstruction, or model evidence computed.",
+  "external_shear": 0.0,
+  "external_convergence": 0.0,
+  "distances": {
+    "Dd_kpc": 502819.16959537566,
+    "Ds_kpc": 1484472.9262930376,
+    "Dds_kpc": 1150375.7609987436,
+    "kpc_per_arcsec": 2.4377361254397414,
+    "sigma_critical_msun_kpc2": 4267690631.2150607
+  },
+  "conditional_on_fixed_baryons_and_geometry": true,
+  "alternative_rotation_fits": [
+    {
+      "chi2": 5.303212342924876,
+      "rms_kms": 3.0063196292708936,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.8277220380746594
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.8235629301568727
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.767150068332875
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8202379558914547,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.303212342935835,
+      "rms_kms": 3.006319492651526,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.8277218321885832
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.823565040042265
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.544466059552566e-17
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.7671463446089284
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8202379968491387,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.394771585564706,
+      "rms_kms": 3.04950146769203,
+      "components": [
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6036231355514445
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.749784753971445
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.26032553835091476
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8405148216698675,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.45496282532054,
+      "rms_kms": 3.062124418785408,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7677711250830409
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 8.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 7.715557179159771
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.0117936536280105
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.7887338086058914,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.49935498881485,
+      "rms_kms": 2.9887748835159615,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.723089028759212
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.006872802821393
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.764727882300942
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 20.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8326471470357271,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.502027052351849,
+      "rms_kms": 2.9898150736636557,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 3.1801962384975138
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7603227859046118
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.29478456187466
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8979233215621477,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.587615724346205,
+      "rms_kms": 3.031263884607703,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7812660157549195
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 6.538711440186725
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.156951895847185
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.841595324588915,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.589030092775126,
+      "rms_kms": 3.023532943910763,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7654838989698657
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.9313311581340646
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.333209488582773
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8404731174862441,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.589030092904841,
+      "rms_kms": 3.0235342784570394,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7654839488424016
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.9313255786855703
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.6619002547229317e-15
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.333214203745295
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8404729942226311,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.6613748590988955,
+      "rms_kms": 3.125955054849353,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7023031530142935
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.6839611890510109
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.1543707265854597
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.7868488147817069,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.670769275167754,
+      "rms_kms": 3.0597344499753305,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.68600452669209
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.111560100294049
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.9913635403796924
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 8.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 20.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.7827127494193433,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.721842151780076,
+      "rms_kms": 3.106125978925431,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.4040536328993408
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.43321734873585466
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.125270879669033
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8053486536358763,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.735354828035542,
+      "rms_kms": 3.145036351110814,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6744327031832773
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.1983842397197302
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 6.924434010085449
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.7841501424065712,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.824851559751088,
+      "rms_kms": 3.179478794003385,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6950411160283719
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.404807788279452
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.42635385248317487
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8193461128723076,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 5.884560110283539,
+      "rms_kms": 3.1196268967436924,
+      "components": [
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.1545859672281739
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.092753911653945e-16
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.686989284017221
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.176694985408598
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8134510526596361,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 6.064698820776241,
+      "rms_kms": 3.020215630154709,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 4.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 5.897985159107328
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.6612245830565935
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 2.665863456244983
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.9290323742740858,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 6.123025787032136,
+      "rms_kms": 3.2263972720233625,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7534641188753369
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.489161942629057
+        },
+        {
+          "state": "3s",
+          "n": 3,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.274730289794359
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8428760302420271,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 6.131122018322498,
+      "rms_kms": 3.246173433354875,
+      "components": [
+        {
+          "state": "1s",
+          "n": 1,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.1034564749523135
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7387995773251431
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.0327804398053438e-16
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.938936717104941
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.848203931707039,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 6.146274751379516,
+      "rms_kms": 3.2519871848836983,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.09120688342126644
+        },
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7525606981181401
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 1.0695576326786704e-16
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.928651493439361
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8325272347118554,
+      "maximum_outward_crossings_per_ray": 1
+    },
+    {
+      "chi2": 6.175873085132999,
+      "rms_kms": 3.2617160573534987,
+      "components": [
+        {
+          "state": "2s",
+          "n": 2,
+          "l": 0,
+          "m": 0,
+          "a0_star_kpc": 1.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.7408172541020631
+        },
+        {
+          "state": "2p_z",
+          "n": 2,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.10922767385689597
+        },
+        {
+          "state": "3p_z",
+          "n": 3,
+          "l": 1,
+          "m": 0,
+          "a0_star_kpc": 0.5,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 0.0
+        },
+        {
+          "state": "3d_z2",
+          "n": 3,
+          "l": 2,
+          "m": 0,
+          "a0_star_kpc": 2.0,
+          "ref_mass_msun": 100000000000.0,
+          "weight": 4.904381388356237
+        }
+      ],
+      "effective_einstein_radius_arcsec": 0.8474532934026698,
+      "maximum_outward_crossings_per_ray": 1
+    }
+  ],
+  "alternatives_note": "Up to 20 next-best searched subsets with delta chi2 <= 1; illustrates degeneracy, not a confidence interval."
+}

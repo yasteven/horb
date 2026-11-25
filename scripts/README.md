@@ -1,5 +1,18 @@
 # HORB plotting and analysis programs
 
+## SWELLS spiral-lens comparison
+
+`fit_swells.py` fits J2141's tabulated observed rotation velocities using a
+slit/PSF observation model, then predicts lensing with the mass parameters
+fixed. `horb_swells/` implements photometric baryons, signed force fitting and
+non-spherical thin-lens projection. Run `./run.sh do swells-fit`; use
+`./run.sh do swells-fit --help` for controls. See [methods](../docs/swells.md).
+`compare_swells.py`, via `./run.sh do swells-compare`, draws four explicitly
+labeled positive-only/signed selections. It ranks the saved candidates by
+rotation χ² and by lensing-radius error separately, reconstructs their scores,
+and uses the signed closest-lensing candidate for the density map.
+
+
 Build/run/scan orchestration now lives in the Rust `tool/` crate. `run.sh` is
 the only shell entry point. See [the tool guide](../tool/README.md) for every
 workflow, the source dump command, dependencies and the shell migration table.

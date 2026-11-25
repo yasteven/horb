@@ -1,6 +1,46 @@
 use std::process::Command;
 
 #[test]
+fn swells_routes_rotation_fit_and_lensing_without_cuda() {
+    let output = tool(&[
+        "--dry-run",
+        "do",
+        "swells-fit",
+        "--max-components",
+        "3",
+        "--no-plots",
+    ]);
+    assert!(output.status.success());
+    let plan = String::from_utf8_lossy(&output.stderr);
+    assert!(plan.contains("fit_swells.py --max-components 3 --no-plots"));
+    assert!(!plan.contains("nvcc"));
+    let data = tool(&["--dry-run", "data", "swells"]);
+    assert!(data.status.success());
+    assert!(String::from_utf8_lossy(&data.stderr).contains("--validate-only"));
+    assert!(!tool(&["--dry-run", "do", "swells-fit", "--buget", "100"])
+        .status
+        .success());
+    assert!(!tool(&["--dry-run", "do", "swells-fit", "--budget"])
+        .status
+        .success());
+    let comparison = tool(&[
+        "--dry-run",
+        "do",
+        "swells-compare",
+        "--positive-dir",
+        "a directory",
+        "--no-plots",
+    ]);
+    assert!(comparison.status.success());
+    assert!(String::from_utf8_lossy(&comparison.stderr).contains("compare_swells.py"));
+    assert!(
+        !tool(&["--dry-run", "do", "swells-compare", "--positive-dir"])
+            .status
+            .success()
+    );
+}
+
+#[test]
 fn sparc_builds_once_and_forwards_batch_options_without_cuda() {
     let output = tool(&[
         "--dry-run",
@@ -157,7 +197,7 @@ fn every_workflow_and_legacy_alias_builds_a_dry_run_plan() {
         );
         count += 1;
     }
-    assert_eq!(count, 37);
+    assert_eq!(count, 39);
     let alias = tool(&["--dry-run", "do", "scan_cuda_mw_basis.sh"]);
     assert!(alias.status.success());
     assert!(String::from_utf8_lossy(&alias.stderr).contains("--bin scan_horb_cuda_mw_basis"));

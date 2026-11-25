@@ -1,5 +1,19 @@
 # HORB project operations
 
+## SWELLS spiral lenses
+
+`data swells` validates the bundled J2141 measurements. `do swells-fit`
+fits its rotation curve, freezes the parameters, and predicts lensing.
+Use `--predict-only` to reuse a saved fit, `--nonnegative` for a positive
+coefficient control, and `--stellar-mass-offset-dex .24` for the Salpeter
+sensitivity case. Put independent runs in separate `--out-dir` directories.
+Default output is `reports/swells/j2141/`; open its PNGs with `view PATH`.
+`do swells-compare` draws the positive-only and signed best-rotation and
+closest-lensing selections with their rotation RMS values. Its defaults use
+the bundled reference fits; `--signed-dir` and `--positive-dir` select matching
+fresh runs. Output is `reports/swells/j2141_comparison/`.
+See [methods and all options](../docs/swells.md).
+
 Run `./run.sh` from the repository root for the menu. The launcher also works
 when invoked by absolute path from another directory. All relative data and
 output paths are interpreted from the repository root.
