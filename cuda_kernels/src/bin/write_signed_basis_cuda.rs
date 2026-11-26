@@ -18,9 +18,22 @@ fn main() -> Result<()> {
         &std::env::args().skip(1).collect::<Vec<_>>(),
         "cuda_quadrature",
         |cfg, radii, options| {
-            let cells = mass_cells(cfg, options.nr, options.nmu, options.nphi)?;
+            let field = if options.signed_lobes {
+                Some(orbital_basis::signed_lobe::SignedLobe::new(
+                    cfg.clone(),
+                    options.nr,
+                )?)
+            } else {
+                None
+            };
+            let cells = if let Some(field) = &field {
+                field.mass_cells(options.nmu, options.nphi)?
+            } else {
+                mass_cells(cfg, options.nr, options.nmu, options.nphi)?
+            };
+            let expected_fraction = field.as_ref().map(|f| f.net_mass_fraction).unwrap_or(1.0);
             let mass: f64 = cells.iter().map(|c| c.m).sum();
-            if (mass / cfg.dm_mass - 1.0).abs() > 1e-4 {
+            if (mass / cfg.dm_mass - expected_fraction).abs() > 1e-4 {
                 bail!("quadrature mass differs from analytic normalization by more than 1e-4; increase --n-radial/--n-mu");
             }
             let mut out = vec![f64::NAN; radii.len()];

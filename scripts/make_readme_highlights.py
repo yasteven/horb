@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render an audited six-model comparison and its matching signed-density map."""
+"""Render an audited seven-model comparison and its matching signed-density map."""
 import argparse
 import copy
 import csv
@@ -19,6 +19,10 @@ from horb_qi import velocity as qi_velocity, metadata as qi_metadata
 
 ROOT = Path(__file__).resolve().parents[1]
 GALAXIES = {
+    "agc114905": {"title":"AGC 114905", "source":"Mancera Piña et al. (2024), Fig. 7 · digitized", "number":"04",
+        "rc":"data/agc114905/rotation_curve.csv", "baryons":"data/agc114905/baryons.csv",
+        "note":"Figure 7 scenario held fixed: D = 80.27 Mpc, i = 35.86° · five points, digitized baryons and errors",
+        "sources":["https://arxiv.org/abs/2404.06537", "data/agc114905/README.md"]},
     "mw": {"title": "Milky Way", "source": "Sofue (2020)", "number": "01",
            "rc": "data/milky_way/sofue_2020_standard_rc.csv",
            "baryons": "data/milky_way/sofue_literature_baryons.csv",
@@ -30,8 +34,8 @@ GALAXIES = {
             "sources": ["https://arxiv.org/abs/0912.4133", "https://arxiv.org/abs/astro-ph/0501240"]},
 }
 BG, PANEL, INK, MUTED, GRID = "#0b1220", "#101b2d", "#f0f5fc", "#9cacc2", "#263448"
-COLORS = dict(zip(MODELS, ["#5de4d0", "#c3a2ff", "#ffb65e", "#75a8ff", "#f487b4", "#a4b0c1"]))
-STYLES = dict(zip(MODELS, ["-", (0, (7, 2, 1, 2)), (0, (5, 2)), (0, (6, 2, 1, 2)), (0, (1, 1.5)), (0, (4, 3))]))
+COLORS = dict(zip(MODELS, ["#5de4d0", "#ffe27a", "#c3a2ff", "#ffb65e", "#75a8ff", "#f487b4", "#a4b0c1"]))
+STYLES = dict(zip(MODELS, ["-", "-", (0, (7, 2, 1, 2)), (0, (5, 2)), (0, (6, 2, 1, 2)), (0, (1, 1.5)), (0, (4, 3))]))
 
 
 def style():
@@ -72,7 +76,7 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
     # Draw the selected superposition last so its path stays visible at overlaps.
     for name in reversed(MODELS):
         ax.plot(r, curves[name], color=COLORS[name], ls=STYLES[name],
-                lw=3 if name == "superposition" else 1.8, zorder=3 if name == "superposition" else 2)
+                lw=2.8 if name in ("superposition", "psi") else 1.8, zorder=3 if name == "superposition" else 2)
     ax.errorbar(obs["R_kpc"], obs["Vobs_kms"], yerr=obs["eV_kms"], fmt="o", ms=4,
                 mfc=INK, mec=BG, mew=.7, ecolor="#b9c4d3", elinewidth=.8, capsize=2, zorder=5)
     ax.grid(axis="y")
@@ -84,27 +88,29 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
     fig.text(.755, .777, "MODEL", color=MUTED, size=9, weight="bold")
     fig.text(.951, .777, "RMS · km/s", color=MUTED, size=9, ha="right")
     for i, name in enumerate(MODELS):
-        y = .727 - i*.077
+        y = .727 - i*.069
         fig.add_artist(plt.Line2D([.755, .78], [y, y], transform=fig.transFigure,
                                  color=COLORS[name], ls=STYLES[name], lw=2.5))
         fig.text(.79, y, LABELS[name], color=COLORS[name], size=10, va="center")
-        fig.text(.951, y-.025, f"{scores[name]['rms_kms']:.2f}", ha="right", size=12, weight="bold")
-        description = {"superposition": f"{report['k']} signed-weight terms", "qi": "fixed prediction · 0 fitted",
+        fig.text(.951, y-.025, "<0.1" if galaxy == "agc114905" and scores[name]["rms_kms"] < .1 else f"{scores[name]['rms_kms']:.2f}", ha="right", size=12, weight="bold")
+        description = {"superposition": f"{report['k']} density terms", "psi": f"{scores['psi']['k']} signed-lobe terms", "qi": "fixed prediction · 0 fitted",
                        "nfw": "fitted mass + scale", "burkert": "fitted mass + scale",
-                       "einasto": "fitted mass + scale + shape", "baryons": "fixed literature model"}[name]
+                       "einasto": "fitted mass + scale + shape", "baryons": "all HORB coefficients = 0" if galaxy == "agc114905" else "fixed literature model"}[name]
         if name == "einasto" and scores[name]["bound_reached"]:
             description = f"α = {scores[name]['parameters'][2]:g} (parameter bound)"
         fig.text(.79, y-.026, description, color=MUTED, size=8)
-    fig.text(.755, .255, "●  Observations with published errors", size=9, color=MUTED)
+    fig.text(.755, .235, "●  Observations with published errors", size=9, color=MUTED)
     fig.text(.07, .080, g["note"], color=MUTED, size=9)
-    fig.text(.07, .049, "HORB/halos fitted to these data; QI predicted from fixed baryons. Superposition: weighted χ², documented ≤4-term dictionary.", color=MUTED, size=8.7)
+    footer = ("Five digitized points and up to four weights: residuals below 0.1 km/s are below extraction precision. Fits are in-sample."
+              if galaxy == "agc114905" else "HORB/halos fitted to these data; QI predicted from fixed baryons. Superposition: weighted χ², documented ≤4-term dictionary.")
+    fig.text(.07, .049, footer, color=MUTED, size=8.7)
     save(fig, output)
 
 
 def density_figure(galaxy, x, z, rho, report, output):
     style()
     fig = plt.figure(figsize=(14, 8.2))
-    header(fig, galaxy, "Fitted dark density", "The exact superposition from the rotation plot above  ·  x–z slice through y = 0")
+    header(fig, galaxy, "Fitted dark density", f"{LABELS['psi'] if report.get('density_model') == 'psi' else LABELS['superposition']} from the rotation plot  ·  x–z slice through y = 0")
     # Signed log color: negative cyan, zero dark, positive amber. No abs(rho).
     cmap = LinearSegmentedColormap.from_list("horb_signed", ["#66e4f0", "#146d94", PANEL, "#b94f31", "#ffde83"])
     limit = 10**np.ceil(np.log10(max(float(np.max(np.abs(rho))), 1e-20)))
@@ -128,7 +134,9 @@ def density_figure(galaxy, x, z, rho, report, output):
     inset.set_ylabel("z [kpc]", fontsize=9)
     inset.tick_params(labelsize=9)
     inset.title.set_fontsize(10)
-    fig.text(.635, .365, r"$\rho_{\rm DM}=\sum_i w_i\,M_{\rm ref}\,|R_{n\ell}Y_{\ell m}|^2$", size=17)
+    equation = (r"$\rho_{\rm DM}=\sum_i w_i M_{\rm ref}\,\psi_i / \int |\psi_i|\,dV$"
+                if report.get("density_model") == "psi" else r"$\rho_{\rm DM}=\sum_i w_i\,M_{\rm ref}\,|R_{n\ell}Y_{\ell m}|^2$")
+    fig.text(.635, .365, equation, size=16)
     fig.text(.635, .315, "ORBITAL", color=MUTED, size=9, weight="bold")
     fig.text(.79, .315, "a₀ · kpc", color=MUTED, size=9, ha="right")
     fig.text(.945, .315, "SIGNED WEIGHT", color=MUTED, size=9, ha="right")
@@ -137,7 +145,7 @@ def density_figure(galaxy, x, z, rho, report, output):
         fig.text(.635, y, term["state"].replace("_", " "), size=11)
         fig.text(.79, y, f"{term['a0_star_kpc']:g}", size=11, ha="right")
         fig.text(.945, y, f"{term['weight']:+.6f}", size=11, ha="right", color="#ffde83" if term["weight"] >= 0 else "#66e4f0")
-    fig.text(.635, .100, r"$M_{\rm ref}=10^{11}\,M_\odot$" + "  ·  amber + / cyan −\nWeights are not normalized probabilities.", size=10, color=MUTED, linespacing=1.7)
+    fig.text(.635, .100, f"Mref = {report['components'][0]['ref_mass_msun']:.3g} M☉" + "  ·  amber + / cyan −\nWeights are not normalized probabilities." if report["components"] else "Zero orbital coefficients · zero dark density", size=10, color=MUTED, linespacing=1.7)
     fig.text(.07, .027, "Fitted model density; rotation data constrain disk-plane force and do not uniquely determine a 3D mass distribution.", color=MUTED, size=9)
     save(fig, output)
 
@@ -167,14 +175,14 @@ def update_readme_scores():
     fits = [json.loads((ROOT/f"data/highlights/{n}_fit.json").read_text()) for n in ("mw", "m31")]
     columns = [f"{d['galaxy']} · {d['fit_range_kpc'][0]:g}–{d['fit_range_kpc'][1]:g} kpc" for d in records]
     lines = ["| In-sample RMS (km/s) | " + " | ".join(columns) + " |", "|---|---:|---:|"]
-    labels = [f"HORB superposition · {fits[0]['k']}/{fits[1]['k']} terms (MW/M31)",
-              "QI · fixed prediction", "NFW · fitted mass + scale", "Burkert · fitted mass + scale",
+    labels = [f"HORB squared density · {fits[0]['k']}/{fits[1]['k']} terms (MW/M31)",
+              "HORB signed ψ · lobe signs retained", "QI · fixed prediction", "NFW · fitted mass + scale", "Burkert · fitted mass + scale",
               "Einasto · fitted mass + scale + shape", "Baryons alone · fixed"]
     if fits[0]["k"] == fits[1]["k"]:
-        labels[0] = f"HORB superposition · {fits[0]['k']} terms"
+        labels[0] = f"HORB squared density · {fits[0]['k']} terms"
     for name, label in zip(MODELS, labels):
         values = [f"{d['scores'][name]['rms_kms']:.2f}" for d in records]
-        if name == "superposition": values = [f"**{v}**" for v in values]
+        if name in ("superposition", "psi"): values = [f"**{v}**" for v in values]
         lines.append("| " + " | ".join([label, *values]) + " |")
     before, rest = text.split(start)
     _, after = rest.split(end)
@@ -192,7 +200,8 @@ def prepare(galaxy, report, basis_path):
     for term in report["components"]:
         index = lookup[term["basis_id"]]
         for key, value in basis.metadata[index].items():
-            if term[key] != value:
+            same = np.isclose(term[key], value, rtol=1e-11, atol=1e-12) if isinstance(value, (float, int)) else term[key] == value
+            if not same:
                 raise ValueError(f"selected component {term['basis_id']} has changed {key}")
         indices.append(index)
         weights.append(term["weight"])
@@ -229,6 +238,17 @@ def prepare(galaxy, report, basis_path):
     return r, curves, obs, predictions, scores, snapshot
 
 
+def portable_paths(value):
+    """Relocate recorded paths without changing the recorded input hashes."""
+    if isinstance(value, dict):
+        return {k: portable_paths(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [portable_paths(v) for v in value]
+    if isinstance(value, str) and value.startswith(str(ROOT) + "/"):
+        return str(Path(value).relative_to(ROOT))
+    return value
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--galaxy", choices=GALAXIES, required=True)
@@ -236,17 +256,31 @@ def main():
     p.add_argument("--weights", type=Path, required=True)
     p.add_argument("--basis-csv", type=Path, required=True)
     p.add_argument("--density-csv", type=Path, required=True)
+    p.add_argument("--psi-fit-report", type=Path, required=True)
+    p.add_argument("--psi-weights", type=Path, required=True)
+    p.add_argument("--psi-basis-csv", type=Path, required=True)
+    p.add_argument("--psi-density-csv", type=Path, required=True)
     args = p.parse_args()
     report = json.loads(args.fit_report.read_text())
     validate_weights(args.weights, report["components"])
     r, curves, obs, predictions, scores, snapshot = prepare(args.galaxy, report, args.basis_csv)
     x, z, rho = load_density(args.density_csv, report["components"])
+    psi = json.loads(args.psi_fit_report.read_text())
+    if psi.get("density_model") != "psi":
+        raise ValueError("signed-psi comparison requires a signed-lobe fit")
+    validate_weights(args.psi_weights, psi["components"])
+    rp, cp, op, pp, sp, psnapshot = prepare(args.galaxy, psi, args.psi_basis_csv)
+    if not np.array_equal(r, rp) or not np.array_equal(obs, op):
+        raise ValueError("HORB comparisons must use identical observations/range")
+    curves["psi"], predictions["psi"], scores["psi"] = cp["superposition"], pp["superposition"], {**sp["superposition"], "k":psi["k"]}
+    xp, zp, rhop = load_density(args.psi_density_csv, psi["components"])
     name = args.galaxy
+    density_figure(name, xp, zp, rhop, psi, ROOT/f"images/{name}_psi_density_highlight.png")
     rotation_figure(name, r, curves, obs, predictions, scores, report, ROOT/f"images/{name}_rotation_highlight.png")
     density_figure(name, x, z, rho, report, ROOT/f"images/{name}_density_highlight.png")
     record = ROOT/"data/highlights"
     record.mkdir(parents=True, exist_ok=True)
-    portable = copy.deepcopy(report)
+    portable = portable_paths(report)
     portable["fitted_observations_columns"] = ["R_kpc", "Vobs_kms", "eV_kms", "v2_baryons_kms2", "v2_dark_signed_kms2"]
     portable["fitted_observations"] = snapshot.tolist()
     for item in portable["inputs"].values():
@@ -254,6 +288,17 @@ def main():
     portable["config"]["basis_csv"] = f"reports/{name}_showcase_basis.csv"
     portable["inputs"]["basis"]["path"] = portable["config"]["basis_csv"]
     atomic_write(record/f"{name}_fit.json", lambda f: json.dump(portable, f, indent=2, allow_nan=False))
+    pportable = portable_paths(psi)
+    pportable["fitted_observations_columns"] = portable["fitted_observations_columns"]
+    pportable["fitted_observations"] = psnapshot.tolist()
+    for key,value in pportable["config"].items():
+        if isinstance(value,str) and Path(value).is_absolute() and Path(value).is_relative_to(ROOT):
+            pportable["config"][key]=str(Path(value).relative_to(ROOT))
+    for item in pportable["inputs"].values():
+        item["path"] = str(Path(item["path"]).relative_to(ROOT)) if Path(item["path"]).is_relative_to(ROOT) else item["path"]
+    atomic_write(record/f"{name}_psi_fit.json", lambda f: json.dump(pportable, f, indent=2, allow_nan=False))
+    psi_fields = ["basis_id","state","n","l","m","a0_star_kpc","ref_mass_msun","weight","signed_mass_msun","density_model","amplitude_mass_msun","absolute_component_mass_msun","net_mass_fraction"]
+    write_csv(record/f"{name}_psi_weights.csv", psi_fields, [[t[k] for k in psi_fields] for t in psi["components"]])
     weight_fields = ["basis_id", "state", "n", "l", "m", "a0_star_kpc", "ref_mass_msun", "weight", "signed_mass_msun"]
     write_csv(record/f"{name}_weights.csv", weight_fields, [[t[k] for k in weight_fields] for t in report["components"]])
     comparison = {"galaxy": GALAXIES[name]["title"], "sources": GALAXIES[name]["sources"], "scores": scores,

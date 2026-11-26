@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--baryons-csv", required=True, type=Path)
     parser.add_argument("-o", "--out", required=True, type=Path)
     parser.add_argument("--title", default="Total model comparison")
+    parser.add_argument("--fit-report", type=Path, action="append", default=[])
     args = parser.parse_args()
 
     dm = np.genfromtxt(args.dm_compare_csv, delimiter=",", names=True)
@@ -54,6 +55,10 @@ def main():
                 linewidth=2.0, label=einasto_label(dm) + " + same baryons")
     ax.plot(r, v_baryon, linestyle=":", linewidth=1.8, label="literature baryons only")
 
+    from horb_recorded import recorded_curve
+    for report_path in args.fit_report:
+        name,rr,v,report=recorded_curve(report_path,args.rc_csv,args.baryons_csv)
+        ax.plot(rr,v,lw=2.5,label=f"{name} · RMS {report['rms_kms']:.2f} km/s")
     ax.set_xlabel("R [kpc]")
     ax.set_ylabel("v [km/s]")
     ax.set_title(args.title)

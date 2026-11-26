@@ -175,3 +175,17 @@ The compact [reference summary](../data/sparc/reference_summary.csv) and
 [run settings](../data/sparc/reference_run.json) are committed. Large generated
 force libraries, density grids and per-galaxy PNGs remain under the ignored
 run directories and can be reproduced with the command above.
+
+
+## Signed wavefunction lobes (2026-11-26)
+
+The current comparisons also include a separate real-ψ gravitational source,
+with intrinsic positive/negative lobes and absolute-mass normalization. See
+[the complete model notes](signed_lobes.md).
+`do signed-fit`, `do m31-signed-fit` and `do sparc-fit` now compare both definitions
+by default; `--density-model squared` or `psi` selects one. SWELLS fits and projects
+both families. `do agc114905-fit` handles the separate 2024 digitized galaxy dataset.
+`do readme-highlights` regenerates all four galaxies' comparison figures.
+`data agn --fits-dir reports/sparc/NAME --density-model psi --out-dir reports/agn_psi`
+exports activity and ψ weights with absolute-strength concentration, not net-mass
+concentration. `--max-components 0` explicitly selects zero orbital coefficients.

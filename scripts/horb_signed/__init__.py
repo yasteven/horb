@@ -28,12 +28,22 @@ def load_basis(path):
         raise ValueError("signed basis schema required (v2_signed_kms2); old speed-only libraries lost force signs and must be regenerated")
     if len(data) < 2:
         raise ValueError("empty or undersampled signed basis")
+    # Schema 1 files historically omitted these columns. When present, they
+    # must agree with that convention, never silently turn psi into psi².
+    squared_rows = data["schema_version"] == 1
+    if "density_model" in data.dtype.names and np.any(data["density_model"][squared_rows] != "squared"):
+        raise ValueError("schema 1 requires squared density")
+    if "net_mass_fraction" in data.dtype.names and np.any(data["net_mass_fraction"][squared_rows] != 1):
+        raise ValueError("schema 1 requires unit net mass fraction")
+    extra = {"density_model", "net_mass_fraction"} if np.any(data["schema_version"] == 2) else set()
+    if not extra.issubset(data.dtype.names):
+        raise ValueError("schema 2 requires density_model and net_mass_fraction")
     metadata, curves, radii = [], [], None
     for bid in sorted(set(data["basis_id"])):
         rows = data[data["basis_id"] == bid]
         rows = np.sort(rows, order="r_kpc")
         meta = {}
-        for key in sorted(required - {"r_kpc", "v2_signed_kms2"}):
+        for key in sorted((required | extra) - {"r_kpc", "v2_signed_kms2"}):
             if not np.all(rows[key] == rows[key][0]):
                 raise ValueError(f"inconsistent metadata {key} for basis {bid}")
             meta[key] = rows[key][0].item()
@@ -41,8 +51,17 @@ def load_basis(path):
             if not np.isfinite(meta[key]) or int(meta[key]) != meta[key]:
                 raise ValueError(f"{key} must be an integer")
             meta[key] = int(meta[key])
-        if meta["schema_version"] != 1 or meta["geometry"] != "azimuthal_mean" or meta["normalization"] != "analytic_full_space":
+        squared = meta["schema_version"] == 1 and meta["normalization"] == "analytic_full_space"
+        lobes = (meta["schema_version"] == 2 and meta.get("density_model") == "psi"
+                 and meta["normalization"] == "absolute_mass_full_space")
+        if meta["geometry"] != "azimuthal_mean" or not (squared or lobes):
             raise ValueError("unsupported signed basis convention")
+        if lobes:
+            from horb_lobes import net_mass_fraction
+            if meta["m"] != 0 or meta["l"] % 2:
+                raise ValueError("psi rotation basis must exclude zero-response odd-l/nonaxisymmetric modes")
+            if not np.isclose(meta["net_mass_fraction"], net_mass_fraction(meta["n"], meta["l"]), rtol=1e-9, atol=1e-10):
+                raise ValueError("psi basis has incorrect net/absolute mass normalization")
         for key in ("a0_star_kpc", "ref_mass_msun"):
             if not np.isfinite(meta[key]) or meta[key] <= 0:
                 raise ValueError(f"invalid {key}")
@@ -63,7 +82,7 @@ def load_basis(path):
         if radii is not None and not np.array_equal(rr, radii):
             raise ValueError("all basis curves must share the same radius grid")
         if metadata:
-            for key in ("gravity_backend", "geometry", "normalization", "softening_kpc", "n_radial", "n_mu", "n_phi"):
+            for key in ("schema_version", "gravity_backend", "geometry", "normalization", "softening_kpc", "n_radial", "n_mu", "n_phi"):
                 if meta[key] != metadata[0][key]:
                     raise ValueError(f"basis mixes {key} conventions")
         radii = rr

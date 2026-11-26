@@ -1,4 +1,4 @@
-//! Rebuild the README figures from recorded fits, optionally repeating MW/M31 searches.
+//! Rebuild the README figures, optionally repeating MW/M31/AGC searches.
 use crate::runner::{python, strings, Runner};
 use anyhow::{bail, Result};
 
@@ -6,11 +6,11 @@ pub fn run(r: &mut Runner, args: &[&str]) -> Result<()> {
     if args == ["--help"] {
         println!(
             "./run.sh [--release] do readme-highlights [--refit]\n\
-Default: rebuild MW/M31 six-model comparisons and matching densities,\n\
+Default: rebuild MW/M31/AGC 114905 seven-model comparisons and both density maps,\n\
 plus J2141 rotation and lensing comparisons, from recorded fits.\n\
 Inputs and scores are checked against the recorded selected weights.\n\
---refit: repeat all 31,931 subsets per MW/M31 galaxy (up to four signed terms).\n\
-NFW, Burkert and Einasto are refitted for MW/M31; QI has no fitted parameters.\n\
+--refit: repeat all 31,931 squared-density and 6,196 signed-psi subsets per galaxy (up to four signed terms).\n\
+NFW, Burkert and Einasto are refitted for MW/M31/AGC; QI has no fitted parameters.\n\
 J2141 keeps its recorded fits. The single orbital is omitted from these plots.\n\
 Outputs: images/*_highlight.png, images/swells/*.png, plots/*.pdf, data/highlights/*.\n\
 CPU only; --refit can take several minutes. No Git operations are performed."
@@ -128,6 +128,94 @@ CPU only; --refit can take several minutes. No Git operations are performed."
             ],
             None,
         )?;
+        let psi_basis = format!("reports/{name}_psi_showcase_basis.csv");
+        crate::signed::basis(
+            r,
+            &[
+                "signed",
+                "cpu",
+                "--density-model",
+                "psi",
+                "--out",
+                &psi_basis,
+                "--rc-csv",
+                rc,
+                "--scales",
+                "0.5,1,2,4,8",
+                "--r-min",
+                "0.5",
+                "--r-max",
+                basis_maximum,
+                "--r-step",
+                "0.5",
+                "--n-radial",
+                "128",
+                "--ref-mass",
+                "1e11",
+            ],
+        )?;
+        let psi_prefix = format!("reports/{name}_psi_showcase");
+        let (psi_report, psi_weights) = if args == ["--refit"]
+            || !r
+                .root
+                .join(format!("data/highlights/{name}_psi_fit.json"))
+                .exists()
+        {
+            crate::signed::fit(
+                r,
+                &[
+                    "signed",
+                    "--basis-csv",
+                    &psi_basis,
+                    "--rc-csv",
+                    rc,
+                    "--baryons-csv",
+                    baryons,
+                    "--out-prefix",
+                    &psi_prefix,
+                    "--r-min",
+                    minimum,
+                    "--r-max",
+                    maximum,
+                    "--max-components",
+                    "4",
+                    "--search",
+                    "exhaustive",
+                    "--budget",
+                    "40000",
+                    "--criterion",
+                    "chi2",
+                    "--ridge",
+                    "0",
+                    "--max-abs-weight",
+                    "20",
+                ],
+            )?;
+            (
+                format!("{psi_prefix}.json"),
+                format!("{psi_prefix}_weights.csv"),
+            )
+        } else {
+            (
+                format!("data/highlights/{name}_psi_fit.json"),
+                format!("data/highlights/{name}_psi_weights.csv"),
+            )
+        };
+        let psi_density = format!("curves/{name}_psi_showcase_density_xz.csv");
+        r.curve(
+            &[
+                "signed_density",
+                "--weights",
+                &psi_weights,
+                "--out",
+                &psi_density,
+                "--extent",
+                "40",
+                "--bins",
+                "401",
+            ],
+            None,
+        )?;
         r.python(
             "make_readme_highlights",
             &[
@@ -141,10 +229,19 @@ CPU only; --refit can take several minutes. No Git operations are performed."
                 &basis,
                 "--density-csv",
                 &density,
+                "--psi-fit-report",
+                &psi_report,
+                "--psi-weights",
+                &psi_weights,
+                "--psi-basis-csv",
+                &psi_basis,
+                "--psi-density-csv",
+                &psi_density,
             ],
             None,
         )?;
     }
     r.python("make_swells_highlight", &[], None)?;
+    crate::agc::run(r, args)?;
     Ok(())
 }

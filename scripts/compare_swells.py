@@ -33,13 +33,14 @@ def load_family(directory, nonnegative):
     return report, lensing
 
 
-def candidate_pool(report, lensing):
+def candidate_pool(report, lensing, model="superposition"):
+    key_name = "psi_alternative_rotation_fits" if model == "psi" else "alternative_rotation_fits"
     """Use the recorded pool, including the rotation winner, without refitting."""
-    best = report["models"]["superposition"]
+    best = report["models"][model]
     fits = {component_key(c["components"]): c
-            for c in [best, *report["alternative_rotation_fits"]]}
-    predictions = [{**lensing["models"]["superposition"], "components": best["components"]},
-                   *lensing["alternative_rotation_fits"]]
+            for c in [best, *report[key_name]]}
+    predictions = [{**lensing["models"][model], "components": best["components"]},
+                   *lensing[key_name]]
     pool, seen = [], set()
     for prediction in predictions:
         key = component_key(prediction["components"])
@@ -93,7 +94,16 @@ def compare(signed, positive):
                          "subsets_evaluated_in_rotation_search": report["search"]["subsets_evaluated"],
                          "candidate_scope": lensing["alternatives_note"]}
         rows.extend(select_family(pool, observed, family))
-    for name in MODELS[1:]:
+    if "psi" in sr["models"]:
+        pool = candidate_pool(sr, sl, "psi")
+        pools["psi"] = {"saved_candidates":len(pool), "subsets_evaluated_in_rotation_search":sr["psi_search"]["subsets_evaluated"]}
+        # No closed critical curve is a reportable result, not a fit failure.
+        try:
+            rows.extend(select_family(pool, observed, "psi"))
+        except ValueError:
+            candidate = min(pool, key=lambda c:c["rotation_chi2"])
+            rows.append({**candidate, "family":"psi", "selection":"best_rotation", "selection_uses_lensing":False})
+    for name in (n for n in MODELS if n not in ("superposition", "psi")):
         fit = sr["models"][name]
         rows.append({"family": name, "selection": "best_rotation", "selection_uses_lensing": False,
                      "rotation_rms_kms": fit["rms_kms"], "rotation_chi2": fit["chi2"],
@@ -112,7 +122,7 @@ def audit_and_map(result, signed, positive, out):
     """Independently reconstruct every displayed HORB score and selected map."""
     radial = np.geomspace(1e-5, 10000, 3200)
     cache, selected_map = {}, None
-    for row in result["rows"][:4]:
+    for row in (r for r in result["rows"] if r["family"] in ("positive_only", "signed", "psi")):
         report = positive[0] if row["family"] == "positive_only" else signed[0]
         meta, distance = report["photometry"], report["distances"]
         sigma = distance["sigma_critical_msun_kpc2"]
@@ -129,7 +139,7 @@ def audit_and_map(result, signed, positive, out):
         row["predicted_los_kms"] = prediction.tolist()
         surface = np.zeros((3, len(radial)))
         for term in row["components"]:
-            key = tuple(term[k] for k in ("n", "l", "a0_star_kpc", "ref_mass_msun"))
+            key = (term.get("density_model", "squared"), *[term[k] for k in ("n", "l", "a0_star_kpc", "ref_mass_msun")])
             if key not in cache:
                 cache[key] = orbital_surface_modes(radial, term, meta["cos_inclination"])
             surface += term["weight"]*cache[key]
@@ -167,7 +177,7 @@ def plot_comparison(result, lens_map, out):
     right = fig.add_axes([.64, .265, .275, .537])
     fig.text(.065, .945, "HORB  /  ROTATION + LENSING", color=COLORS["superposition"], size=14, weight="bold")
     fig.text(.065, .89, "SDSS J2141−0001", size=27, weight="bold")
-    fig.text(.065, .85, "Positive-only and signed superpositions · separate rotation and lensing selections", color=muted, size=12)
+    fig.text(.065, .85, "Squared density and signed ψ lobes · separate rotation and lensing selections", color=muted, size=12)
     selected = result["rows"][3]
     dark = lens_map["kappa_dark"]
     limit = max(float(np.max(np.abs(dark))), .01)
@@ -178,7 +188,7 @@ def plot_comparison(result, lens_map, out):
     line, = left.plot(radius*np.cos(phi), radius*np.sin(phi), color=fg, lw=2)
     line.set_path_effects([patheffects.Stroke(linewidth=4, foreground=bg), patheffects.Normal()])
     left.set(xlabel="Major-axis offset [arcsec]", ylabel="Minor-axis offset [arcsec]",
-             title="Signed HORB · closest lensing")
+             title="HORB |ψ|² · closest lensing")
     colorbar = fig.colorbar(im, cax=fig.add_axes([.376, .265, .012, .537]))
     colorbar.set_label(r"$\kappa_{\rm HORB}=\Sigma_{\rm HORB}/\Sigma_{\rm crit}$", labelpad=7)
     fig.text(.065, .18, f"Map: θE = {selected['effective_einstein_radius_arcsec']:.3f}″  ·  rotation RMS = {selected['rotation_rms_kms']:.3f} km/s", size=11)
@@ -193,8 +203,8 @@ def plot_comparison(result, lens_map, out):
         family = row["family"]
         color = family_colors[family]
         lens_selected = row["selection_uses_lensing"]
-        if family in ("positive_only", "signed"):
-            labels.append(f"HORB · {'positive only' if family == 'positive_only' else 'signed (+/−)'}\n{'closest lensing' if lens_selected else 'best rotation'}")
+        if family in ("positive_only", "signed", "psi"):
+            labels.append({"positive_only":"|ψ|² positive", "signed":"|ψ|² signed", "psi":"Signed ψ"}[family]+"\n"+("closest lensing" if lens_selected else "best rotation"))
         else:
             labels.append(LABELS[family])
         value = row["effective_einstein_radius_arcsec"]
@@ -217,7 +227,7 @@ def plot_comparison(result, lens_map, out):
     right.text(1.10, 1.025, "Rotation RMS\n[km/s]", transform=right.transAxes, ha="center", color=muted, size=10)
     fig.text(.64, .195, "●  Best rotation (weighted χ²)     ◆  Closest lensing radius", color=muted, size=10)
     counts = result["pools"]
-    fig.text(.065, .105, f"Selections from saved rotation fits: {counts['positive_only']['saved_candidates']} positive-only, {counts['signed']['saved_candidates']} signed. Diamonds use the lensing measurement for selection.", color=muted, size=10.5)
+    fig.text(.065, .105, f"Selections from saved rotation fits: {counts['positive_only']['saved_candidates']} positive-only, {counts['signed']['saved_candidates']} signed |ψ|², {counts.get('psi',{}).get('saved_candidates',0)} signed ψ. Diamonds use the lensing measurement for selection.", color=muted, size=10.5)
     fig.text(.065, .072, f"White band: published SIE radius {observed:.2f} (+{source['radius_error_plus_arcsec']:.2f} / −{source['radius_error_minus_arcsec']:.2f}) arcsec. Same six rotation measurements and fixed SPS baryons.", color=muted, size=10.5)
     fig.text(.065, .04, "Closest lensing refers to this saved candidate pool; no continuous lensing refit or observed-arc pixel likelihood.", color=muted, size=10.5)
     fig.savefig(out/"j2141_lensing.png", dpi=180)
@@ -245,9 +255,9 @@ def main(argv=None):
         writer.writerows(result["rows"])
     if not args.no_plots:
         plot_comparison(result, lens_map, args.out_dir)
-    for row in result["rows"][:4]:
+    for row in (r for r in result["rows"] if r["family"] in ("positive_only", "signed", "psi")):
         print(f"{row['family']} / {row['selection']}: RMS {row['rotation_rms_kms']:.3f} km/s; θE {row['effective_einstein_radius_arcsec']}")
-    print(f"Wrote four HORB selections and baseline comparisons to {args.out_dir}")
+    print(f"Wrote HORB density-family selections and baseline comparisons to {args.out_dir}")
 
 
 if __name__ == "__main__":

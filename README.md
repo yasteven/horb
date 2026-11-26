@@ -4,14 +4,17 @@ Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Gala
 
 ## Milky Way: rotation curve and fitted dark density
 
-**Six curves, one dataset:** the best found HORB superposition, quantised
-inertia (QI), NFW, Burkert, Einasto, and baryons alone. All use the same fixed
+**Seven curves, one dataset:** the best found HORB squared-density superposition,
+the new **signed-ψ lobe** superposition, quantised inertia (QI), NFW, Burkert,
+Einasto, and baryons alone. All use the same fixed
 baryons and observed error bars. HORB and the three classical halos are fitted;
 [QI is a fixed prediction](docs/quantised_inertia.md) with no fitted parameters.
 
-![Milky Way: HORB superposition, QI, NFW, Burkert, Einasto, and baryons compared with Sofue observations](images/mw_rotation_highlight.png)
+![Milky Way: both HORB density definitions, QI, NFW, Burkert, Einasto, and baryons compared with Sofue observations](images/mw_rotation_highlight.png)
 
-![Milky Way: signed dark-density slice of the exact superposition above, with central detail and orbital weights](images/mw_density_highlight.png)
+![Milky Way: squared-basis density and weights](images/mw_density_highlight.png)
+
+![Milky Way: signed wavefunction lobes, density and weights](images/mw_psi_density_highlight.png)
 
 ## Andromeda: rotation curve and fitted dark density
 
@@ -19,15 +22,18 @@ The same comparison using Corbelli et al. (2010) observations and fixed
 Geehan et al. (2006) baryons. Each density map uses its rotation fit's exact
 weights; amber is positive density and cyan is negative density.
 
-![Andromeda: HORB superposition, QI, NFW, Burkert, Einasto, and baryons compared with Corbelli observations](images/m31_rotation_highlight.png)
+![Andromeda: both HORB density definitions, QI, NFW, Burkert, Einasto, and baryons compared with Corbelli observations](images/m31_rotation_highlight.png)
 
-![Andromeda: signed dark-density slice of the exact superposition above, with central detail and orbital weights](images/m31_density_highlight.png)
+![Andromeda: squared-basis density and weights](images/m31_density_highlight.png)
+
+![Andromeda: signed wavefunction lobes, density and weights](images/m31_psi_density_highlight.png)
 
 <!-- HORB_HIGHLIGHT_SCORES_START -->
 
 | In-sample RMS (km/s) | Milky Way · 5–80 kpc | Andromeda · 8.5–36.5 kpc |
 |---|---:|---:|
-| HORB superposition · 4 terms | **2.05** | **3.32** |
+| HORB squared density · 4 terms | **2.05** | **3.32** |
+| HORB signed ψ · lobe signs retained | **3.08** | **3.23** |
 | QI · fixed prediction | 37.13 | 14.00 |
 | NFW · fitted mass + scale | 9.29 | 10.54 |
 | Burkert · fitted mass + scale | 6.97 | 11.60 |
@@ -37,27 +43,52 @@ weights; amber is positive density and cyan is negative density.
 <!-- HORB_HIGHLIGHT_SCORES_END -->
 
 “Best” here means the lowest converged weighted χ² found after trying all
-31,931 subsets of up to four terms in the documented 30-member dictionary.
-MW had no failed fits; two M31 subsets did not converge. These are in-sample
+31,931 squared-density subsets (30 columns) and 6,196 signed-ψ subsets
+(20 identifiable columns), each with up to four weights. The squared MW search
+had no failures; two squared M31 subsets did not converge. Both ψ searches
+had no failures. These are in-sample
 comparisons with different model flexibility, not a model-probability test.
 The M31 Einasto fit reaches the configured lower shape bound, `alpha=0.03`.
 The M31 baryonic baseline has no separately resolved gas component. The
 density maps depict fitted models, not unique reconstructions from observations.
 
 ```sh
-./run.sh --release do readme-highlights          # rebuild MW, M31 and J2141 README figures
+./run.sh --release do readme-highlights          # rebuild MW, M31, J2141 and AGC 114905 figures
 ./run.sh --release do readme-highlights --refit  # repeat both complete subset searches too
 ```
+
+The two density definitions are separate: `squared` uses |ψ|² with fitted
+coefficients; `psi` uses the real signed wavefunction divided by its absolute
+mass integral. Zero-net-mass lobes retain their gravitational contribution.
+See [equations, sign conventions and commands](docs/signed_lobes.md).
 
 The PNGs, fitted weights, scores and plotted curves are committed. The command
 also exports PDF figures. See [figure methods and reproduction](docs/readme_highlights.md)
 and [the numerical records](data/highlights/README.md).
 
+## AGC 114905: including the zero-orbital solution
+
+The same seven-model comparison uses the 2024 paper's Figure 7 scenario,
+**digitized from its vector figure**, with its distance and inclination held
+fixed for every model. The all-zero HORB coefficients give the baryons-only
+curve: **RMS 4.76 km/s** on these five points. The updated data do not favor
+that zero solution. Four weights can nearly interpolate five points, so the
+very small HORB residuals are below extraction precision, not a unique physical
+reconstruction. [Data provenance and limitations](data/agc114905/README.md).
+
+![AGC 114905: both HORB models, QI, classical halos and zero-orbital baryons](images/agc114905_rotation_highlight.png)
+
+![AGC 114905: signed-ψ density from the displayed rotation fit](images/agc114905_psi_density_highlight.png)
+
+```sh
+./run.sh --release do agc114905-fit
+```
+
 ## Fit all 175 SPARC galaxies
 
 The official SPARC catalog and all **3,391 rotation-curve measurements** are
 bundled with their gas, disk and bulge contributions. The batch workflow fits
-signed orbital densities, saves matching rotation/density plots, and builds a
+both density definitions by default, saves matching rotation/density plots, and builds a
 searchable gallery. Completed fits are verified and skipped when resuming.
 
 ```sh
@@ -67,7 +98,13 @@ searchable gallery. Completed fits are verified and skipped when resuming.
 
 All 175 galaxies are included, with published quality flags preserved. Defaults
 use fixed disk/bulge M/L = 0.5/0.7 and a 30-column orbital dictionary scaled to
-each galaxy. Scores describe the fitted observations. See [SPARC commands and
+each galaxy for |ψ|² and 20 columns for signed ψ. Both models completed
+**175/175 fits**: median in-sample RMS is **1.09 km/s (|ψ|²)** and
+**1.41 km/s (ψ)**. Signed ψ has lower weighted χ² in 19/175 galaxies in this
+beam search. [All scores, both sets of weights and activity joins](data/sparc/density_comparison_20261126/README.md).
+![SPARC 175: squared-density and signed-psi fit distributions](images/sparc_density_comparison.png)
+
+Scores describe the fitted observations. See [SPARC commands and
 methods](docs/sparc.md) and [the attributed source data](data/sparc/README.md).
 
 ## Project tool
@@ -111,8 +148,7 @@ mass at the reference radius, and total curves use the same baryonic model.
 The two comparison workflows write graphs and score tables for every model.
 These are fixed-parameter diagnostics; the defaults are not optimized fits.
 See [the Einasto model notes](docs/einasto.md) for the equations, CSV fields,
-normalization and scoring ranges. M31 fitting is available below; the full
-SPARC importer remains planned.
+normalization and scoring ranges. M31 fitting is available below; the complete SPARC sample is available above.
 
 ## Signed orbital-density fitting
 
@@ -209,8 +245,8 @@ The CUDA shared library `libhorb_cuda.so` is intentionally ignored by git becaus
 
 The SWELLS pilot fits published gas rotation measurements first and predicts
 lensing with the mass parameters fixed. The lensing figure shows separate
-rotation-selected and lensing-selected HORB candidates from both positive-only
-and signed searches. [Methods and results](docs/swells.md).
+rotation-selected and lensing-selected candidates for positive-coefficient |ψ|²,
+signed-coefficient |ψ|², and the new signed-ψ lobes. [Methods and results](docs/swells.md).
 
 The rotation panel includes QI at the lens redshift, z=0.138, through the same
 inclination, seeing and slit model. Its RMS uses the same six outer points.
@@ -221,14 +257,18 @@ curves and points are omitted from the README comparisons.
 
 ![J2141 positive and signed HORB rotation and lensing selections](images/swells/j2141_lensing.png)
 
-With fixed Chabrier baryons, the four HORB selections are:
+![J2141 signed-ψ density from its rotation-selected fit](images/swells/j2141_psi_density_highlight.png)
+
+With fixed Chabrier baryons, the six HORB selections are:
 
 | Coefficients | Selection | Rotation RMS (km/s) | Einstein radius (arcsec) |
 |---|---|---:|---:|
-| Positive only | Best rotation χ² | 3.009 | 0.841 |
-| Positive only | Closest lensing radius | 2.990 | 0.898 |
-| Signed (+/−) | Best rotation χ² | 2.230 | 0.428 |
-| Signed (+/−) | Closest lensing radius | 2.283 | 0.843 |
+| ψ², positive weights | Best rotation χ² | 3.009 | 0.841 |
+| ψ², positive weights | Closest lensing radius | 2.990 | 0.898 |
+| ψ², signed weights | Best rotation χ² | 2.230 | 0.428 |
+| ψ², signed weights | Closest lensing radius | 2.283 | 0.843 |
+| Signed ψ lobes | Best rotation χ² | 2.773 | 0.529 |
+| Signed ψ lobes | Closest lensing radius | 2.924 | 0.857 |
 
 The published SIE summary is 0.89 (+0.05/−0.08) arcsec. NFW, Burkert and
 Einasto predict 0.902, 0.838 and 0.930 arcsec. The density map uses the
@@ -253,8 +293,13 @@ LeMMINGs radio and nuclear X-ray measurements. It includes 21 optical
 Seyfert/LINER nuclei, seven priorities with resolved jet/lobe evidence, and
 comparison galaxies with measured upper limits. NGC 1167 (UGC02487), with a
 rotation curve reaching 80.38 kpc, is the strongest detected radio core in this
-overlap. The export joins these observations to the existing signed orbital
-weights and their concentration metrics.
+overlap. The export joins these observations to either density family's weights
+and concentration metrics. For ψ it uses absolute component strength, preserving
+zero-net-mass orbitals. Unknown AGN status and radio upper limits remain distinct.
+
+```sh
+./run.sh data agn --density-model psi --out-dir reports/agn_psi  # bundled 175-galaxy fits
+```
 
 ```sh
 ./run.sh data agn

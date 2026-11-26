@@ -16,6 +16,7 @@ def main():
     parser.add_argument("--cuda-csv", type=Path, help="also score the CUDA HORB curve on the common radius interval")
     parser.add_argument("--r-min", type=float, default=5.0)
     parser.add_argument("--r-max", type=float, default=80.0)
+    parser.add_argument("--fit-report", type=Path, action="append", default=[])
     args = parser.parse_args()
     dm = np.atleast_1d(np.genfromtxt(args.dm_compare_csv, delimiter=",", names=True))
     rc = np.atleast_1d(np.genfromtxt(args.rc_csv, delimiter=",", names=True, dtype=None, encoding=None))
@@ -38,6 +39,10 @@ def main():
                     np.sqrt(np.interp(r, cuda["r_kpc"], cuda["v_horb_cuda_kms"])**2 + vb2),
                     rc, args.r_min, args.r_max))
     rows.append(score("baryons_only", r, np.sqrt(vb2), rc, args.r_min, args.r_max))
+    from horb_recorded import recorded_curve
+    for report_path in args.fit_report:
+        name,rr,v,_=recorded_curve(report_path,args.rc_csv,args.baryons_csv)
+        rows.append(score(name,rr,v,rc,args.r_min,args.r_max))
     writer = csv.writer(sys.stdout, lineterminator="\n")
     writer.writerow(["model", "r_min", "r_max", "n", "rms_kms", "chi2", "chi2_per_point"])
     for name, lo, hi, n, rms, chi2, per_point in rows:

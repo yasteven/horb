@@ -285,13 +285,13 @@ of positional shell sorting. A few historical graph filenames now use the full
 candidate stem printed in the command trace.
 ## README figures
 
-`./run.sh --release do readme-highlights` regenerates the Milky Way and
-Andromeda six-model rotation comparisons and matching signed-density maps,
-plus J2141's rotation and lensing figures from its recorded SWELLS fits.
+`./run.sh --release do readme-highlights` regenerates the Milky Way,
+Andromeda and AGC 114905 seven-model rotation comparisons and both density maps,
+plus J2141's rotation, signed-ψ density and lensing figures from its recorded SWELLS fits.
 It uses the committed selected orbital weights, validates their inputs and
-scores, and refits NFW, Burkert and Einasto for MW/M31. QI is a fixed prediction
-on all three rotation plots; the single orbital is omitted from the figures.
-Add `--refit` to repeat the complete MW/M31 ≤4-term superposition searches.
+scores, and refits NFW, Burkert and Einasto for MW/M31/AGC. QI is a fixed prediction
+on all four rotation plots; the single orbital is omitted from the figures.
+Add `--refit` to repeat both complete MW/M31/AGC ≤4-term superposition searches.
 PNGs go to `images/`, PDFs to `plots/`, and numerical records to
 `data/highlights/`. See [the methods](../docs/readme_highlights.md).
 
@@ -323,3 +323,21 @@ It works offline and performs no new fits. Use `--fits-dir reports/sparc/NAME`
 to analyze a different run, and `--out-dir PATH` to choose the output directory.
 Unmatched and unobserved galaxies remain explicitly unclassified.
 See [targets, units and analysis method](../docs/agn_rotation_sample.md).
+
+
+## Signed wavefunction lobes (2026-11-26)
+
+The current comparisons also include a separate real-ψ gravitational source,
+with intrinsic positive/negative lobes and absolute-mass normalization. See
+[the complete model notes](../docs/signed_lobes.md).
+`do signed-fit`, `do m31-signed-fit` and `do sparc-fit` now compare both definitions
+by default; `--density-model squared` or `psi` selects one. SWELLS fits and projects
+both families. `do agc114905-fit` handles the separate 2024 digitized galaxy dataset.
+`do readme-highlights` regenerates all four galaxies' comparison figures.
+`data agn --fits-dir reports/sparc/NAME --density-model psi --out-dir reports/agn_psi`
+exports activity and ψ weights with absolute-strength concentration, not net-mass
+concentration. `--max-components 0` explicitly selects zero orbital coefficients.
+
+The signed-ψ activity export also works directly from the bundled 175-galaxy
+fit records: `./run.sh data agn --density-model psi --out-dir reports/agn_psi`.
+Use `--fits-dir` to select a different completed run.

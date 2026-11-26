@@ -1,6 +1,8 @@
 //! Versioned, signed force-basis export shared by CPU and CUDA entry points.
 use anyhow::{bail, Context, Result};
-use orbital_basis::{signed_gravity::state_config, OrbitalConfig, Superposition};
+use orbital_basis::{
+    signed_gravity::state_config, signed_lobe::SignedLobe, DensityField, OrbitalConfig,
+};
 use serde::{Deserialize, Serialize};
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -8,6 +10,8 @@ use std::{
 };
 
 pub const DEFAULT_STATES: &str = "1s,2s,2p_z,3s,3p_z,3d_z2";
+pub const LOBE_STATES: &str = "1s,2s,3s,3d_z2";
+
 pub const DEFAULT_SCALES: &str = "0.5,1,2,4,8";
 
 pub fn options(args: &[String], allowed: &[&str]) -> Result<BTreeMap<String, String>> {
@@ -44,11 +48,14 @@ pub struct BasisOptions {
     pub nmu: usize,
     pub nphi: usize,
     pub softening: f64,
+    pub signed_lobes: bool,
 }
 
 #[derive(Serialize)]
 struct BasisRow<'a> {
     schema_version: u32,
+    density_model: &'a str,
+    net_mass_fraction: f64,
     basis_id: usize,
     state: &'a str,
     n: u32,
@@ -81,13 +88,14 @@ where
     F: FnMut(&OrbitalConfig, &[f64], &BasisOptions) -> Result<Vec<f64>>,
 {
     if args == ["--help"] {
-        println!("signed_basis --out FILE [--states {DEFAULT_STATES}] [--scales {DEFAULT_SCALES}] [--ref-mass 1e11] [--r-min 0.5 --r-max 100 --r-step 0.5] [--rc-csv FILE] [--n-radial 128 --n-mu 32 --n-phi 64 --softening 0]");
+        println!("signed_basis --out FILE [--density-model squared|psi] [--states {DEFAULT_STATES}] [--scales {DEFAULT_SCALES}] [--ref-mass 1e11] [--r-min 0.5 --r-max 100 --r-step 0.5] [--rc-csv FILE] [--n-radial 128 --n-mu 32 --n-phi 64 --softening 0]");
         return Ok(());
     }
     let o = options(
         args,
         &[
             "--out",
+            "--density-model",
             "--states",
             "--scales",
             "--ref-mass",
@@ -102,7 +110,12 @@ where
         ],
     )?;
     let out = PathBuf::from(o.get("--out").context("--out is required")?);
+    let model = value(&o, "--density-model", "squared");
+    if !["squared", "psi"].contains(&model) {
+        bail!("density model must be squared or psi");
+    }
     let opts = BasisOptions {
+        signed_lobes: model == "psi",
         nr: value(&o, "--n-radial", "128").parse()?,
         nmu: value(&o, "--n-mu", "32").parse()?,
         nphi: value(&o, "--n-phi", "64").parse()?,
@@ -144,9 +157,22 @@ where
     let mass = number(&o, "--ref-mass", "1e11")?;
     let mut configs = Vec::new();
     let mut seen = BTreeSet::new();
-    for state in value(&o, "--states", DEFAULT_STATES).split(',') {
+    for state in value(
+        &o,
+        "--states",
+        if opts.signed_lobes {
+            LOBE_STATES
+        } else {
+            DEFAULT_STATES
+        },
+    )
+    .split(',')
+    {
         for scale in value(&o, "--scales", DEFAULT_SCALES).split(',') {
             let cfg = state_config(state.trim(), scale.trim().parse()?, mass)?;
+            if opts.signed_lobes && (cfg.m != 0 || cfg.l % 2 != 0) {
+                bail!("psi rotation basis requires even l and m=0: odd l/m!=0 have zero azimuthal-mean radial response; use them only in independently constrained 3D models");
+            }
             if !seen.insert((cfg.n, cfg.l, cfg.m, cfg.a0_star.to_bits())) {
                 bail!("duplicate basis state/scale");
             }
@@ -168,9 +194,16 @@ where
             if curve.len() != radii.len() || curve.iter().any(|k| !k.is_finite()) {
                 bail!("backend returned an invalid signed force curve");
             }
+            let net_mass_fraction = if opts.signed_lobes {
+                SignedLobe::new(cfg.clone(), opts.nr)?.net_mass_fraction
+            } else {
+                1.0
+            };
             for (&r, &k) in radii.iter().zip(&curve) {
                 writer.serialize(BasisRow {
-                    schema_version: 1,
+                    schema_version: if opts.signed_lobes { 2 } else { 1 },
+                    density_model: model,
+                    net_mass_fraction,
                     basis_id: id,
                     state,
                     n: cfg.n,
@@ -180,7 +213,11 @@ where
                     ref_mass_msun: mass,
                     gravity_backend: backend,
                     geometry: "azimuthal_mean",
-                    normalization: "analytic_full_space",
+                    normalization: if opts.signed_lobes {
+                        "absolute_mass_full_space"
+                    } else {
+                        "analytic_full_space"
+                    },
                     n_radial: opts.nr,
                     n_mu: if backend == "cpu_multipole" {
                         8
@@ -213,6 +250,11 @@ struct WeightedRow {
     a0_star_kpc: f64,
     ref_mass_msun: f64,
     weight: f64,
+    #[serde(default = "squared_model")]
+    density_model: String,
+}
+fn squared_model() -> String {
+    "squared".into()
 }
 
 pub fn write_density(args: &[String]) -> Result<()> {
@@ -233,6 +275,7 @@ pub fn write_density(args: &[String]) -> Result<()> {
     }
     let mut reader = csv::Reader::from_path(input)?;
     let mut parts = Vec::new();
+    let mut lobes = Vec::new();
     for row in reader.deserialize::<WeightedRow>() {
         let row = row?;
         let cfg = state_config(
@@ -240,13 +283,15 @@ pub fn write_density(args: &[String]) -> Result<()> {
             row.a0_star_kpc,
             row.ref_mass_msun,
         )?;
-        parts.push((row.weight, cfg));
+        if !row.weight.is_finite() {
+            bail!("weight must be finite");
+        }
+        match row.density_model.as_str() {
+            "squared" => parts.push((row.weight, DensityField::new(cfg)?)),
+            "psi" => lobes.push((row.weight, SignedLobe::new(cfg, 128)?)),
+            _ => bail!("unknown density model in weights"),
+        }
     }
-    let field = if parts.is_empty() {
-        None
-    } else {
-        Some(Superposition::new(parts)?)
-    };
     let mut file = output_file(out)?;
     {
         let mut writer = csv::Writer::from_writer(file.as_file_mut());
@@ -261,10 +306,14 @@ pub fn write_density(args: &[String]) -> Result<()> {
                 } else {
                     (z / r).clamp(-1.0, 1.0).acos()
                 };
-                let rho = match &field {
-                    Some(f) => f.rho(r, theta, if x < 0.0 { std::f64::consts::PI } else { 0.0 })?,
-                    None => 0.0,
-                };
+                let phi = if x < 0.0 { std::f64::consts::PI } else { 0.0 };
+                let mut rho = 0.0;
+                for (w, field) in &parts {
+                    rho += w * field.rho(r, theta, phi)?;
+                }
+                for (w, field) in &lobes {
+                    rho += w * field.rho(r, theta, phi)?;
+                }
                 writer.serialize((x, z, rho))?;
             }
         }
@@ -284,12 +333,26 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let out = tmp.path().join("basis.csv");
         let rc = tmp.path().join("observations.csv");
-        std::fs::write(&rc, "R_kpc,Vobs_kms,eV_kms\n1.87,10,1\n3.14,20,1\n12.33,30,1\n").unwrap();
+        std::fs::write(
+            &rc,
+            "R_kpc,Vobs_kms,eV_kms\n1.87,10,1\n3.14,20,1\n12.33,30,1\n",
+        )
+        .unwrap();
         let args = vec![
-            "--out".into(), out.to_string_lossy().into(), "--states".into(), "1s".into(),
-            "--scales".into(), "1".into(), "--r-min".into(), "1.87".into(),
-            "--r-max".into(), "12.33".into(), "--r-step".into(), "0.08171875".into(),
-            "--rc-csv".into(), rc.to_string_lossy().into(),
+            "--out".into(),
+            out.to_string_lossy().into(),
+            "--states".into(),
+            "1s".into(),
+            "--scales".into(),
+            "1".into(),
+            "--r-min".into(),
+            "1.87".into(),
+            "--r-max".into(),
+            "12.33".into(),
+            "--r-step".into(),
+            "0.08171875".into(),
+            "--rc-csv".into(),
+            rc.to_string_lossy().into(),
         ];
         write_library(&args, "cpu_multipole", |_, radii, _| {
             assert!(radii.iter().all(|r| (1.87..=12.33).contains(r)));
@@ -297,7 +360,8 @@ mod tests {
                 assert!(radii.contains(&observed));
             }
             Ok(vec![1.0; radii.len()])
-        }).unwrap();
+        })
+        .unwrap();
     }
 
     #[test]

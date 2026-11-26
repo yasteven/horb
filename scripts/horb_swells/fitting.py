@@ -120,13 +120,16 @@ class ProjectedSearch:
 
     def run(self, max_components=4, beam_width=8, budget=1200, exhaustive=False):
         size = self.A.shape[1]
-        if not 1 <= max_components <= min(4, size) or beam_width < 1 or budget < size+1:
+        if (not 0 <= max_components <= min(4, size) or beam_width < 1
+                or budget < (1 if max_components == 0 else size+1)):
             raise ValueError("invalid subset search controls")
         if exhaustive:
             import math
             if sum(math.comb(size, k) for k in range(max_components+1)) > budget:
                 raise ValueError("budget too small for exhaustive subset search")
         self.fit(())
+        if max_components == 0:
+            return [self.cache[()]]
         frontier = []
         for i in range(size):
             if self.fit((i,)) is not None:

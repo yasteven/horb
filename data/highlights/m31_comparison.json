@@ -137,6 +137,12 @@
       "optimizer": "differential_evolution(seed=42) + least_squares",
       "global_converged": true,
       "local_converged": true
+    },
+    "psi": {
+      "rms_kms": 3.231851975438726,
+      "chi2": 4.855816400218976,
+      "n": 29,
+      "k": 4
     }
   },
   "fit_range_kpc": [

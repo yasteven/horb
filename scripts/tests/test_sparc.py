@@ -81,11 +81,13 @@ class SparcTests(unittest.TestCase):
         self.assertEqual(len(select_galaxies('all', self.catalog)), 175)
         for argv in [('--galaxies', 'M31'), ('--galaxies', 'NGC2403,NGC2403'), ('--name', '../escape'),
                      ('--scale-factors', '1,1'), ('--scales', 'nan'), ('--jobs', '0'),
-                     ('--max-components', '0'), ('--states', '1s,2p_x'), ('--search', 'exhaustive'),
+                     ('--max-components', '-1'), ('--states', '1s,2p_x'), ('--search', 'exhaustive'),
                      ('--budget', '1')]:
             with self.assertRaises(ValueError):
                 self.options(*argv)
         self.options('--search', 'exhaustive', '--budget', '31931')
+        self.options('--max-components', '0', '--budget', '1')
+        self.options('--states', '1s,5:2:0,6:2:0', '--density-model', 'both')
 
     def test_resume_verifies_every_artifact_and_settings(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(fit_sparc, 'ROOT', Path(tmp)):

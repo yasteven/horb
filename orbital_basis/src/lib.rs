@@ -56,6 +56,7 @@ pub mod angular;
 pub mod baryons;
 pub mod density;
 pub mod signed_gravity;
+pub mod signed_lobe;
 pub mod halo_models;
 pub mod presets;
 pub mod radial;

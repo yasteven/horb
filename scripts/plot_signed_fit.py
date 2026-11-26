@@ -20,7 +20,7 @@ def main():
     used=obs["used_in_fit"]==1
     for mask,label,color in [(used,"Fitted observations","black"),(~used,"Outside fit range","0.65")]:
         if np.any(mask): axes[0].errorbar(obs["R_kpc"][mask],obs["Vobs_kms"][mask],yerr=obs["eV_kms"][mask],fmt="o",ms=3,color=color,label=label)
-    axes[0].plot(r,curve["v_total_kms"],label="Signed density fit + baryons",lw=2.5)
+    axes[0].plot(r,curve["v_total_kms"],label=("Signed ψ lobes + baryons" if report.get("density_model") == "psi" else "Squared density + baryons"),lw=2.5)
     qb=curve["v2_baryons_kms2"]
     axes[0].plot(r,np.sqrt(np.where(qb>=0,qb,np.nan)),"--",label="Fixed baryonic model")
     axes[0].set_ylabel("Circular speed [km/s]")

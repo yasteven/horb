@@ -25,6 +25,7 @@ pub fn run(r: &mut Runner, args: &[&str]) -> Result<()> {
         "--criterion",
         "--ridge",
         "--weights",
+        "--density-model",
         "--ml-disk",
         "--ml-bulge",
         "--states",
@@ -84,7 +85,7 @@ pub fn run(r: &mut Runner, args: &[&str]) -> Result<()> {
     r.python("fit_sparc", &batch, None)
 }
 
-fn cargo_executable(output: &str) -> Result<PathBuf> {
+pub fn cargo_executable(output: &str) -> Result<PathBuf> {
     output
         .lines()
         .filter_map(|line| serde_json::from_str::<serde_json::Value>(line).ok())

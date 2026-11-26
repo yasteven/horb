@@ -21,13 +21,13 @@ from horb_swells.lensing import (orbital_surface_modes, spherical_surface,
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/swells"
-MODELS = ("superposition", "single", "nfw", "burkert", "einasto", "baryons")
-ROTATION_MODELS = ("superposition", "qi", "nfw", "burkert", "einasto", "baryons")
+MODELS = ("superposition", "psi", "single", "nfw", "burkert", "einasto", "baryons")
+ROTATION_MODELS = ("superposition", "psi", "qi", "nfw", "burkert", "einasto", "baryons")
 LENS_DISPLAY_MODELS = tuple(name for name in MODELS if name != "single")
-LABELS = {"superposition": "HORB superposition", "single": "HORB single orbital",
+LABELS = {"superposition": "HORB |ψ|²", "psi": "HORB signed ψ", "single": "HORB single orbital",
           "qi": "Quantised inertia (QI)",
           "nfw": "NFW", "burkert": "Burkert", "einasto": "Einasto", "baryons": "Baryons alone"}
-COLORS = {"superposition": "#50e0cf", "single": "#bf9bff", "nfw": "#ffb451",
+COLORS = {"superposition": "#50e0cf", "psi": "#ffe27a", "single": "#bf9bff", "nfw": "#ffb451",
           "qi": "#bf9bff",
           "burkert": "#70a8ff", "einasto": "#ee82af", "baryons": "#9cabbc"}
 
@@ -68,7 +68,7 @@ def total_force(model, r, report):
         result[mask] = qi_velocity(r[mask], baryons[mask], report["photometry"]["lens_redshift"])**2
         return result
     result = report["models"][model]
-    if model == "superposition":
+    if model in ("superposition", "psi"):
         if result["components"]:
             baryons += basis_matrix(r, result["components"])@np.array([t["weight"] for t in result["components"]])
     elif model != "baryons":
@@ -124,7 +124,40 @@ def fit_rotation(meta, obs, args):
             "uncertainty_note": "Point fits conditional on baryons and geometry. Alternative subsets are not posterior samples or confidence intervals."}
 
 
+def ensure_psi_model(report):
+    if "psi" in report["models"]:
+        return
+    search_args = report["search"]
+    terms = dictionary(density_model="psi")
+    grid = force_grid()
+    fine = np.unique(np.r_[force_grid(1600), force_grid(3200)])
+    obs = report["observations"]
+    mask = np.array([o["use_for_fit"] for o in obs], dtype=bool)
+    P = observing_matrix(np.array([o["r_arcsec"] for o in obs]), grid, report["photometry"])
+    v = np.array([o["v_los_kms"] for o in obs])[mask]
+    e = np.array([o["error_kms"] for o in obs])[mask]
+    search = ProjectedSearch(basis_matrix(grid, terms), baryon_v2(grid, report["baryons"]),
+        P[mask], v, e, max_weight=search_args["max_abs_weight"],
+        nonnegative=False, validation_matrix=basis_matrix(fine, terms),
+        validation_baryons=baryon_v2(fine, report["baryons"]))
+    print("Fitting signed-psi lobes to J2141 rotation; lensing held out...", flush=True)
+    candidates = search.run(search_args["max_components"], search_args["beam_width"], search_args["budget"],
+                            search_args["method"] == "exhaustive")
+    from horb_lobes import mass_fields
+    def expand(c):
+        components = [{**terms[i], "weight":float(w)} for i,w in zip(c["subset"], c["weights"])]
+        for term in components:
+            term.update(mass_fields(term))
+        return {**c, "components":components, "density_model":"psi", "parameter_count":len(components)}
+    report["models"]["psi"] = expand(candidates[0])
+    report["psi_alternative_rotation_fits"] = [expand(c) for c in candidates[1:21]]
+    report["psi_search"] = {**search_args, "nonnegative":False, "dictionary":terms,
+                             "subsets_evaluated":len(search.cache), "failed_subsets":search.failed}
+    print(f"Signed psi: RMS {candidates[0]['rms_kms']:.4f} km/s", flush=True)
+
+
 def rotation_outputs(report, meta, obs, out):
+    ensure_psi_model(report)
     # Double both force and integration resolution for a numerical audit, without
     # changing parameters or reselecting the model against lensing information.
     grid = force_grid(1600)
@@ -162,7 +195,7 @@ def lens_predictions(report, meta, out):
     def modes(components):
         result = np.zeros((3, len(radial)))
         for term in components:
-            key = (term["n"], term["l"], term["a0_star_kpc"], term["ref_mass_msun"])
+            key = (term.get("density_model", "squared"), term["n"], term["l"], term["a0_star_kpc"], term["ref_mass_msun"])
             if key not in cache:
                 cache[key] = orbital_surface_modes(radial, term, meta["cos_inclination"])
             result += term["weight"]*cache[key]
@@ -176,7 +209,7 @@ def lens_predictions(report, meta, out):
     fields, curves, all_modes = {}, {}, []
     for name in MODELS:
         fit = report["models"][name]
-        if name == "superposition":
+        if name in ("superposition", "psi"):
             surface = modes(fit["components"])
         elif name == "single":
             mass, scale = fit["parameters"]
@@ -195,17 +228,18 @@ def lens_predictions(report, meta, out):
         print(f"{LABELS[name]}: predicted effective Einstein radius {critical['effective_einstein_radius_arcsec']} arcsec", flush=True)
     # A small documented collection of near-best searched subsets exposes the
     # extrapolation sensitivity. It is not selected by lensing agreement.
-    alternatives = []
-    best_chi = report["models"]["superposition"]["chi2"]
-    for fit in report["alternative_rotation_fits"]:
-        if fit["chi2"] > best_chi+1:
-            continue
-        lens = CombinedLens(FourierLens(radial, modes(fit["components"])/sigma), report["baryons"], sigma)
-        curve = lens.critical_curve(distance["kpc_per_arcsec"], angles=128)
-        alternatives.append({"chi2": fit["chi2"], "rms_kms": fit["rms_kms"], "components": fit["components"],
-                             "effective_einstein_radius_arcsec": curve["effective_einstein_radius_arcsec"],
-                             "maximum_outward_crossings_per_ray": curve["maximum_outward_crossings_per_ray"]})
-    result["alternative_rotation_fits"] = alternatives
+    for model, key in (("superposition", "alternative_rotation_fits"), ("psi", "psi_alternative_rotation_fits")):
+        alternatives = []
+        best_chi = report["models"][model]["chi2"]
+        for fit in report[key]:
+            if fit["chi2"] > best_chi+1:
+                continue
+            lens = CombinedLens(FourierLens(radial, modes(fit["components"])/sigma), report["baryons"], sigma)
+            curve = lens.critical_curve(distance["kpc_per_arcsec"], angles=128)
+            alternatives.append({"chi2": fit["chi2"], "rms_kms": fit["rms_kms"], "components": fit["components"],
+                "effective_einstein_radius_arcsec": curve["effective_einstein_radius_arcsec"],
+                "maximum_outward_crossings_per_ray": curve["maximum_outward_crossings_per_ray"]})
+        result[key] = alternatives
     result["alternatives_note"] = "Up to 20 next-best searched subsets with delta chi2 <= 1; illustrates degeneracy, not a confidence interval."
     np.savetxt(out/"surface_density_modes.csv", np.column_stack([radial, *all_modes]), delimiter=",", comments="",
                header="r_kpc,"+",".join(f"sigma_{name}_m{m}_msun_kpc2" for name in MODELS for m in (0, 2, 4)))
@@ -257,7 +291,7 @@ def plot_rotation(report, meta, obs, out):
         ax.plot(xx*scale, v, color=COLORS[name], lw=2.8 if name == "superposition" else 1.9,
                 ls="-." if name == "qi" else "--" if name in ("baryons", "nfw") else "-",
                 zorder=3 if name == "superposition" else 2)
-        y = .74-j*.08
+        y = .74-j*.068
         fig.text(.76, y, LABELS[name], color=COLORS[name], size=12)
         score = report["numerical_audit"][name]["refined_scores"]
         fig.text(.94, y-.027, f"{score['rms_kms']:.2f} km/s", ha="right", size=12, weight="bold")
@@ -268,7 +302,7 @@ def plot_rotation(report, meta, obs, out):
     ax.set(xlabel="Projected major-axis radius [kpc]", ylabel="Observed line-of-sight rotation [km/s]",
            xlim=(0, 13.2), ylim=(0, 320))
     ax.grid(alpha=.12)
-    fig.text(.76, .23, "RMS on the same six points", color=muted, size=10)
+    fig.text(.76, .235, "RMS on the same six points", color=muted, size=10)
     fig.text(.76, .17, "QI: fixed prediction\nz = 0.138 · no fitted parameters", color=muted, size=9, linespacing=1.5)
     fig.text(.08, .08, "Dutton et al. (2011), Table 4. Shaded inner region excluded, following the paper.", color=muted, size=10)
     fig.text(.08, .045, f"Fixed SPS baryons (mass offset {report['stellar_mass_offset_dex']:+.2f} dex); PSF + slit model. Signed terms: {report['models']['superposition']['parameter_count']}.", color=muted, size=10)
@@ -352,7 +386,8 @@ def main(argv=None):
     p.add_argument("--no-plots", action="store_true")
     p.add_argument("--validate-only", action="store_true")
     args = p.parse_args(argv)
-    if (not 1 <= args.max_components <= 4 or args.beam_width < 1 or args.budget < 31
+    if (not 0 <= args.max_components <= 4 or args.beam_width < 1
+            or args.budget < (1 if args.max_components == 0 else 31)
             or not np.isfinite(args.max_abs_weight) or not 0 < args.max_abs_weight <= 100
             or not np.isfinite(args.stellar_mass_offset_dex) or not -.5 <= args.stellar_mass_offset_dex <= .5
             or args.fit_only and args.predict_only):

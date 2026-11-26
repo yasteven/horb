@@ -60,6 +60,7 @@ fn workflow_for(r: &mut Runner, args: &[&str], m31: bool) -> Result<()> {
   --name NAME                 Output stem (default mw_signed_cpu/cuda)\n\
   --rc-csv FILE --baryons-csv FILE   Target and fixed baryonic components\n\
   --dataset-meta FILE         Optional provenance with matching input hashes\n\
+  --density-model both|squared|psi  Default compares both definitions\n\
   --states LIST --scales LIST  Candidate orbitals and a0 values\n\
   --r-min 5 --r-max 80        Fit range in kpc\n\
   --max-components 4 --search beam|anneal|exhaustive\n\
@@ -73,7 +74,78 @@ CPU uses unsoftened axisymmetric multipoles; CUDA uses direct-force quadrature."
         );
         return Ok(());
     }
+    // Default comparisons retain the old fit and add an independently fitted
+    // signed-lobe source. Explicit model selection remains available.
+    let requested_model = args
+        .chunks(2)
+        .find(|pair| pair.first() == Some(&"--density-model"))
+        .and_then(|pair| pair.get(1))
+        .copied()
+        .unwrap_or("both");
+    if requested_model == "both" {
+        if args.len() % 2 != 0 {
+            bail!("signed-fit options require --name VALUE pairs");
+        }
+        let default_name = format!("{}_signed_{backend}", if m31 { "m31" } else { "mw" });
+        let name = args
+            .chunks(2)
+            .find(|pair| pair[0] == "--name")
+            .map(|pair| pair[1])
+            .unwrap_or(&default_name);
+        let psi_name = format!("{name}_psi");
+        for (model, output_name) in [("squared", name), ("psi", psi_name.as_str())] {
+            let mut options = vec![backend, "--density-model", model, "--name", output_name];
+            let mut psi_states = String::new();
+            if model == "psi" {
+                if let Some(pair) = args.chunks(2).find(|pair| pair[0] == "--states") {
+                    psi_states = pair[1]
+                        .split(',')
+                        .filter(|state| {
+                            matches!(*state, "1s" | "2s" | "3s" | "3d_z2") || {
+                                let q: Vec<_> = state.split(':').collect();
+                                q.len() == 3 && matches!(q[1], "0" | "2") && q[2] == "0"
+                            }
+                        })
+                        .collect::<Vec<_>>()
+                        .join(",");
+                    if psi_states.is_empty() {
+                        bail!("no identifiable signed-psi rotation modes in --states");
+                    }
+                }
+            }
+            for pair in args.chunks(2) {
+                if pair[0] == "--density-model" || pair[0] == "--name" {
+                    continue;
+                }
+                if model == "psi" && pair[0] == "--states" {
+                    options.extend(["--states", &psi_states]);
+                } else {
+                    options.extend_from_slice(pair);
+                }
+            }
+            workflow_for(r, &options, m31)?;
+        }
+        return r.python(
+            "compare_orbital_fits",
+            &[
+                "--fit-prefix",
+                &format!("reports/{name}"),
+                "--fit-prefix",
+                &format!("reports/{psi_name}"),
+                "--out-prefix",
+                &format!("plots/{name}_rotation"),
+                "--title",
+                if m31 {
+                    "Andromeda: HORB density comparisons"
+                } else {
+                    "Milky Way: HORB density comparisons"
+                },
+            ],
+            None,
+        );
+    }
     let basis_keys = [
+        "--density-model",
         "--states",
         "--scales",
         "--n-radial",
@@ -127,7 +199,12 @@ CPU uses unsoftened axisymmetric multipoles; CUDA uses direct-force quadrature."
             o.entry("--dataset-meta").or_insert(M31_META);
         }
     }
-    let default_name = format!("{}_signed_{backend}", if m31 { "m31" } else { "mw" });
+    let model = o.get("--density-model").copied().unwrap_or("squared");
+    let default_name = format!(
+        "{}_{}_{backend}",
+        if m31 { "m31" } else { "mw" },
+        if model == "psi" { "psi" } else { "signed" }
+    );
     let name = o.get("--name").copied().unwrap_or(&default_name);
     if name.is_empty()
         || !name

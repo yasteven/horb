@@ -23,6 +23,10 @@ def publish(reports, plots, run, catalog, curves, statuses):
             row[k] = metrics.get(k, "")
         row["components"] = "; ".join(f"{t['state']}@{t['a0_star_kpc']:.6g}:{t['weight']:+.8g}"
                                       for t in metrics.get("components", []))
+        for model in ("squared", "psi"):
+            detail = status.get("model_metrics", {}).get(model, {})
+            for key in ("rms_kms", "chi2", "k"):
+                row[f"{model}_{key}"] = detail.get(key, "")
         row["error"] = status.get("error", "")
         rows.append(row)
     write_csv(reports/"summary.csv", list(rows[0]), [list(row.values()) for row in rows])
@@ -44,7 +48,7 @@ Q=1 high, Q=2 medium, Q=3 low. No quality or inclination cuts. Negative orbital 
 <p><a href="{links(reports/'summary.csv')}">Summary CSV</a> · <a href="{links(reports/'run.json')}">Run settings and provenance</a>''']
     if run["config"]["plots"] != "none":
         parts.append(' · <a href="overview.png">Overview plot (written at batch end)</a>')
-    parts.append('</p><label>Filter by galaxy or status <input id="filter" placeholder="e.g. NGC2403"></label><div class="scroll"><table><thead><tr><th>Galaxy</th><th>Status</th><th>Q</th><th>i (°)</th><th>N</th><th>Terms</th><th>RMS (km/s)</th><th>χ²/N</th><th>Results</th></tr></thead><tbody>')
+    parts.append('</p><label>Filter by galaxy or status <input id="filter" placeholder="e.g. NGC2403"></label><div class="scroll"><table><thead><tr><th>Galaxy</th><th>Status</th><th>Q</th><th>i (°)</th><th>N</th><th>Terms</th><th>RMS (km/s)</th><th>χ²/N</th><th>ψ RMS</th><th>Results</th></tr></thead><tbody>')
     for row in rows:
         name, status = row["galaxy"], row["status"]
         result = ""
@@ -54,12 +58,18 @@ Q=1 high, Q=2 medium, Q=3 low. No quality or inclination cuts. Negative orbital 
                 result += f' · <a href="{esc(name)}_rotation.png">Rotation</a>'
             if run["config"]["plots"] == "both":
                 result += f' · <a href="{esc(name)}_density.png">Density</a>'
+            if "psi" in statuses[name].get("model_metrics", {}):
+                result += f' · <a href="{links(reports/name/"comparison.json")}">Model comparison</a>'
+                if run["config"]["density_model"] == "both":
+                    result += f' · <a href="{links(reports/name/"fit_psi_weights.csv")}">ψ weights</a>'
+                    if run["config"]["plots"] == "both":
+                        result += f' · <a href="{esc(name)}_psi_density.png">ψ density</a>'
             if row["coefficient_bound_reached"]:
                 result += ' <span class="error">weight bound reached</span>'
         elif row["error"]:
             result = f'<span class="error">{esc(row["error"])}</span> · <a href="{links(reports/name/"run.log")}">Log</a>'
         fmt = lambda v: f"{v:.3f}" if isinstance(v, (float, int)) else esc(v)
-        parts.append(f'<tr><td>{esc(name)}</td><td>{esc(status)}</td><td>{row["quality"]}</td><td>{row["inclination_deg"]:g}</td><td>{row["points"]}</td><td>{row["k"]}</td><td>{fmt(row["rms_kms"])}</td><td>{fmt(row["chi2_per_point"])}</td><td>{result}</td></tr>')
+        parts.append(f'<tr><td>{esc(name)}</td><td>{esc(status)}</td><td>{row["quality"]}</td><td>{row["inclination_deg"]:g}</td><td>{row["points"]}</td><td>{row["k"]}</td><td>{fmt(row["rms_kms"])}</td><td>{fmt(row["chi2_per_point"])}</td><td>{fmt(row["psi_rms_kms"])}</td><td>{result}</td></tr>')
     parts.append('''</tbody></table></div><script>
 document.querySelector('#filter').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('tbody tr').forEach(r=>r.hidden=!r.textContent.toLowerCase().includes(q));});
 </script></html>''')
@@ -73,12 +83,28 @@ def overview(path, name, statuses):
     if not good:
         return
     fig, axes = plt.subplots(1, 2, figsize=(12, 4.8))
-    rms = [s["metrics"]["rms_kms"] for s in good]
-    axes[0].hist(rms, bins=min(25, max(5, len(good)//5)), color="#257b8b", edgecolor="white")
-    axes[0].set(xlabel="In-sample RMS [km/s]", ylabel="Galaxies", title=f"Median RMS: {np.median(rms):.2f} km/s")
-    terms = Counter(s["metrics"]["k"] for s in good)
-    axes[1].bar(sorted(terms), [terms[k] for k in sorted(terms)], color="#bb6941")
-    axes[1].set(xlabel="Selected orbital terms", ylabel="Galaxies", xticks=sorted(terms), title="Configured sparse search")
-    fig.suptitle(f"HORB / SPARC · {name} · {len(good)} completed fits")
+    families = []
+    for model, label, color in (("squared", "Squared density", "#257b8b"),
+                                ("psi", "Signed ψ density", "#bb6941")):
+        metrics = [s["model_metrics"][model] for s in good if model in s.get("model_metrics", {})]
+        if metrics:
+            families.append((label, color, metrics))
+    if not families:
+        families = [("HORB", "#257b8b", [s["metrics"] for s in good])]
+    bins = np.histogram_bin_edges([m["rms_kms"] for _, _, ms in families for m in ms],
+                                 bins=min(25, max(5, len(good)//5)))
+    counts = [Counter(m["k"] for m in ms) for _, _, ms in families]
+    ks = sorted(set().union(*(c.keys() for c in counts)))
+    width = .8 / len(families)
+    for i, ((label, color, metrics), terms) in enumerate(zip(families, counts)):
+        rms = [m["rms_kms"] for m in metrics]
+        axes[0].hist(rms, bins=bins, histtype="step", linewidth=2, color=color,
+                     label=f"{label}: median {np.median(rms):.2f}")
+        axes[1].bar(np.array(ks)+(i-(len(families)-1)/2)*width,
+                    [terms[k] for k in ks], width=width, color=color, label=label)
+    axes[0].set(xlabel="In-sample RMS [km/s]", ylabel="Galaxies", title="Both density definitions")
+    axes[1].set(xlabel="Selected orbital terms", ylabel="Galaxies", xticks=ks, title="Configured sparse search")
+    axes[0].legend(fontsize=9); axes[1].legend(fontsize=9)
+    fig.suptitle(f"HORB / SPARC · {name} · {len(good)} completed galaxies")
     fig.text(.5, .015, "Fixed published baryonic components; all quality flags included. Scores describe the fitted data.", ha="center", fontsize=9)
     fig.tight_layout(rect=(0,.04,1,.95)); fig.savefig(path, dpi=180); plt.close(fig)

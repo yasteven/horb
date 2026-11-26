@@ -197,7 +197,7 @@ fn every_workflow_and_legacy_alias_builds_a_dry_run_plan() {
         );
         count += 1;
     }
-    assert_eq!(count, 39);
+    assert_eq!(count, 40);
     let alias = tool(&["--dry-run", "do", "scan_cuda_mw_basis.sh"]);
     assert!(alias.status.success());
     assert!(String::from_utf8_lossy(&alias.stderr).contains("--bin scan_horb_cuda_mw_basis"));

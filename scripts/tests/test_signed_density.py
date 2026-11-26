@@ -92,6 +92,14 @@ class SignedCliTests(unittest.TestCase):
     def command(self,script,args):
         return subprocess.run([sys.executable,str(SCRIPTS/script),*map(str,args)],capture_output=True,text=True)
 
+    def test_schema_one_cannot_silently_reinterpret_psi_as_squared(self):
+        with self.basis.open(newline="") as stream:
+            rows = list(csv.reader(stream))
+        mislabeled = self.write("mislabeled.csv", rows[0]+["density_model", "net_mass_fraction"],
+                                [r+["psi", 0] for r in rows[1:]])
+        with self.assertRaisesRegex(ValueError, "schema 1 requires squared"):
+            load_basis(mislabeled)
+
     def test_fit_outputs_can_be_reconstructed_and_plotted(self):
         prefix=self.root/"fit"
         result=self.command("fit_signed_density.py",["--basis-csv",self.basis,"--rc-csv",self.rc,

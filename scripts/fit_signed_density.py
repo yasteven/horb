@@ -10,6 +10,7 @@ import tempfile
 import numpy as np
 import scipy
 from horb_signed import load_basis, load_observations, baryons_function, Search
+from horb_lobes import mass_fields
 
 
 def atomic_write(path, write):
@@ -83,12 +84,16 @@ def main():
     best = candidates[0]
     terms = [{**basis.metadata[i],"weight":float(w),"signed_mass_msun":float(w*basis.metadata[i]["ref_mass_msun"])}
              for i,w in zip(best.subset,best.weights)]
+    density_model = basis.metadata[0].get("density_model", "squared")
+    for term in terms:
+        term["density_model"] = density_model
+        term.update(mass_fields(term))
     contributions = C[:,best.subset]*best.weights
     dark = np.sum(contributions,axis=1)
     total = d+dark
     if np.any(total<0): raise RuntimeError("internal error: invalid total force was accepted")
     prefix = str(args.out_prefix)
-    weight_fields = ["basis_id","state","n","l","m","a0_star_kpc","ref_mass_msun","weight","signed_mass_msun"]
+    weight_fields = ["basis_id","state","n","l","m","a0_star_kpc","ref_mass_msun","weight","signed_mass_msun","density_model","amplitude_mass_msun","absolute_component_mass_msun","net_mass_fraction"]
     write_csv(prefix+"_weights.csv",weight_fields,[[t[key] for key in weight_fields] for t in terms])
     write_csv(prefix+"_curve.csv",["r_kpc","v2_baryons_kms2","v2_dark_signed_kms2","v2_total_kms2","v_total_kms",
               *[f"v2_basis_{t['basis_id']}_kms2" for t in terms]],
@@ -112,7 +117,7 @@ def main():
                for rank,c in enumerate(candidates,1)])
     signed_masses = np.array([t["signed_mass_msun"] for t in terms])
     config = {key:(str(val) if isinstance(val,Path) else val) for key,val in vars(args).items()}
-    report = {"schema_version":1,"model":"signed_linear_orbital_density","geometry":"azimuthal_mean",
+    report = {"schema_version":1,"model":"signed_linear_orbital_density" if density_model == "squared" else "signed_real_psi_density","density_model":density_model,"geometry":"azimuthal_mean",
               "config":config,"inputs":{"basis":fingerprint(args.basis_csv),"observations":fingerprint(args.rc_csv),"baryons":fingerprint(args.baryons_csv)},
               "software":{"numpy":np.__version__,"scipy":scipy.__version__},
               "basis_count":len(basis.metadata),"evaluated_subsets":len(search.cache),"failed_subsets":search.failed,
@@ -122,8 +127,11 @@ def main():
               "rms_kms":best.rms,"selection_score":best.objective,"min_total_v2_kms2":best.min_total_v2,
               "matrix_rank":best.rank,"condition_number":best.condition if np.isfinite(best.condition) else None,
               "coefficient_bound_reached":bool(np.any(np.abs(best.weights)>=args.max_abs_weight*(1-1e-6))),
-              "net_mass_msun":float(signed_masses.sum()),"positive_mass_msun":float(signed_masses[signed_masses>0].sum()),
-              "negative_mass_msun":float(signed_masses[signed_masses<0].sum()),
+              "net_mass_msun":float(signed_masses.sum()),"positive_mass_msun":float(sum(t["positive_lobe_mass_msun"] for t in terms)),
+              "negative_mass_msun":float(sum(t["negative_lobe_mass_msun"] for t in terms)),
+              "absolute_component_mass_msun":float(sum(t["absolute_component_mass_msun"] for t in terms)),
+              "mass_note":"Signed mass is the integrated net mass; amplitude mass is weight times reference absolute mass. Lobe masses sum components before spatial cancellation.",
+              "zero_orbital_baseline": {"k":0,"weights":[],"chi2":search.fit(()).chi2,"rms_kms":search.fit(()).rms} if search.fit(()) else None,
               "components":terms,
               "selection_note":"chi2 + ridge*sum(w^2) + k*log(N) for bic; adaptive basis search makes this a heuristic complexity score, not a model probability",
               "domain_note":"positivity checked on the reported guard grid; no guarantee between samples or outside it; fit scores are in-sample"}

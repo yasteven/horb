@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "model": "signed_real_psi_density",
+  "density_model": "psi",
+  "geometry": "azimuthal_mean",
+  "config": {
+    "basis_csv": "reports/m31_psi_showcase_basis.csv",
+    "rc_csv": "reports/m31_inputs/rotation_curve.csv",
+    "baryons_csv": "reports/m31_inputs/baryons.csv",
+    "dataset_meta": null,
+    "out_prefix": "reports/m31_psi_showcase",
+    "r_min": 8.5,
+    "r_max": 36.5,
+    "max_components": 4,
+    "search": "exhaustive",
+    "beam_width": 6,
+    "budget": 40000,
+    "seed": 42,
+    "max_abs_weight": 20.0,
+    "ridge": 0.0,
+    "criterion": "chi2",
+    "weights": "signed"
+  },
+  "inputs": {
+    "basis": {
+      "path": "reports/m31_psi_showcase_basis.csv",
+      "sha256": "126e11f63278dd1c533911985b16b7cc0aa8828a72549f4e922893ed65b74405"
+    },
+    "observations": {
+      "path": "reports/m31_inputs/rotation_curve.csv",
+      "sha256": "40d8f117110522a51dd8fb7aa222814580da7e703e790b9fda80c1e2ab54fc97"
+    },
+    "baryons": {
+      "path": "reports/m31_inputs/baryons.csv",
+      "sha256": "2d68c8532a797c201dcbb046a7e55ba30b24ddfa714e4c1d9eac84a85f827236"
+    }
+  },
+  "software": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "basis_count": 20,
+  "evaluated_subsets": 6196,
+  "failed_subsets": 0,
+  "budget_reached": false,
+  "n_observations": 29,
+  "r_fit_requested_kpc": [
+    8.5,
+    36.5
+  ],
+  "r_guard_kpc": [
+    0.5,
+    60.0
+  ],
+  "guard_count": 477,
+  "k": 4,
+  "chi2": 4.855816400218976,
+  "chi2_per_point": 0.1674419448351371,
+  "rms_kms": 3.231851975438726,
+  "selection_score": 4.855816400218976,
+  "min_total_v2_kms2": 44391.328135831995,
+  "matrix_rank": 4,
+  "condition_number": 218.66965699975614,
+  "coefficient_bound_reached": true,
+  "net_mass_msun": 681048188335.7942,
+  "positive_mass_msun": 3486447969051.682,
+  "negative_mass_msun": -2805399780715.888,
+  "absolute_component_mass_msun": 6291847749767.57,
+  "mass_note": "Signed mass is the integrated net mass; amplitude mass is weight times reference absolute mass. Lobe masses sum components before spatial cancellation.",
+  "zero_orbital_baseline": {
+    "k": 0,
+    "weights": [],
+    "chi2": 3143.693173153898,
+    "rms_kms": 86.41934960296885
+  },
+  "components": [
+    {
+      "a0_star_kpc": 4.0,
+      "basis_id": 3,
+      "density_model": "psi",
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 1,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "net_mass_fraction": 1.0,
+      "normalization": "absolute_mass_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 2,
+      "softening_kpc": 0.0,
+      "state": "1s",
+      "weight": 8.443104974991007,
+      "signed_mass_msun": 844310497499.1007,
+      "amplitude_mass_msun": 844310497499.1007,
+      "absolute_component_mass_msun": 844310497499.1007,
+      "positive_lobe_mass_msun": 844310497499.1007,
+      "negative_lobe_mass_msun": 0.0
+    },
+    {
+      "a0_star_kpc": 8.0,
+      "basis_id": 4,
+      "density_model": "psi",
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 1,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "net_mass_fraction": 1.0,
+      "normalization": "absolute_mass_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 2,
+      "softening_kpc": 0.0,
+      "state": "1s",
+      "weight": -19.96117536001462,
+      "signed_mass_msun": -1996117536001.4622,
+      "amplitude_mass_msun": -1996117536001.4622,
+      "absolute_component_mass_msun": 1996117536001.4622,
+      "positive_lobe_mass_msun": 0.0,
+      "negative_lobe_mass_msun": -1996117536001.4622
+    },
+    {
+      "a0_star_kpc": 2.0,
+      "basis_id": 12,
+      "density_model": "psi",
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 0,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "net_mass_fraction": 0.9164276134190777,
+      "normalization": "absolute_mass_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 2,
+      "softening_kpc": 0.0,
+      "state": "3s",
+      "weight": 20.0,
+      "signed_mass_msun": 1832855226838.1555,
+      "amplitude_mass_msun": 2000000000000.0,
+      "absolute_component_mass_msun": 2000000000000.0,
+      "positive_lobe_mass_msun": 1916427613419.0776,
+      "negative_lobe_mass_msun": -83572386580.92224
+    },
+    {
+      "a0_star_kpc": 1.0,
+      "basis_id": 16,
+      "density_model": "psi",
+      "geometry": "azimuthal_mean",
+      "gravity_backend": "cpu_multipole",
+      "l": 2,
+      "m": 0,
+      "n": 3,
+      "n_mu": 8,
+      "n_phi": 0,
+      "n_radial": 128,
+      "net_mass_fraction": 0.0,
+      "normalization": "absolute_mass_full_space",
+      "ref_mass_msun": 100000000000.0,
+      "schema_version": 2,
+      "softening_kpc": 0.0,
+      "state": "3d_z2",
+      "weight": -14.514197162670076,
+      "signed_mass_msun": -0.0,
+      "amplitude_mass_msun": -1451419716267.0076,
+      "absolute_component_mass_msun": 1451419716267.0076,
+      "positive_lobe_mass_msun": 725709858133.5038,
+      "negative_lobe_mass_msun": -725709858133.5038
+    }
+  ],
+  "selection_note": "chi2 + ridge*sum(w^2) + k*log(N) for bic; adaptive basis search makes this a heuristic complexity score, not a model probability",
+  "domain_note": "positivity checked on the reported guard grid; no guarantee between samples or outside it; fit scores are in-sample",
+  "fitted_observations_columns": [
+    "R_kpc",
+    "Vobs_kms",
+    "eV_kms",
+    "v2_baryons_kms2",
+    "v2_dark_signed_kms2"
+  ],
+  "fitted_observations": [
+    [
+      8.5,
+      232.0,
+      11.0,
+      35025.163248417026,
+      19579.044327037765
+    ],
+    [
+      9.5,
+      240.7,
+      8.8,
+      34456.39038640411,
+      23600.172627127842
+    ],
+    [
+      10.5,
+      247.6,
+      6.5,
+      33782.522803890955,
+      27189.13750387249
+    ],
+    [
+      11.5,
+      249.1,
+      10.7,
+      33007.29677109144,
+      30090.09888122017
+    ],
+    [
+      12.5,
+      251.2,
+      13.5,
+      32144.512461780905,
+      32176.096307625605
+    ],
+    [
+      13.5,
+      252.6,
+      7.6,
+      31212.17254692298,
+      33434.40208049867
+    ],
+    [
+      14.5,
+      253.2,
+      5.6,
+      30229.1638258384,
+      33939.788505736964
+    ],
+    [
+      15.5,
+      253.8,
+      6.5,
+      29213.439082883186,
+      33824.59861023876
+    ],
+    [
+      16.5,
+      251.6,
+      7.1,
+      28181.094108180416,
+      33251.05538978833
+    ],
+    [
+      17.5,
+      247.3,
+      5.2,
+      27145.978624744337,
+      32388.579468912038
+    ],
+    [
+      18.5,
+      241.9,
+      8.1,
+      26119.621002427943,
+      31397.05094954099
+    ],
+    [
+      19.5,
+      233.6,
+      4.6,
+      25111.330972096668,
+      30415.81953097867
+    ],
+    [
+      20.5,
+      227.4,
+      5.5,
+      24128.396221446405,
+      29557.661894632765
+    ],
+    [
+      21.5,
+      224.0,
+      5.3,
+      23176.321009995085,
+      28906.640840162425
+    ],
+    [
+      22.5,
+      223.2,
+      5.4,
+      22259.07533887938,
+      28518.801963127644
+    ],
+    [
+      23.5,
+      227.3,
+      7.0,
+      21379.336201131933,
+      28424.75116678955
+    ],
+    [
+      24.5,
+      226.2,
+      6.0,
+      20538.710717715312,
+      28633.32170068831
+    ],
+    [
+      25.5,
+      226.4,
+      8.4,
+      19737.936209543223,
+      29135.719247852332
+    ],
+    [
+      26.5,
+      223.6,
+      9.5,
+      18977.055528643996,
+      29909.70260304035
+    ],
+    [
+      27.5,
+      218.9,
+      12.0,
+      18255.56795766114,
+      30923.503012922345
+    ],
+    [
+      28.5,
+      218.8,
+      9.9,
+      17572.55713362714,
+      32139.302717512626
+    ],
+    [
+      29.5,
+      223.5,
+      10.6,
+      16926.798054638588,
+      33516.18293762379
+    ],
+    [
+      30.5,
+      225.8,
+      10.1,
+      16316.84548265097,
+      35012.51640729315
+    ],
+    [
+      31.5,
+      223.2,
+      11.6,
+      15741.10609253219,
+      36587.82360326083
+    ],
+    [
+      32.5,
+      224.7,
+      32.1,
+      15197.896623448354,
+      38204.13935575274
+    ],
+    [
+      33.5,
+      237.4,
+      7.8,
+      14685.490120950082,
+      39826.951532248095
+    ],
+    [
+      34.5,
+      231.5,
+      22.1,
+      14202.152154260884,
+      41425.779429778006
+    ],
+    [
+      35.5,
+      238.0,
+      32.0,
+      13746.168677342368,
+      42974.459231692155
+    ],
+    [
+      36.5,
+      240.1,
+      38.2,
+      13315.866989313043,
+      44451.19961191831
+    ]
+  ]
+}

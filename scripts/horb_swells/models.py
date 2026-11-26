@@ -101,13 +101,15 @@ def orbital_v2(r, n, ell, scale, mass=1e11):
     return np.where(r == 0, 0, G*mass/scale*result)
 
 
-def dictionary(scales=(.5, 1., 2., 4., 8.)):
+def dictionary(scales=(.5, 1., 2., 4., 8.), density_model="squared"):
     return [{"state": name, "n": n, "l": ell, "m": 0, "a0_star_kpc": a,
-             "ref_mass_msun": 1e11} for name, n, ell in STATES for a in scales]
+             "ref_mass_msun": 1e11, **({"density_model": "psi"} if density_model == "psi" else {})} for name, n, ell in STATES if density_model != "psi" or ell % 2 == 0 for a in scales]
 
 
 def basis_matrix(r, terms):
-    return np.column_stack([orbital_v2(r, t["n"], t["l"], t["a0_star_kpc"], t["ref_mass_msun"]) for t in terms])
+    from horb_lobes import orbital_v2 as psi_v2
+    return np.column_stack([(psi_v2 if t.get("density_model", "squared") == "psi" else orbital_v2)(
+        r, t["n"], t["l"], t["a0_star_kpc"], t["ref_mass_msun"]) for t in terms]) if terms else np.zeros((len(r), 0))
 
 
 def baseline_v2(model, r, params, reference=13.):

@@ -1,3 +1,4 @@
+mod agc;
 mod dump;
 mod highlights;
 mod runner;
@@ -113,6 +114,7 @@ fn dispatch(r: &mut Runner, args: &[String]) -> Result<()> {
         }
         "data" => match rest.as_slice() {
             ["mw"] => workflows::mw_data(r)?,
+            ["agc114905"] => r.python("make_agc114905_data", &[], None)?,
             ["m31"] | ["andromeda"] => signed::m31_data(r)?,
             ["sparc", args @ ..] => sparc::data(r, args)?,
             ["swells", args @ ..] => swells::data(r, args)?,

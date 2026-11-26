@@ -26,11 +26,11 @@ def read_csv(path):
         return list(csv.DictReader(stream))
 
 
-def write_csv(path, rows):
-    if not rows:
+def write_csv(path, rows, fields=None):
+    if not rows and not fields:
         raise ValueError(f"empty output: {path}")
     def write(stream):
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]) if rows else fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     atomic_write(Path(path), write)
@@ -62,9 +62,9 @@ def index_unique(rows, key):
 
 
 def concentration(weights):
-    """Fractions of absolute signed mass, not probabilities or enclosed mass."""
-    values = [float(row["signed_mass_msun"]) for row in weights]
-    if not values or not all(math.isfinite(x) for x in values):
+    """Absolute component strength; count intrinsic negative lobes separately."""
+    values = [float(row.get("amplitude_mass_msun", row["signed_mass_msun"])) for row in weights]
+    if not all(math.isfinite(x) for x in values):
         raise ValueError("weights must contain finite signed masses")
     total = math.fsum(abs(x) for x in values)
     if total == 0:
@@ -76,8 +76,8 @@ def concentration(weights):
         "largest_abs_mass_fraction": max(fractions),
         "effective_components": 1 / math.fsum(x*x for x in fractions),
         "weight_entropy_nats": -math.fsum(x*math.log(x) for x in fractions if x),
-        "negative_abs_mass_fraction": math.fsum(abs(x) for x in values if x < 0) / total,
-        "mass_cancellation_fraction": max(0.0, 1 - abs(math.fsum(values)) / total),
+        "negative_abs_mass_fraction": math.fsum((abs(float(r.get("amplitude_mass_msun",r["signed_mass_msun"])))-float(r["signed_mass_msun"]))/2 for r in weights)/total,
+        "mass_cancellation_fraction": max(0.0, 1 - abs(math.fsum(float(r["signed_mass_msun"]) for r in weights)) / total),
     }
 
 
@@ -93,18 +93,42 @@ def validate_weights(summary, weights):
         w, ref, mass = (float(row[k]) for k in ("weight", "ref_mass_msun", "signed_mass_msun"))
         if not all(map(math.isfinite, (w, ref, mass, key[1]))) or ref <= 0 or key[1] <= 0:
             raise ValueError("invalid orbital weight/scale")
-        if not math.isclose(w*ref, mass, rel_tol=1e-10, abs_tol=1e-5):
+        from horb_lobes import mass_fields
+        term = {**row, "weight":w, "ref_mass_msun":ref,
+                "n":int(row["n"]) if "n" in row else 1, "l":int(row["l"]) if "l" in row else 0}
+        expected = mass_fields(term)
+        if not math.isclose(expected["signed_mass_msun"], mass, rel_tol=1e-10, abs_tol=1e-5):
             raise ValueError("signed mass disagrees with coefficient normalization")
     for key, values in (
         ("net_mass_msun", [float(r["signed_mass_msun"]) for r in weights]),
-        ("positive_mass_msun", [float(r["signed_mass_msun"]) for r in weights if float(r["weight"]) > 0]),
-        ("negative_mass_msun", [float(r["signed_mass_msun"]) for r in weights if float(r["weight"]) < 0]),
+        ("positive_mass_msun", [(abs(float(r.get("amplitude_mass_msun",r["signed_mass_msun"])))+float(r["signed_mass_msun"]))/2 for r in weights]),
+        ("negative_mass_msun", [(float(r["signed_mass_msun"])-abs(float(r.get("amplitude_mass_msun",r["signed_mass_msun"]))))/2 for r in weights]),
     ):
         if not math.isclose(math.fsum(values), float(summary[key]), rel_tol=1e-9, abs_tol=1e-3):
             raise ValueError(f"{summary['galaxy']}: summary and weights disagree on {key}")
 
 
-def load_fits(fits_dir=None):
+def load_fits(fits_dir=None, density_model="squared"):
+    if fits_dir is None and density_model != "squared":
+        # The paired 175-galaxy snapshot makes the new model usable immediately,
+        # without requiring another batch fit on the user's machine.
+        directory = ROOT / "data/sparc/density_comparison_20261126"
+        path, run_path = directory / "fit_reports.json", directory / "run.json"
+        reports = [r for r in json.loads(path.read_text()) if r["density_model"] == density_model]
+        summaries, weights = {}, defaultdict(list)
+        for report in reports:
+            name = report["galaxy"]
+            summary = {**report, "status":"complete",
+                       "distance_mpc":report["dataset"]["catalog"]["distance_mpc"]}
+            if canonical(name) in summaries:
+                raise ValueError("duplicate galaxy in bundled fit reports")
+            summaries[canonical(name)] = summary
+            weights[name] = report["components"]
+            validate_weights(summary, weights[name])
+        if len(summaries) != 175:
+            raise ValueError("bundled paired fit snapshot is incomplete")
+        return summaries, weights, json.loads(run_path.read_text()), {
+            str(p.relative_to(ROOT)):sha256(p) for p in (path, run_path)}
     weights = defaultdict(list)
     if fits_dir is None:
         summary_path = ROOT / "data/sparc/reference_summary.csv"
@@ -121,6 +145,7 @@ def load_fits(fits_dir=None):
         fits_dir = Path(fits_dir)
         summary_path, run_path = fits_dir / "summary.csv", fits_dir / "run.json"
         inputs = {str(p): sha256(p) for p in (summary_path, run_path)}
+    run = json.loads(run_path.read_text())
     summaries = index_unique(read_csv(summary_path), "galaxy")
     for summary in summaries.values():
         name = summary["galaxy"]
@@ -129,17 +154,27 @@ def load_fits(fits_dir=None):
         if summary["status"] != "complete":
             continue
         if fits_dir is not None:
-            path = fits_dir / name / "fit_weights.csv"
+            suffix = "_psi" if density_model == "psi" and run["config"].get("density_model") == "both" else ""
+            report_path = fits_dir / name / ("fit"+suffix+".json")
+            report = json.loads(report_path.read_text())
+            if report.get("density_model", "squared") != density_model:
+                raise ValueError(f"{name}: requested density model is absent")
+            for key in ("k", "rms_kms", "chi2", "chi2_per_point", "net_mass_msun",
+                        "positive_mass_msun", "negative_mass_msun", "condition_number",
+                        "coefficient_bound_reached"):
+                summary[key] = report.get(key, "")
+            path = fits_dir / name / ("fit"+suffix+"_weights.csv")
+            inputs[str(report_path)] = sha256(report_path)
             weights[name] = read_csv(path)
             inputs[str(path)] = sha256(path)
         validate_weights(summary, weights[name])
     return summaries, weights, json.loads(run_path.read_text()), inputs
 
 
-def build_catalog(fits_dir=None):
+def build_catalog(fits_dir=None, density_model="squared"):
     manifest = load_sources()
     catalog, curves, sparc_source = load_data()
-    fits, weights, run, fit_inputs = load_fits(fits_dir)
+    fits, weights, run, fit_inputs = load_fits(fits_dir, density_model)
     if run["source"]["files"] != sparc_source["files"]:
         raise ValueError("fit run uses a different SPARC source snapshot")
     radio = index_unique(read_csv(DATA / "lemmings_radio_2021.csv"), "canonical_name")
@@ -168,7 +203,7 @@ def build_catalog(fits_dir=None):
                          else "radio_origin_unresolved" if r.get("radio_detection") in ("I", "unI", "I+unI")
                          else "not_detected_in_this_survey")
         out = {
-            "galaxy": name, "activity_name": r.get("name", ""),
+            "galaxy": name, "density_model": density_model, "activity_name": r.get("name", ""),
             "catalog_coverage": "matched" if match else "no_catalog_match",
             "match_method": "canonical_name" if key == match else "SIMBAD_alias" if match else "",
             "optical_class": activity_class, "radio_loud_flag": r.get("radio_loud_flag", ""),
@@ -212,10 +247,10 @@ def build_catalog(fits_dir=None):
             if not math.isclose(float(f["distance_mpc"]), meta["distance_mpc"]):
                 raise ValueError(f"{name}: fit and SPARC distances disagree")
             out.update(concentration(weights[name]))
-            absolute_mass = math.fsum(abs(float(w["signed_mass_msun"])) for w in weights[name])
+            absolute_mass = math.fsum(abs(float(w.get("amplitude_mass_msun", w["signed_mass_msun"]))) for w in weights[name])
             for w in weights[name]:
                 joined_weights.append({"galaxy": name, **{k:v for k,v in w.items() if k != "galaxy"},
-                                       "abs_mass_fraction": abs(float(w["signed_mass_msun"]))/absolute_mass if absolute_mass else "",
+                                       "abs_mass_fraction": abs(float(w.get("amplitude_mass_msun", w["signed_mass_msun"])))/absolute_mass if absolute_mass else "",
                                        "scale_over_disk_scale": float(w["a0_star_kpc"])/meta["disk_scale_kpc"],
                                        "activity_name": out["activity_name"], "optical_class": activity_class,
                                        "jet_evidence": jet_class, "radio_core_limit": out["radio_core_limit"]})
@@ -226,19 +261,20 @@ def build_catalog(fits_dir=None):
                           ("radio_core_rank_among_AGN_detections", [r for r in detections if r["optical_class"] in ("Seyfert", "LINER")])):
         for rank, row in enumerate(sorted(subset, key=lambda r: -r["log_core_Lnu_1p5_W_Hz_sparc_distance"]), 1):
             row[label] = rank
-    return rows, joined_weights, points, {"sources": manifest, "fit_run": run,
+    return rows, joined_weights, points, {"sources": manifest, "fit_run": run, "density_model": density_model,
         "fit_input_sha256": fit_inputs, "ml_disk": ml_disk, "ml_bulge": ml_bulge}
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--density-model", choices=["squared", "psi"], default="squared")
     parser.add_argument("--out-dir", type=Path, default=ROOT / "reports/agn")
-    parser.add_argument("--fits-dir", type=Path, help="SPARC run directory with run.json, summary.csv and per-galaxy fit_weights.csv; default: bundled reference fits")
+    parser.add_argument("--fits-dir", type=Path, help="SPARC run directory with run.json, summary.csv and per-galaxy fits; default: bundled reference for the selected model")
     args = parser.parse_args(argv)
     out = args.out_dir.resolve()
     if out == ROOT or DATA.resolve() == out or DATA.resolve() in out.parents:
         parser.error("output must be separate from project/source data")
-    rows, weights, points, info = build_catalog(args.fits_dir)
+    rows, weights, points, info = build_catalog(args.fits_dir, args.density_model)
     matched = [r for r in rows if r["catalog_coverage"] == "matched"]
     counts = {
         "sparc_total": len(rows), "catalog_matches": len(matched),
@@ -257,7 +293,12 @@ def main(argv=None):
     out.mkdir(parents=True, exist_ok=True)
     write_csv(out / "sparc175_activity_weights.csv", rows)
     write_csv(out / "matched51_activity_weights.csv", matched)
-    write_csv(out / "orbital_weights.csv", weights)
+    # An all-zero run has no component rows, but still exports a valid table.
+    write_csv(out / "orbital_weights.csv", weights, fields=[
+        "galaxy", "basis_id", "state", "n", "l", "m", "a0_star_kpc", "ref_mass_msun",
+        "weight", "signed_mass_msun", "density_model", "amplitude_mass_msun",
+        "absolute_component_mass_msun", "net_mass_fraction", "abs_mass_fraction",
+        "scale_over_disk_scale", "activity_name", "optical_class", "jet_evidence", "radio_core_limit"])
     write_csv(out / "rotation_points.csv", points)
     atomic_write(out / "galaxies.txt", lambda f: f.write(",".join(r["galaxy"] for r in matched)+"\n"))
     atomic_write(out / "provenance.json", lambda f: json.dump(info, f, indent=2, allow_nan=False))

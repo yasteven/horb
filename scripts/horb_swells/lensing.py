@@ -29,7 +29,14 @@ def orbital_surface_modes(radii, term, cos_i, order=192):
     u = 2*radius/(n*a)
     radial = (2/(n*a))**3*gamma(n-ell)/(2*n*gamma(n+ell+1))
     radial = radial*np.exp(-u)*u**(2*ell)*eval_genlaguerre(n-ell-1, 2*ell+1, u)**2
-    radial = mass*radial*(2*ell+1)/(4*np.pi)
+    lobes = term.get("density_model", "squared") == "psi"
+    if lobes:
+        if ell % 2 or term.get("m", 0) != 0:
+            raise ValueError("psi lens projection supports aligned even-l, m=0 modes")
+        from horb_lobes import radial as psi_radial, normalization
+        radial = mass/a**3*psi_radial(radius/a, n, ell)/normalization(n, ell)*np.sqrt((2*ell+1)/(4*np.pi))
+    else:
+        radial = mass*radial*(2*ell+1)/(4*np.pi)
     si2, ci2 = 1-cos_i*cos_i, cos_i*cos_i
     surfaces = []
     for sin_phi2 in (0., .5, 1.):
@@ -37,6 +44,8 @@ def orbital_surface_modes(radii, term, cos_i, order=192):
         mu2 = (y2*si2+s*s*ci2)/radius**2
         if ell == 0:
             angular = 1.
+        elif lobes:
+            angular = (3*mu2-1)/2
         elif ell == 1:
             angular = mu2
         else:

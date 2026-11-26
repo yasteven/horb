@@ -38,6 +38,7 @@ def parser():
     p.add_argument("--max-abs-weight", type=float, default=20)
     p.add_argument("--criterion", choices=["chi2", "bic"], default="chi2")
     p.add_argument("--ridge", type=float, default=0)
+    p.add_argument("--density-model", choices=["both","squared","psi"], default="both")
     p.add_argument("--weights", choices=["signed", "nonnegative"], default="signed")
     p.add_argument("--ml-disk", type=float, default=0.5)
     p.add_argument("--ml-bulge", type=float, default=0.7)
@@ -61,13 +62,20 @@ def validate(args, catalog, curves):
     names = select_galaxies(args.galaxies, catalog)
     mass_to_light(args.ml_disk, args.ml_bulge)
     states = args.states.split(",")
-    if len(states) != len(set(states)) or not set(states) <= set(STATES) or not states:
-        raise ValueError(f"--states requires distinct names from {','.join(STATES)}")
+    def supported(state):
+        if state in STATES: return True
+        try:
+            n, ell, m = map(int, state.split(":"))
+            return 1 <= n <= 10 and 0 <= ell < n and ell <= 2 and m == 0
+        except ValueError:
+            return False
+    if len(states) != len(set(states)) or not states or not all(supported(s) for s in states):
+        raise ValueError(f"--states requires distinct names from {','.join(STATES)} or n:l:0 (n<=10,l<=2)")
     values = [float(x) for x in (args.scales or args.scale_factors or "0.125,0.25,0.5,1,2").split(",")]
     if not values or not np.isfinite(values).all() or min(values) <= 0 or len(values) != len(set(values)):
         raise ValueError("scales/factors must be distinct, positive and finite")
     if (args.jobs < 1 or args.budget < 1 or args.beam_width < 1 or args.seed < 0
-            or args.max_components < 1 or not 8 <= args.n_radial <= 512
+            or args.max_components < 0 or not 8 <= args.n_radial <= 512
             or not 2 <= args.grid_points <= 10000 or not 3 <= args.density_bins <= 1001):
         raise ValueError("invalid jobs/search/grid settings; see --help (radial order 8..512, grid 2..10000, density bins 3..1001)")
     if (not np.isfinite([args.max_abs_weight, args.ridge]).all() or args.max_abs_weight <= 0
@@ -76,7 +84,7 @@ def validate(args, catalog, curves):
     count = len(states)*len(values)
     if count > 300:
         raise ValueError("at most 300 basis columns are supported per batch")
-    if args.budget < count+1:
+    if args.budget < count+1 and args.max_components > 0:
         raise ValueError(f"--budget must be >= {count+1} to evaluate the null model and every single orbital")
     if args.search == "exhaustive":
         k = min(args.max_components, count, max(len(curves[n])-1 for n in names))
@@ -107,7 +115,8 @@ def signature(value):
 def software_fingerprint(binary):
     paths = sorted({*ROOT.glob("scripts/horb_sparc/*.py"), *ROOT.glob("scripts/horb_signed/*.py"),
                     *ROOT.glob("scripts/horb_common/*.py"), *ROOT.glob("scripts/plot_signed*.py"),
-                    ROOT/"scripts/fit_signed_density.py", ROOT/"scripts/fit_sparc.py"})
+                    ROOT/"scripts/fit_signed_density.py", ROOT/"scripts/fit_sparc.py",
+                    ROOT/"scripts/horb_lobes.py", ROOT/"scripts/compare_orbital_fits.py"})
     plotting = {}
     for name in ("matplotlib", "Pillow"):
         try:
@@ -193,38 +202,56 @@ def fit_one(name, args, config, catalog, curves, source, key, reports, plots, ch
         with (directory/"run.log").open("w") as log:
             prepare_galaxy(directory, catalog[name], curves[name], source, args.ml_disk, args.ml_bulge)
             lo, hi = parameters["r_min_kpc"], parameters["r_max_kpc"]
-            children.run([args.curve_bin, "signed_basis", "--out", directory/"basis.csv",
-                          "--states", args.states, "--scales", ",".join(format(v, ".17g") for v in parameters["scales_kpc"]),
-                          "--ref-mass", parameters["ref_mass_msun"], "--r-min", lo, "--r-max", hi,
-                          "--r-step", (hi-lo)/(args.grid_points-1), "--rc-csv", directory/"rotation_curve.csv",
-                          "--n-radial", args.n_radial], log)
-            command = [sys.executable, ROOT/"scripts/fit_signed_density.py", "--basis-csv", directory/"basis.csv",
-                       "--rc-csv", directory/"rotation_curve.csv", "--baryons-csv", directory/"baryons.csv",
-                       "--dataset-meta", directory/"dataset.json", "--out-prefix", directory/"fit",
-                       "--r-min", lo, "--r-max", hi, "--max-components", parameters["max_components_effective"]]
-            for key_name in ("search", "budget", "beam_width", "seed", "max_abs_weight", "criterion", "ridge", "weights"):
-                command.extend(["--"+key_name.replace("_", "-"), config[key_name]])
-            children.run(command, log)
-            outputs = [directory/f for f in ("rotation_curve.csv", "baryons.csv", "dataset.json", "basis.csv", "fit.json",
-                       "fit_weights.csv", "fit_curve.csv", "fit_observations.csv", "fit_candidates.csv")]
+            models = ["squared", "psi"] if args.density_model == "both" else [args.density_model]
+            outputs, model_metrics, prefixes = [], {}, []
+            for model in models:
+                suffix = "" if model == models[0] else "_psi"
+                prefix = directory/("fit"+suffix)
+                prefixes.append(prefix)
+                basis = directory/("basis"+suffix+".csv")
+                states = args.states.split(",")
+                if model == "psi":
+                    states = [state for state in states if state in ("1s", "2s", "3s", "3d_z2") or (":" in state and int(state.split(":")[1]) % 2 == 0)]
+                    if not states:
+                        raise ValueError("no identifiable signed-psi states remain in this rotation dictionary")
+                children.run([args.curve_bin, "signed_basis", "--density-model", model, "--out", basis,
+                    "--states", ",".join(states), "--scales", ",".join(format(v, ".17g") for v in parameters["scales_kpc"]),
+                    "--ref-mass", parameters["ref_mass_msun"], "--r-min", lo, "--r-max", hi,
+                    "--r-step", (hi-lo)/(args.grid_points-1), "--rc-csv", directory/"rotation_curve.csv",
+                    "--n-radial", args.n_radial], log)
+                command = [sys.executable, ROOT/"scripts/fit_signed_density.py", "--basis-csv", basis,
+                    "--rc-csv", directory/"rotation_curve.csv", "--baryons-csv", directory/"baryons.csv",
+                    "--dataset-meta", directory/"dataset.json", "--out-prefix", prefix,
+                    "--r-min", lo, "--r-max", hi, "--max-components", min(parameters["max_components_effective"],len(states)*len(parameters["scales_kpc"]))]
+                for key_name in ("search", "budget", "beam_width", "seed", "max_abs_weight", "criterion", "ridge", "weights"):
+                    command.extend(["--"+key_name.replace("_", "-"), config[key_name]])
+                children.run(command, log)
+                outputs.extend([basis, *[Path(str(prefix)+ext) for ext in (".json","_weights.csv","_curve.csv","_observations.csv","_candidates.csv")]])
+                if args.plots == "both":
+                    density = directory/("density"+suffix+"_xz.csv")
+                    image = plots/f"{name}{suffix}_density.png"
+                    children.run([args.curve_bin, "signed_density", "--weights", str(prefix)+"_weights.csv",
+                        "--out", density, "--extent", hi, "--bins", args.density_bins], log)
+                    children.run([sys.executable, ROOT/"scripts/plot_signed_density.py", density, "-o", image,
+                        "--title", f"SPARC {name}: {model} density"], log)
+                    outputs.extend([density, image])
+                fit = json.loads(Path(str(prefix)+".json").read_text())
+                fields = ("k", "chi2", "chi2_per_point", "rms_kms", "selection_score", "evaluated_subsets", "failed_subsets",
+                    "budget_reached", "matrix_rank", "condition_number", "coefficient_bound_reached", "density_model",
+                    "net_mass_msun", "positive_mass_msun", "negative_mass_msun", "absolute_component_mass_msun", "components")
+                model_metrics[model] = {k:fit[k] for k in fields}
+            from compare_orbital_fits import compare
+            comparison = directory/"comparison"
+            compare(prefixes, comparison, f"SPARC {name}", plot=args.plots != "none")
+            outputs.extend([directory/f for f in ("rotation_curve.csv","baryons.csv","dataset.json",
+                "comparison.json","comparison_scores.csv","comparison_curves.csv")])
             if args.plots != "none":
+                import shutil
                 image = plots/f"{name}_rotation.png"
-                children.run([sys.executable, ROOT/"scripts/plot_signed_fit.py", "--fit-prefix", directory/"fit", "-o", image], log)
+                shutil.copyfile(str(comparison)+".png", image)
                 outputs.append(image)
-            if args.plots == "both":
-                density = directory/"density_xz.csv"
-                image = plots/f"{name}_density.png"
-                children.run([args.curve_bin, "signed_density", "--weights", directory/"fit_weights.csv",
-                              "--out", density, "--extent", hi, "--bins", args.density_bins], log)
-                children.run([sys.executable, ROOT/"scripts/plot_signed_density.py", density, "-o", image,
-                              "--title", f"SPARC {name}: signed orbital density"], log)
-                outputs.extend([density, image])
-            fit = json.loads((directory/"fit.json").read_text())
-            fields = ("k", "chi2", "chi2_per_point", "rms_kms", "selection_score", "evaluated_subsets", "failed_subsets",
-                      "budget_reached", "matrix_rank", "condition_number", "coefficient_bound_reached",
-                      "net_mass_msun", "positive_mass_msun", "negative_mass_msun", "components")
-            state.update(status="complete", metrics={k: fit[k] for k in fields},
-                         outputs={str(p.relative_to(ROOT)): digest(p) for p in outputs})
+            state.update(status="complete", metrics=model_metrics[models[0]], model_metrics=model_metrics,
+                outputs={str(p.relative_to(ROOT)):digest(p) for p in outputs})
     except Exception as e:
         state.update(status="interrupted" if children.cancelled.is_set() else "failed", error=str(e))
     state["seconds"] = time.monotonic()-started

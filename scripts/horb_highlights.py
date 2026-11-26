@@ -9,8 +9,8 @@ from scipy.optimize import differential_evolution, least_squares
 from scipy.special import gammainc, gammaincc, gamma, eval_genlaguerre, eval_legendre
 
 G = 4.3009e-6
-MODELS = ("superposition", "qi", "nfw", "burkert", "einasto", "baryons")
-LABELS = {"superposition": "HORB superposition", "single": "HORB single orbital",
+MODELS = ("superposition", "psi", "qi", "nfw", "burkert", "einasto", "baryons")
+LABELS = {"superposition": "HORB |ψ|²", "psi": "HORB signed ψ", "single": "HORB single orbital",
           "qi": "Quantised inertia (QI)", "nfw": "NFW", "burkert": "Burkert",
           "einasto": "Einasto", "baryons": "Baryons alone"}
 
@@ -95,6 +95,10 @@ def signed_density_xz(x, z, components):
         n, ell, m, a = (term[k] for k in ("n", "l", "m", "a0_star_kpc"))
         if m != 0:
             raise ValueError("README dictionary requires axisymmetric m=0 orbitals")
+        if term.get("density_model", "squared") == "psi":
+            from horb_lobes import density
+            rho += term["weight"]*density(radius, mu, n, ell, a, term["ref_mass_msun"])
+            continue
         u = 2*radius/(n*a)
         norm2 = (2/(n*a))**3 * gamma(n-ell)/(2*n*gamma(n+ell+1))
         radial2 = norm2*np.exp(-u)*u**(2*ell)*eval_genlaguerre(n-ell-1, 2*ell+1, u)**2

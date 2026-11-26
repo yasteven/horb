@@ -161,7 +161,7 @@ class SwellsPhysics(unittest.TestCase):
             report = json.loads((base/folder/"rotation_fit.json").read_text())
             self.assertFalse(report["lensing_used_in_fit"])
             self.assertEqual(report["fit_inputs_sha256"],fingerprints())
-            for name in MODELS:
+            for name in (m for m in MODELS if m in report["models"]):
                 prediction = P@np.sqrt(total_force(name,grid,report))
                 residual = prediction[mask]-self.obs["v_los_kms"][mask]
                 rms = np.sqrt(np.mean(residual**2))

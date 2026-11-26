@@ -25,6 +25,16 @@ class ActivityCatalogTests(unittest.TestCase):
         self.assertEqual(canonical("UGC 02487"), canonical("ugc2487"))
         self.assertNotEqual(canonical("NGC 4388"), canonical("NGC4389"))
 
+    def test_signed_psi_catalog_keeps_its_own_fit_and_intrinsic_lobe_masses(self):
+        rows, weights, _, info = build_catalog(density_model="psi")
+        self.assertEqual(len(rows), 175)
+        self.assertEqual(info["density_model"], "psi")
+        self.assertTrue(all(r["density_model"] == "psi" for r in rows))
+        self.assertTrue(all(r["density_model"] == "psi" for r in weights))
+        d = [r for r in weights if r["l"] == 2]
+        self.assertTrue(d)
+        self.assertTrue(all(r["signed_mass_msun"] == 0 and r["abs_mass_fraction"] > 0 for r in d))
+
     def test_mismatched_weight_normalization_is_rejected(self):
         summary = dict(galaxy="test", k=1, net_mass_msun=100,
                        positive_mass_msun=100, negative_mass_msun=0)

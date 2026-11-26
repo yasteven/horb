@@ -1,0 +1,162 @@
+{
+  "galaxy": "AGC 114905",
+  "sources": [
+    "https://arxiv.org/abs/2404.06537",
+    "data/agc114905/README.md"
+  ],
+  "scores": {
+    "baryons": {
+      "rms_kms": 4.762684533091943,
+      "chi2": 32.16665183570708,
+      "n": 5
+    },
+    "superposition": {
+      "rms_kms": 3.205977406757179e-05,
+      "chi2": 1.2231734906236597e-09,
+      "n": 5
+    },
+    "qi": {
+      "rms_kms": 34.45195379358152,
+      "chi2": 1646.4761326002258,
+      "n": 5,
+      "source": "https://doi.org/10.1007/s10509-017-3128-6",
+      "equation": 8,
+      "redshift_scaling_equation": 9,
+      "redshift": 0.0,
+      "c_m_s": 299792458.0,
+      "theta_now_m": 8.8e+26,
+      "theta_m": 8.8e+26,
+      "a_qi_m_s2": 2.0426254062200399e-10,
+      "parameter_count": 0,
+      "fitted": false,
+      "baryons": "Same fixed baryonic force; QI is the total speed, with no additional halo.",
+      "domain": "Positive radius and nonnegative total inward baryonic v^2."
+    },
+    "nfw": {
+      "rms_kms": 1.0331767750333203,
+      "chi2": 1.6112142577998303,
+      "n": 5,
+      "log10_parameters": [
+        8.721727160143544,
+        0.9126453116355967
+      ],
+      "parameter_names": [
+        "mass_within_reference_msun",
+        "scale_kpc"
+      ],
+      "parameters": [
+        526898740.1458288,
+        8.17796620710652
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ]
+      ],
+      "reference_radius_kpc": 10.129482078056904,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    },
+    "burkert": {
+      "rms_kms": 0.8985564344376631,
+      "chi2": 1.2001445660885013,
+      "n": 5,
+      "log10_parameters": [
+        8.687445432836453,
+        0.38889731831713353
+      ],
+      "parameter_names": [
+        "mass_within_reference_msun",
+        "scale_kpc"
+      ],
+      "parameters": [
+        486906343.71316046,
+        2.4484842701572576
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ]
+      ],
+      "reference_radius_kpc": 10.129482078056904,
+      "parameter_count": 2,
+      "bound_reached": false,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    },
+    "einasto": {
+      "rms_kms": 0.8009529761826106,
+      "chi2": 0.9497567741571327,
+      "n": 5,
+      "log10_parameters": [
+        8.655064645184401,
+        0.5886923224575238,
+        0.014255534472970222
+      ],
+      "parameter_names": [
+        "mass_within_reference_msun",
+        "scale_kpc",
+        "alpha"
+      ],
+      "parameters": [
+        451923208.60729146,
+        3.8787547680350496,
+        1.0333692509162518
+      ],
+      "log10_bounds": [
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -1.3010299956639813,
+          2.6989700043360187
+        ],
+        [
+          -1.5228787452803376,
+          0.3010299956639812
+        ]
+      ],
+      "reference_radius_kpc": 10.129482078056904,
+      "parameter_count": 3,
+      "bound_reached": false,
+      "optimizer": "differential_evolution(seed=42) + least_squares",
+      "global_converged": true,
+      "local_converged": true
+    },
+    "psi": {
+      "rms_kms": 0.00019777515819139507,
+      "chi2": 4.5599163119995656e-08,
+      "n": 5,
+      "k": 4
+    }
+  },
+  "fit_range_kpc": [
+    1.1254977875225507,
+    10.129482078056904
+  ],
+  "baryons": "Figure 7 scenario held fixed: D = 80.27 Mpc, i = 35.86\u00b0 \u00b7 five points, digitized baryons and errors",
+  "selection": "Lowest converged weighted chi2 in the enumerated <=4-term dictionary; no model-probability claim.",
+  "density": {
+    "slice": "y=0",
+    "extent_kpc": 15.0,
+    "bins": 301,
+    "min_msun_per_kpc3": -25294913131.04923,
+    "max_msun_per_kpc3": 223187439.35487854
+  },
+  "validation": "Weights, signed-density CSV, input snapshot, fitted scores and total-force guard checked before rendering."
+}

@@ -25,6 +25,10 @@ fn main() -> Result<()> {
                 if options.softening != 0.0 {
                     bail!("CPU multipoles are unsoftened; use --softening 0");
                 }
+                if options.signed_lobes {
+                    let field = orbital_basis::signed_lobe::SignedLobe::new(cfg.clone(), options.nr)?;
+                    return radii.iter().map(|r| Ok(field.disk_plane_v2(*r)?)).collect();
+                }
                 radii
                     .iter()
                     .map(|r| {
