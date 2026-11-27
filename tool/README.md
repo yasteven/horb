@@ -41,6 +41,8 @@ conventions.
 
 ./run.sh do make-curve
 ./run.sh do mw-comparison
+./run.sh python make_sparc_summary  # README mean RMS and jet/activity plots
+./run.sh python make_sparc_summary --refit  # repeat the 700 classical halo fits
 ./run.sh --release do signed-fit cpu  # sparse signed weights + rotation/density graphs
 ./run.sh --release do m31-signed-fit cpu  # Andromeda with bundled data and provenance
 ./run.sh do cuda-candidate       # a0=1.0, mass=2.5e11, n=96, extent=80, eps=0.25

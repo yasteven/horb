@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "galaxies_evaluated": 175,
+  "rotation_points": 3391,
+  "aggregation": "arithmetic mean of per-galaxy RMS; equal galaxy weights",
+  "models": [
+    {
+      "model": "squared",
+      "galaxies": 175,
+      "mean_rms_kms": 2.1520448226372517,
+      "median_rms_kms": 1.09277573191741,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 2.160402677435709
+    },
+    {
+      "model": "psi",
+      "galaxies": 175,
+      "mean_rms_kms": 2.690702543813044,
+      "median_rms_kms": 1.4059402154428589,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 2.694853011160639
+    },
+    {
+      "model": "nfw",
+      "galaxies": 175,
+      "mean_rms_kms": 7.487225204699437,
+      "median_rms_kms": 4.762599692236459,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 7.506857377803994
+    },
+    {
+      "model": "burkert",
+      "galaxies": 175,
+      "mean_rms_kms": 6.6747299450191475,
+      "median_rms_kms": 3.644710144427173,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 6.649671811818172
+    },
+    {
+      "model": "piso",
+      "galaxies": 175,
+      "mean_rms_kms": 6.231284689809365,
+      "median_rms_kms": 3.625300235074427,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 6.214120106405454
+    },
+    {
+      "model": "einasto",
+      "galaxies": 175,
+      "mean_rms_kms": 5.6675696699400415,
+      "median_rms_kms": 3.264902678414099,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 5.67791510897895
+    },
+    {
+      "model": "vms",
+      "galaxies": 175,
+      "mean_rms_kms": 10.51538645473167,
+      "median_rms_kms": 8.485964389785401,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 10.528447163725732
+    },
+    {
+      "model": "mond",
+      "galaxies": 174,
+      "mean_rms_kms": 17.184605783494913,
+      "median_rms_kms": 13.978833465585122,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 17.184605783494913
+    },
+    {
+      "model": "qi",
+      "galaxies": 174,
+      "mean_rms_kms": 19.427573649594574,
+      "median_rms_kms": 15.776443126617895,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 19.427573649594574
+    },
+    {
+      "model": "baryons",
+      "galaxies": 174,
+      "mean_rms_kms": 43.29563527038195,
+      "median_rms_kms": 41.02014077874128,
+      "common_galaxies": 174,
+      "common_mean_rms_kms": 43.29563527038195
+    }
+  ],
+  "qi": {
+    "source": "https://doi.org/10.1007/s10509-017-3128-6",
+    "equation": 8,
+    "redshift_scaling_equation": 9,
+    "redshift": 0.0,
+    "c_m_s": 299792458.0,
+    "theta_now_m": 8.8e+26,
+    "theta_m": 8.8e+26,
+    "a_qi_m_s2": 2.0426254062200399e-10,
+    "parameter_count": 0,
+    "fitted": false,
+    "baryons": "Same fixed baryonic force; QI is the total speed, with no additional halo.",
+    "domain": "Positive radius and nonnegative total inward baryonic v^2."
+  },
+  "mond": {
+    "source": "https://doi.org/10.12942/lrr-2012-10",
+    "equations": [
+      42,
+      43
+    ],
+    "interpolation": "simple algebraic",
+    "a0_m_s2": 1.2e-10,
+    "parameter_count": 0,
+    "fitted": false,
+    "external_field": "omitted",
+    "geometry": "algebraic rotation-curve approximation; no field solver"
+  },
+  "classical_method": {
+    "version": 1,
+    "objective": "sum(((v_model-v_observed)/published_error)^2)",
+    "log10_mass_bounds_msun": [
+      0.0,
+      14.0
+    ],
+    "log10_scale_bounds_kpc": [
+      -3.0,
+      4.0
+    ],
+    "alpha_bounds": [
+      0.03,
+      2.0
+    ],
+    "reference_radius": "outermost measured radius",
+    "optimizer": "differential_evolution followed by least_squares; explicit zero-halo candidate",
+    "seed": 42,
+    "maxiter": 600,
+    "popsize": 12,
+    "tol": 1e-10,
+    "ml_disk": 0.5,
+    "ml_bulge": 0.7
+  },
+  "horb_search": {
+    "search": "beam",
+    "budget": 2000,
+    "beam_width": 6,
+    "seed": 42,
+    "max_components": 4,
+    "max_abs_weight": 20,
+    "criterion": "chi2",
+    "ridge": 0,
+    "density_model": "both",
+    "weights": "signed",
+    "ml_disk": 0.5,
+    "ml_bulge": 0.7,
+    "states": "1s,2s,2p_z,3s,3p_z,3d_z2",
+    "ref_mass": null,
+    "n_radial": 128,
+    "grid_points": 129,
+    "plots": "both",
+    "density_bins": 201,
+    "scale_mode": "disk_scale_multiple",
+    "scale_values": [
+      0.125,
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ]
+  },
+  "undefined_scores": [
+    {
+      "galaxy": "UGC01281",
+      "model": "mond",
+      "status": "undefined_outward_baryonic_force"
+    },
+    {
+      "galaxy": "UGC01281",
+      "model": "qi",
+      "status": "undefined_outward_baryonic_force"
+    },
+    {
+      "galaxy": "UGC01281",
+      "model": "baryons",
+      "status": "undefined_outward_baryonic_force"
+    }
+  ],
+  "classical_bounds_reached": 112,
+  "classical_global_nonconvergence": 0,
+  "activity_statistics": {
+    "squared": {
+      "optical_AGN": 21,
+      "detections": 12,
+      "upper_limits": 9,
+      "spearman_rho_detections_only": -0.25874125874125875,
+      "spearman_p_two_sided": 0.41677476889913817,
+      "groups": {
+        "resolved_jets": {
+          "n": 7,
+          "median_concentration": 0.8466568553077647,
+          "coefficient_bound_count": 0
+        },
+        "other_optical_AGN": {
+          "n": 14,
+          "median_concentration": 0.7264084962768165,
+          "coefficient_bound_count": 0
+        },
+        "HII_comparison": {
+          "n": 29,
+          "median_concentration": 0.7456887403570723,
+          "coefficient_bound_count": 0
+        }
+      }
+    },
+    "psi": {
+      "optical_AGN": 21,
+      "detections": 12,
+      "upper_limits": 9,
+      "spearman_rho_detections_only": 0.2517482517482518,
+      "spearman_p_two_sided": 0.4299187850328841,
+      "groups": {
+        "resolved_jets": {
+          "n": 7,
+          "median_concentration": 0.8261645350333492,
+          "coefficient_bound_count": 0
+        },
+        "other_optical_AGN": {
+          "n": 14,
+          "median_concentration": 0.6585404331158197,
+          "coefficient_bound_count": 1
+        },
+        "HII_comparison": {
+          "n": 29,
+          "median_concentration": 0.6645460185553116,
+          "coefficient_bound_count": 1
+        }
+      }
+    }
+  },
+  "activity_exclusions": {
+    "no_catalog_match": 124,
+    "ALG_uncertain_AGN": 1
+  },
+  "input_sha256": {
+    "data/sparc/density_comparison_20261126/fit_reports.json": "9609cea4932097d294e6b91f7026176d44f0f71695166598b4f4d655015c32fa",
+    "data/sparc/density_comparison_20261126/run.json": "e2354ddeaea28f317dc8127328319d51c354564966efb599efe0e1fd83611cc6",
+    "data/sparc/density_comparison_20261126/agn_squared.csv": "2f728262342868a1e0e16f966fde6046a30019af4ed9bf6743f95f21044ca078",
+    "data/sparc/density_comparison_20261126/agn_psi.csv": "fbe03be5be66f4b10a998602d43d2a9e8b16bd76799434f9aa892caee88f8d44",
+    "data/sparc/sources.json": "7459d85ac05f03da1486b39ec75f046bb23e484c021b9f92d79fbefe7ca356ea",
+    "data/agn/sources.json": "2b3893d44a9734f0e7611906f7a389dcec08178dcbcd455a0d17dbd774fe4e3a",
+    "data/sparc/model_comparison/halo_fits.json": "06f79eac9b61efd8830e24b18748870329b14a0cea7a7dd83e775fde1e3852eb",
+    "data/sparc/model_comparison/vms_fits.json": "918f90894bc92b218737a69941ac7ff8bebbc1c1ea7b0e5e5817720099d0d2b1"
+  }
+}

@@ -61,6 +61,13 @@ Legacy shell workflows are available as `./run.sh do legacy-*` commands; the
 original shell files remain recoverable through Git history.
 ## README figure generation
 
+`./run.sh python make_sparc_summary` rebuilds the mean-RMS and radio-activity
+figures from the bundled 175-galaxy fits. Add `--refit` to repeat the four
+classical halo optimizations (700 fits); HORB weights remain the recorded
+rotation-only selections. The VMS script profile and simple MOND use
+`horb_vms_mond.py`. Tables, fit parameters, coverage and source hashes live in
+`data/sparc/model_comparison/`. PDF exports go in `plots/`.
+
 Use `./run.sh --release do readme-highlights` for all six featured figures.
 `make_readme_highlights.py` validates and renders each matched pair;
 `horb_highlights.py` supplies refitted classical forces and an independent

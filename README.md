@@ -2,6 +2,24 @@
 
 Rust/CUDA Simulation Suite For Testing Hydrogen Electron Orbitals As Spiral Galaxy Dark Matter Halos
 
+## SPARC 175: average rotation-curve error
+
+![Mean per-galaxy RMS for both HORB density families, four classical halos, VMS script profile, simple MOND, QI, and baryons](images/sparc_model_rms.png)
+
+Each galaxy has equal weight in this arithmetic mean of its RMS. Both HORB
+families, NFW, Burkert, pseudo-isothermal, Einasto and the VMS script profile
+cover **175/175 galaxies** with the same fixed baryons. Simple algebraic MOND,
+QI and baryons alone cover **174/175**: UGC01281's outward baryonic force at
+two measured radii gives no real circular-speed prediction for those formulas.
+White ticks compare every model on the same 174 galaxies. These are in-sample
+scores; fitted model flexibility differs, and QI/MOND have no fitted parameters.
+[All scores, parameters and methods](data/sparc/model_comparison/README.md).
+
+```sh
+./run.sh python make_sparc_summary          # rebuild both SPARC summary figures
+./run.sh python make_sparc_summary --refit  # also repeat the classical halo fits
+```
+
 ## Milky Way: rotation curve and fitted dark density
 
 **Seven curves, one dataset:** the best found HORB squared-density superposition,
@@ -293,6 +311,23 @@ yet been evaluated.
 
 ## AGN and radio-jet comparison sample
 
+![Radio-core activity versus orbital-weight concentration in both HORB density families, with resolved jets and classified comparison groups](images/sparc_jet_concentration.png)
+
+The upper panels compare **21 optically classified Seyfert/LINER nuclei**:
+12 radio-core detections and nine upper limits. Stars label the seven galaxies
+with resolved jets/lobes. Radio-core luminosity is an activity proxy, not a
+measurement of mechanical jet power. The lower panels add 29 HII-classified
+comparison galaxies; 124 unmatched galaxies and one uncertain ALG nucleus
+are excluded. HII classification alone does not establish a jet-free control.
+
+Concentration is the largest **absolute component strength** divided by the
+sum of all absolute strengths, so signed-ψ zero-net-mass lobes still count.
+The resolved-jet group has median concentration **85% (|ψ|²)** and **83% (ψ)**,
+versus **75%** and **66%** in the HII group. Among the 12 detected AGN cores,
+the radio-luminosity rank correlations are **−0.26** and **+0.25**, respectively
+(two-sided p=0.42 and 0.43). This small sample does not establish a luminosity–
+concentration correlation. [Plotted data and sample definitions](data/sparc/model_comparison/README.md#activity-and-concentration).
+
 The activity catalog matches **51 SPARC galaxies** (1,472 rotation points) to
 LeMMINGs radio and nuclear X-ray measurements. It includes 21 optical
 Seyfert/LINER nuclei, seven priorities with resolved jet/lobe evidence, and
@@ -315,8 +350,9 @@ zero-net-mass orbitals. Unknown AGN status and radio upper limits remain distinc
 [Data and provenance](data/agn/README.md).
 The guide also identifies five nearby PG quasar hosts with published rotation
 profiles, Mrk 231, the giant-jet spiral J2345−0449 and six radio-galaxy CO disks.
-Those external curves still need numerical import. This update prepares the
-weight/activity comparison; it makes no statistical correlation claim.
+Those external curves still need numerical import. The plotted comparisons
+use the recorded rotation-only fits; they do not yet search higher-energy
+states, fit jet ages, or establish unique physical orbital populations.
 
 ## License
 
