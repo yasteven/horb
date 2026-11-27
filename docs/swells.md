@@ -180,6 +180,16 @@ dot, critical curve and displayed rotation RMS. The command checks matching
 inputs and baryons, reconstructs all four rotation scores, and recomputes
 their lensing radii at 256 angular samples before drawing the figure.
 
+The README's separate **signed-ψ intrinsic density slice** likewise uses its
+own closest-lensing selection: radius 0.856527 arcsec and rotation RMS
+2.924320 km/s. Its components are 1s (a0=1 kpc), 2s (0.5 kpc), 2s (2 kpc),
+and 3d_z2 (2 kpc), with their saved lensing-selected weights. The 3s term of
+the rotation-selected ψ fit is not used in this slice. Exact weights, scores,
+selection provenance and the intrinsic x–z plane are recorded in
+`data/highlights/j2141_psi_density_fit.json`. Rebuilding the README figures
+audits the lensing selections before rendering and refuses a rotation-winner
+fallback when a closest-lensing ψ selection is unavailable.
+
 The +0.24 dex stellar-mass sensitivity run gives HORB RMS about 1.81 km/s but
 multiple critical branches, withholding a single-radius comparison. Thus
 this pilot does not establish a unique HORB lensing prediction or a lensing

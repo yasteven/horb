@@ -38,6 +38,11 @@ It also rebuilds J2141 from its recorded SWELLS fits: QI is projected through
 the same observing model and scored on the six outer measurements. Lensing
 selections are audited and redrawn without the single-orbital row. Recorded fits are reused. If the signed-ψ SWELLS record is absent, its rotation
 fit is generated before predicting lensing; the squared solution is preserved.
+The separate J2141 signed-ψ density slice uses the **closest-lensing ψ
+candidate**, not the rotation winner. Its orbitals, weights and scores are
+recorded in `data/highlights/j2141_psi_density_fit.json`, and its caption states
+that lensing was used for selection. If no valid closest-lensing ψ candidate
+exists, generation stops rather than substituting the rotation winner.
 
 ```sh
 ./run.sh --release do readme-highlights --refit
@@ -51,6 +56,7 @@ figures and records before publishing. `--dry-run` prints either command plan.
 |---|---|
 | MW/M31 README PNGs | `images/{mw,m31}_{rotation,density}_highlight.png` |
 | J2141 README PNGs | `images/swells/j2141_{rotation,lensing}.png` |
+| J2141 lensing-selected ψ density PNG and exact fit | `images/swells/j2141_psi_density_highlight.png`, `data/highlights/j2141_psi_density_fit.json` |
 | Vector PDFs | `plots/*_highlight.pdf` |
 | Selected fit reports and exact weights | `data/highlights/{mw,m31}_{fit.json,weights.csv}` |
 | Six MW/M31 curves and scores | `data/highlights/{mw,m31}_{curves.csv,scores.csv,comparison.json}` |

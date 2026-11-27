@@ -244,5 +244,6 @@
   },
   "qi_lensing": "Not evaluated: the rotation prescription does not supply a lensing law.",
   "rotation_fit_source": "data/swells/reference/j2141/rotation_fit.json",
-  "lensing_selection_source": "data/swells/reference/j2141_comparison/selection.json"
+  "lensing_selection_source": "data/swells/reference/j2141_comparison/selection.json",
+  "psi_density_fit_source": "data/highlights/j2141_psi_density_fit.json"
 }

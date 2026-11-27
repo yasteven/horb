@@ -110,7 +110,12 @@ def rotation_figure(galaxy, r, curves, obs, predictions, scores, report, output)
 def density_figure(galaxy, x, z, rho, report, output):
     style()
     fig = plt.figure(figsize=(14, 8.2))
-    header(fig, galaxy, "Fitted dark density", f"{LABELS['psi'] if report.get('density_model') == 'psi' else LABELS['superposition']} from the rotation plot  ·  x–z slice through y = 0")
+    label = LABELS['psi'] if report.get('density_model') == 'psi' else LABELS['superposition']
+    lens_selected = report.get("selection") == "closest_lensing"
+    subtitle = (f"{label} · closest lensing fit · θE = {report['effective_einstein_radius_arcsec']:.3f}″"
+                f" · rotation RMS = {report['rotation_rms_kms']:.3f} km/s"
+                if lens_selected else f"{label} from the rotation plot  ·  x–z slice through y = 0")
+    header(fig, galaxy, "Fitted dark density", subtitle)
     # Signed log color: negative cyan, zero dark, positive amber. No abs(rho).
     cmap = LinearSegmentedColormap.from_list("horb_signed", ["#66e4f0", "#146d94", PANEL, "#b94f31", "#ffde83"])
     limit = 10**np.ceil(np.log10(max(float(np.max(np.abs(rho))), 1e-20)))
@@ -146,7 +151,10 @@ def density_figure(galaxy, x, z, rho, report, output):
         fig.text(.79, y, f"{term['a0_star_kpc']:g}", size=11, ha="right")
         fig.text(.945, y, f"{term['weight']:+.6f}", size=11, ha="right", color="#ffde83" if term["weight"] >= 0 else "#66e4f0")
     fig.text(.635, .100, f"Mref = {report['components'][0]['ref_mass_msun']:.3g} M☉" + "  ·  amber + / cyan −\nWeights are not normalized probabilities." if report["components"] else "Zero orbital coefficients · zero dark density", size=10, color=MUTED, linespacing=1.7)
-    fig.text(.07, .027, "Fitted model density; rotation data constrain disk-plane force and do not uniquely determine a 3D mass distribution.", color=MUTED, size=9)
+    footer = (f"Closest lensing radius among {report['saved_candidates']} saved ψ fits; lensing used for selection. "
+              "Intrinsic x–z slice at y = 0; density is not unique."
+              if lens_selected else "Fitted model density; rotation data constrain disk-plane force and do not uniquely determine a 3D mass distribution.")
+    fig.text(.07, .027, footer, color=MUTED, size=9)
     save(fig, output)
 
 

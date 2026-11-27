@@ -6,6 +6,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from compare_swells import DATA, compare, load_family, select_family
+from make_swells_highlight import lensing_density_report
 
 
 class SwellsComparisonTests(unittest.TestCase):
@@ -49,6 +50,24 @@ class SwellsComparisonTests(unittest.TestCase):
             compare(signed, positive)
         with self.assertRaisesRegex(ValueError, "sign constraint"):
             load_family(DATA/"reference/j2141", True)
+
+    def test_density_highlight_uses_lensing_orbitals_and_never_falls_back_to_rotation(self):
+        signed = load_family(DATA/"reference/j2141", False)
+        positive = load_family(DATA/"reference/j2141_nonnegative", True)
+        result = compare(signed, positive)
+        density = lensing_density_report(result)
+        self.assertTrue(density["selection_uses_lensing"])
+        self.assertEqual(density["selection"], "closest_lensing")
+        self.assertAlmostEqual(density["effective_einstein_radius_arcsec"], .8565269049, places=7)
+        self.assertAlmostEqual(density["rotation_rms_kms"], 2.9243200987, places=7)
+        self.assertIn("3d_z2", [term["state"] for term in density["components"]])
+        self.assertNotEqual(density["components"], signed[0]["models"]["psi"]["components"])
+        lensing_candidate = next(row for row in result["rows"]
+                                 if row["family"] == "psi" and row["selection"] == "closest_lensing")
+        self.assertEqual(density["components"], lensing_candidate["components"])
+        result["rows"].remove(lensing_candidate)
+        with self.assertRaisesRegex(ValueError, "rotation winner cannot substitute"):
+            lensing_density_report(result)
 
 
 if __name__ == "__main__":

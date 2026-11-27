@@ -257,7 +257,11 @@ curves and points are omitted from the README comparisons.
 
 ![J2141 positive and signed HORB rotation and lensing selections](images/swells/j2141_lensing.png)
 
-![J2141 signed-ψ density from its rotation-selected fit](images/swells/j2141_psi_density_highlight.png)
+The signed-ψ density slice uses the **closest-lensing fit**, including its
+3d_z2 orbital: Einstein radius **0.857″**, rotation RMS **2.924 km/s**.
+Its orbitals and weights match the signed-ψ closest-lensing point above.
+
+![J2141 signed-ψ density and weights from its closest-lensing fit](images/swells/j2141_psi_density_highlight.png)
 
 With fixed Chabrier baryons, the six HORB selections are:
 
@@ -271,9 +275,10 @@ With fixed Chabrier baryons, the six HORB selections are:
 | Signed ψ lobes | Closest lensing radius | 2.924 | 0.857 |
 
 The published SIE summary is 0.89 (+0.05/−0.08) arcsec. NFW, Burkert and
-Einasto predict 0.902, 0.838 and 0.930 arcsec. The density map uses the
-signed candidate closest to the lensing radius. Each HORB selection is among
-21 saved rotation-fitted candidates in its family; weights are unchanged.
+Einasto predict 0.902, 0.838 and 0.930 arcsec. The projected |ψ|² map and
+the intrinsic signed-ψ slice each use their family's closest-lensing candidate.
+The saved rotation-fitted pools contain 21 candidates in each |ψ|² family
+and 11 signed-ψ candidates; selection leaves their weights unchanged.
 The lensing-selected diamonds use the observed radius for selection and
 are not held-out lensing tests. Six rotation measurements and this radius
 summary do not identify a unique density; no image-pixel likelihood has
